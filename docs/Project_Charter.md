@@ -10,7 +10,7 @@ Universidad Continental — SGOHA v1.0
 |Nombre del Proyecto|Sistema de Generación Óptima de Horarios Académicos (SGOHA)|
 |Patrocinador|Universidad Continental — Dirección de Tecnologías de la Información|
 |Cliente Principal|Coordinación Académica de la Universidad Continental|
-|Líder del Proyecto (Scrum Master)|Por designar — Equipo de Desarrollo Ágil|
+|Líder del Proyecto (Scrum Master)|Diego Isaac Oré Gonzales|
 |Fecha de Inicio|Enero 2025|
 |Fecha Estimada de Entrega|Julio 2025 (Incremento 1.0 funcional)|
 |Versión del Charter|1\.0|
@@ -80,7 +80,7 @@ Desarrollar e implementar un sistema web integral que automatice la generación 
 |**Rol**|**Nombre**|**Firma / Estado**|
 | :- | :- | :- |
 |Patrocinador del Proyecto|Dirección TI — Universidad Continental|Pendiente de firma|
-|Product Owner|Coordinación Académica|Pendiente de firma|
-|Scrum Master|Líder del Equipo de Desarrollo|Pendiente de firma|
-|Líder Técnico Backend|Miembro del Equipo|Pendiente de firma|
-|Líder Técnico Frontend|Miembro del Equipo|Pendiente de firma|
+|Product Owner|Jose Anthony Bacilio de la Cruz|Pendiente de firma|
+|Scrum Master|Diego Isaac Oré Gonzales|Pendiente de firma|
+|Líder Técnico Backend|Aldo Alexandre Requena Lavi|Pendiente de firma|
+|Líder Técnico Frontend|Luis Alberto Gutierrez Taipe|Pendiente de firma|

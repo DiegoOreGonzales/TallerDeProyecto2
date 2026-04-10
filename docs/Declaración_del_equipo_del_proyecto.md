@@ -7,11 +7,11 @@ Universidad Continental — SGOHA v1.0
 
 |**Rol Scrum**|**Responsabilidades Principales**|**Competencias Requeridas**|
 | :- | :- | :- |
-|Product Owner (PO)|Gestión del Product Backlog; priorización de historias de usuario; validación de criterios de aceptación; punto de contacto con Coordinación Académica de la universidad; aprobación de incrementos al final de cada sprint.|Conocimiento del dominio académico; capacidad de toma de decisiones; comunicación efectiva con stakeholders.|
-|Scrum Master (SM)|Facilitación de ceremonias Scrum (Daily, Planning, Review, Retrospective); eliminación de impedimentos; seguimiento de métricas de velocidad del equipo; coaching en prácticas ágiles; reporte de progreso al patrocinador.|Certificación CSM o conocimiento profundo de Scrum; liderazgo servant; gestión de conflictos.|
-|Desarrollador Backend|Diseño e implementación de la API RESTful con FastAPI; integración del motor CP-SAT (OR-Tools); diseño del esquema de base de datos PostgreSQL; migraciones con Alembic; documentación de endpoints con Swagger.|Python 3.11, FastAPI, SQLAlchemy, OR-Tools, PostgreSQL, Docker.|
-|Desarrollador Frontend|Implementación de la SPA con React 18 + TypeScript; diseño de componentes con Tailwind CSS; integración con la API REST mediante Axios/Fetch; gestión de estado; implementación del dashboard de horarios.|React 18, TypeScript, Vite 5, Tailwind CSS, consumo de APIs REST.|
-|Desarrollador Full-Stack / QA|Soporte en desarrollo frontend y backend; implementación de pruebas de integración; validación de los criterios de aceptación de las historias de usuario; gestión del repositorio GitHub (ramas, pull requests, code review).|Conocimientos en React y FastAPI; Git avanzado; herramientas de testing (Pytest, Jest).|
+|Product Owner (PO)|Jose Anthony Bacilio de la Cruz|Gestión del Product Backlog; priorización de historias de usuario; validación de criterios de aceptación; punto de contacto con Coordinación Académica de la universidad; aprobación de incrementos al final de cada sprint.|
+|Scrum Master (SM)|Diego Isaac Oré Gonzales|Facilitación de ceremonias Scrum (Daily, Planning, Review, Retrospective); eliminación de impedimentos; seguimiento de métricas de velocidad del equipo; coaching en prácticas ágiles; reporte de progreso al patrocinador.|
+|Desarrollador Backend|Aldo Alexandre Requena Lavi|Diseño e implementación de la API RESTful con FastAPI; integración del motor CP-SAT (OR-Tools); diseño del esquema de base de datos PostgreSQL; migraciones con Alembic; documentación de endpoints con Swagger.|
+|Desarrollador Frontend|Luis Alberto Gutierrez Taipe|Implementación de la SPA con React 18 + TypeScript; diseño de componentes con Tailwind CSS; integración con la API REST mediante Axios/Fetch; gestión de estado; implementación del dashboard de horarios.|
+|Desarrollador Full-Stack / QA|Todo el equipo|Soporte en desarrollo frontend y backend; implementación de pruebas de integración; validación de los criterios de aceptación de las historias de usuario; gestión del repositorio GitHub (ramas, pull requests, code review).|
 
 **5.2 Normas de Trabajo del Equipo**
 
