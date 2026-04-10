@@ -47,19 +47,19 @@ Una historia de usuario se considera completada (Done) cuando cumple TODOS los s
 
 **5.3 Matriz de Responsabilidades RACI**
 
-|**Actividad**|**PO**|**SM**|**Dev BE**|**Dev FE**|**Dev FS/QA**|
-| :- | :- | :- | :- | :- | :- | :- |
-|Priorizar Product Backlog|**R**|I|C|C|C|
-|Diseñar arquitectura del sistema|I|I|**R**|C|A|
-|Desarrollar API REST + CP-SAT|I|I|**R**|I|C|
-|Desarrollar Frontend SPA|I|I|C|**R**|A|
-|Gestionar repositorio GitHub|I|I|C|C|**R**|
-|Validar criterios de aceptación|**R**|I|C|C|C|
-|Facilizar ceremonias Scrum|I|**R**|I|I|I|
-|Ejecutar pruebas de integración|I|I|C|C|**R**|
+| **Actividad** | **PO** | **SM** | **Dev BE** | **Dev FE** | **Dev FS/QA** |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| Priorizar Product Backlog | **R** | I | C | C | C |
+| Diseñar arquitectura del sistema | I | I | **R** | C | A |
+| Desarrollar API REST + CP-SAT | I | I | **R** | I | C |
+| Desarrollar Frontend SPA | I | I | C | **R** | A |
+| Gestionar repositorio GitHub | I | I | C | C | **R** |
+| Validar criterios de aceptación | **R** | I | C | C | C |
+| Facilitar ceremonias Scrum | I | **R** | I | I | I |
+| Ejecutar pruebas de integración | I | I | C | C | **R** |
 
-|R = Responsable (ejecuta), A = Aprueba, C = Consultado, I = Informado|
-| :- |
+> **Leyenda:** R = Responsable (ejecuta), A = Aprueba, C = Consultado, I = Informado
+
 
 **6. REPOSITORIO GITHUB — ESTRUCTURA Y OPERATIVIDAD**
 
