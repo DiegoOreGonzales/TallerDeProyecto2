@@ -67,7 +67,7 @@ Una historia de usuario se considera completada (Done) cuando cumple TODOS los s
 
 |**Campo**|**Detalle**|
 | :- | :- |
-|URL del Repositorio|https://github.com/uc-horarios-academicos/sgoha|
+|URL del Repositorio|https://github.com/DiegoOreGonzales/TallerDeProyecto2.git|
 |Visibilidad|Privado (acceso compartido verificado entre todos los miembros del equipo)|
 |Rama principal|main (rama de producción estable, protegida)|
 |Rama de desarrollo|develop (integración continua de features)|
