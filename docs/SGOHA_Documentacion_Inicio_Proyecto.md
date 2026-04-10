@@ -163,8 +163,8 @@ Se selecciona el enfoque CP-SAT  por las siguientes razones técnicas y de conte
 |Patrocinador|Universidad Continental — Dirección de Tecnologías de la Información|
 |Cliente Principal|Coordinación Académica de la Universidad Continental|
 |Líder del Proyecto (Scrum Master)|Por designar — Equipo de Desarrollo Ágil|
-|Fecha de Inicio|Enero 2025|
-|Fecha Estimada de Entrega|Julio 2025 (Incremento 1.0 funcional)|
+|Fecha de Inicio|Enero 2026|
+|Fecha Estimada de Entrega|Julio 2026 (Incremento 1.0 funcional)|
 |Versión del Charter|1\.0|
 |Estado|Aprobado — En ejecución|
 
@@ -277,7 +277,7 @@ Las restricciones son factores externos o internos que limitan las opciones disp
 | :- | :- | :- |
 |RES-01|El stack tecnológico está predefinido: React + FastAPI + PostgreSQL + Docker. No se permite sustituir ningún componente principal.|Restricción técnica de la institución para garantizar mantenibilidad post-entrega por el equipo de TI existente.|
 |RES-02|El sistema debe responder al algoritmo de optimización en un máximo de 10 segundos. Este es un requerimiento no funcional vinculante.|Experiencia de usuario inaceptable para tiempos mayores en un contexto administrativo de carga masiva.|
-|RES-03|El proyecto debe desarrollarse en un plazo máximo de 6 meses (enero-julio 2025) con el equipo actual sin incorporación de nuevos miembros.|Restricción presupuestaria y de calendario académico de la universidad.|
+|RES-03|El proyecto debe desarrollarse en un plazo máximo de 6 meses (enero-julio 2026) con el equipo actual sin incorporación de nuevos miembros.|Restricción presupuestaria y de calendario académico de la universidad.|
 |RES-04|Toda la infraestructura de despliegue debe estar basada en contenedores Docker; no se permiten instalaciones directas en el servidor de producción.|Política de TI de la universidad para garantizar reproducibilidad y aislamiento de entornos.|
 |RES-05|Los datos académicos son confidenciales; el sistema debe implementar autenticación por roles y no exponer datos de estudiantes a usuarios no autorizados.|Cumplimiento con la Ley N° 29733 de Protección de Datos Personales del Perú.|
 |RES-06|El motor de optimización debe utilizar exclusivamente Google OR-Tools CP-SAT; no se permite el uso de solvers propietarios (CPLEX, Gurobi).|Restricción de licenciamiento: el proyecto debe ser reproducible sin costos adicionales de software.|
