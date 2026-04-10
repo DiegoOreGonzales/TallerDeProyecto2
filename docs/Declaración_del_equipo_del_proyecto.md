@@ -91,10 +91,10 @@ Todos los commits deben seguir el estándar Conventional Commits para garantizar
 
 |**Hash / Rama**|**Commit Message**|**Descripción**|
 | :- | :- | :- |
-|main / 1a2b3c4|chore: initial repository setup|Estructura de directorios inicial, .gitignore, README.md con descripción del proyecto y badges de tecnologías.|
-|develop / 2b3c4d5|feat: docker-compose base configuration|docker-compose.yml con servicios frontend, backend y PostgreSQL. Variables de entorno en .env.example.|
-|feature/HU-1.1 / 3c4d5e6|feat: backend cursos CRUD endpoints|Implementación completa del router /cursos con GET, POST, PUT, DELETE. Modelo SQLAlchemy + schema Pydantic + migración Alembic.|
-|feature/HU-1.2 / 4d5e6f7|feat: backend aulas CRUD endpoints|Implementación del router /aulas. Campos: identificacion, capacidad, tipo (LAB/TEO). Validaciones de capacidad mínima.|
-|feature/HU-2.1-2.2 / 5e6f7g8|feat: CP-SAT optimizer core module|Implementación del módulo scheduler.py con modelo CP-SAT. Variables booleanas (seccion, aula, dia, hora). Restricciones de no-superposición y capacidad.|
-|feature/frontend-auth / 6f7g8h9|feat: React login page with role selection|Pantalla de login con identidad de UC. Selector de rol (admin/estudiante). Integración con endpoint /auth/login del backend.|
-|develop / 7g8h9i0|test: integration tests for optimizer endpoint|Tests de integración para /optimizar con pytest. Casos: dataset válido, dataset con infactibilidad, dataset vacío.|
+|history/main / ac9af7f|chore: initial repository setup|Estructura de directorios inicial, .gitignore, README.md con descripción del proyecto y badges de tecnologías.|
+|history/develop / a80fab0|feat: docker-compose base configuration|docker-compose.yml con servicios frontend, backend y PostgreSQL. Variables de entorno en .env.example.|
+|history/feature/HU-1.1 / 9331150|feat: backend cursos CRUD endpoints|Implementación completa del router /cursos con GET, POST, PUT, DELETE. Modelo SQLAlchemy + schema Pydantic + migración Alembic.|
+|history/feature/HU-1.2 / 939d349|feat: backend aulas CRUD endpoints|Implementación del router /aulas. Campos: identificacion, capacidad, tipo (LAB/TEO). Validaciones de capacidad mínima.|
+|history/feature/HU-2.1-2.2 / daa52fc|feat: CP-SAT optimizer core module|Implementación del módulo scheduler.py con modelo CP-SAT. Variables booleanas (seccion, aula, dia, hora). Restricciones de no-superposición y capacidad.|
+|history/feature/frontend-auth / 3a05ca5|feat: React login page with role selection|Pantalla de login con identidad de UC. Selector de rol (admin/estudiante). Integración con endpoint /auth/login del backend.|
+|history/develop / 6d9681b|test: integration tests for optimizer endpoint|Tests de integración para /optimizar con pytest. Casos: dataset válido, dataset con infactibilidad, dataset vacío.|
