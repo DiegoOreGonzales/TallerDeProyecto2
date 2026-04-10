@@ -85,8 +85,8 @@
 | **Nombre** | Sistema de Generación Óptima de Horarios Académicos (SGOHA) |
 | **Líder (SM)** | Ore Gonzales Diego Isaac |
 | **Product Owner** | Requena Lavi Aldo Alexandre |
-| **Fecha Inicio** | Enero 2025 |
-| **Fecha Entrega** | Julio 2025 |
+| **Fecha Inicio** | Marzo 2026 |
+| **Fecha Entrega** | Julio 2026 |
 
 #### Objetivos del Proyecto
 1. Automatizar la generación de horarios sin conflictos de recursos.

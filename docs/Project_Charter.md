@@ -11,8 +11,8 @@ Universidad Continental — SGOHA v1.0
 |Patrocinador|Universidad Continental — Dirección de Tecnologías de la Información|
 |Cliente Principal|Coordinación Académica de la Universidad Continental|
 |Líder del Proyecto (Scrum Master)|Diego Isaac Oré Gonzales|
-|Fecha de Inicio|Enero 2025|
-|Fecha Estimada de Entrega|Julio 2025 (Incremento 1.0 funcional)|
+|Fecha de Inicio|Marzo 2026|
+|Fecha Estimada de Entrega|Julio 2026 (Incremento 1.0 funcional)|
 |Versión del Charter|1\.0|
 |Estado|Aprobado — En ejecución|
 
