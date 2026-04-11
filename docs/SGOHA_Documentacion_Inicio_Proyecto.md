@@ -363,10 +363,10 @@ Desarrollar e implementar un sistema web integral que automatice la generación 
 |Rol|Nombre|Firma / Estado|
 | :- | :- | :- |
 |Patrocinador del Proyecto|Dirección TI — Universidad Continental|Pendiente de firma|
-|Product Owner|Jose Anthony Bacilio de la Cruz|Pendiente de firma|
+|Product Owner|Aldo Alexandre Requena Lavi|Pendiente de firma|
 |Scrum Master|Diego Isaac Oré Gonzales|Pendiente de firma|
-|Líder Técnico Backend|Aldo Alexandre Requena Lavi|Pendiente de firma|
-|Líder Técnico Frontend|Luis Alberto Gutierrez Taipe|Pendiente de firma|
+|Líder Técnico Backend|Luis Alberto Gutierrez Taipe|Pendiente de firma|
+|Líder Técnico Frontend|Jose Anthony Bacilio de la Cruz|Pendiente de firma|
 
 
 
