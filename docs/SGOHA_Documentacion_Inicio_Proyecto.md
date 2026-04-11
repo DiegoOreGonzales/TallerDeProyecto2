@@ -360,13 +360,13 @@ Desarrollar e implementar un sistema web integral que automatice la generación 
 
 **5.9 Aprobaciones**
 
-|**Rol**|**Nombre**|**Firma / Estado**|
+|Rol|Nombre|Firma / Estado|
 | :- | :- | :- |
 |Patrocinador del Proyecto|Dirección TI — Universidad Continental|Pendiente de firma|
-|Product Owner|Coordinación Académica|Pendiente de firma|
-|Scrum Master|Líder del Equipo de Desarrollo|Pendiente de firma|
-|Líder Técnico Backend|Miembro del Equipo|Pendiente de firma|
-|Líder Técnico Frontend|Miembro del Equipo|Pendiente de firma|
+|Product Owner|Jose Anthony Bacilio de la Cruz|Pendiente de firma|
+|Scrum Master|Diego Isaac Oré Gonzales|Pendiente de firma|
+|Líder Técnico Backend|Aldo Alexandre Requena Lavi|Pendiente de firma|
+|Líder Técnico Frontend|Luis Alberto Gutierrez Taipe|Pendiente de firma|
 
 
 
@@ -388,9 +388,6 @@ Los siguientes supuestos han sido identificados y documentados. Si alguno result
 
 
 
-
-
-
 **6.2 Restricciones del Proyecto**
 
 Las restricciones son factores externos o internos que limitan las opciones disponibles para el equipo del proyecto. Son inamovibles salvo decisión explícita del patrocinador.
@@ -405,23 +402,17 @@ Las restricciones son factores externos o internos que limitan las opciones disp
 |RES-06|El motor de optimización debe utilizar exclusivamente Google OR-Tools CP-SAT; no se permite el uso de solvers propietarios (CPLEX, Gurobi).|Restricción de licenciamiento: el proyecto debe ser reproducible sin costos adicionales de software.|
 |RES-07|El sistema debe funcionar en los navegadores modernos (Chrome 120+, Firefox 120+, Edge 120+) sin plugins adicionales.|Restricción de compatibilidad con el parque tecnológico existente en las oficinas administrativas de la universidad.|
 
-
-
 **7. DECLARACIÓN DEL EQUIPO DEL PROYECTO**
 
 **7.1 Estructura del Equipo Scrum**
 
-|**Rol Scrum**|**Responsabilidades Principales**|**Competencias Requeridas**|
+|**Rol Scrum**|**Nombre**|**Responsabilidades Principales**|
 | :- | :- | :- |
-|Product Owner (PO)|Gestión del Product Backlog; priorización de historias de usuario; validación de criterios de aceptación; punto de contacto con Coordinación Académica de la universidad; aprobación de incrementos al final de cada sprint.|Conocimiento del dominio académico; capacidad de toma de decisiones; comunicación efectiva con stakeholders.|
-|Scrum Master (SM)|Facilitación de ceremonias Scrum (Daily, Planning, Review, Retrospective); eliminación de impedimentos; seguimiento de métricas de velocidad del equipo; coaching en prácticas ágiles; reporte de progreso al patrocinador.|Certificación CSM o conocimiento profundo de Scrum; liderazgo servant; gestión de conflictos.|
-|Desarrollador Backend|Diseño e implementación de la API RESTful con FastAPI; integración del motor CP-SAT (OR-Tools); diseño del esquema de base de datos PostgreSQL; migraciones con Alembic; documentación de endpoints con Swagger.|Python 3.11, FastAPI, SQLAlchemy, OR-Tools, PostgreSQL, Docker.|
-|Desarrollador Frontend|Implementación de la SPA con React 18 + TypeScript; diseño de componentes con Tailwind CSS; integración con la API REST mediante Axios/Fetch; gestión de estado; implementación del dashboard de horarios.|React 18, TypeScript, Vite 5, Tailwind CSS, consumo de APIs REST.|
-|Desarrollador Full-Stack / QA|Soporte en desarrollo frontend y backend; implementación de pruebas de integración; validación de los criterios de aceptación de las historias de usuario; gestión del repositorio GitHub (ramas, pull requests, code review).|Conocimientos en React y FastAPI; Git avanzado; herramientas de testing (Pytest, Jest).|
-
-
-
-
+|Product Owner (PO)|Jose Anthony Bacilio de la Cruz|Gestión del Product Backlog; priorización de historias de usuario; validación de criterios de aceptación; punto de contacto con Coordinación Académica de la universidad; aprobación de incrementos al final de cada sprint.|
+|Scrum Master (SM)|Diego Isaac Oré Gonzales|Facilitación de ceremonias Scrum (Daily, Planning, Review, Retrospective); eliminación de impedimentos; seguimiento de métricas de velocidad del equipo; coaching en prácticas ágiles; reporte de progreso al patrocinador.|
+|Desarrollador Backend|Aldo Alexandre Requena Lavi|Diseño e implementación de la API RESTful con FastAPI; integración del motor CP-SAT (OR-Tools); diseño del esquema de base de datos PostgreSQL; migraciones con Alembic; documentación de endpoints con Swagger.|
+|Desarrollador Frontend|Luis Alberto Gutierrez Taipe|Implementación de la SPA con React 18 + TypeScript; diseño de componentes con Tailwind CSS; integración con la API REST mediante Axios/Fetch; gestión de estado; implementación del dashboard de horarios.|
+|Desarrollador Full-Stack / QA|Todo el equipo|Soporte en desarrollo frontend y backend; implementación de pruebas de integración; validación de los criterios de aceptación de las historias de usuario; gestión del repositorio GitHub (ramas, pull requests, code review).|
 
 
 **7.2 Normas de Trabajo del Equipo**
@@ -480,7 +471,7 @@ Una historia de usuario se considera completada (Done) cuando cumple TODOS los s
 
 |**Campo**|**Detalle**|
 | :- | :- |
-|URL del Repositorio|https://github.com/uc-horarios-academicos/sgoha|
+|URL del Repositorio|https://github.com/DiegoOreGonzales/TallerDeProyecto2.git|
 |Visibilidad|Privado (acceso compartido verificado entre todos los miembros del equipo)|
 |Rama principal|main (rama de producción estable, protegida)|
 |Rama de desarrollo|develop (integración continua de features)|
@@ -508,13 +499,13 @@ Todos los commits deben seguir el estándar Conventional Commits para garantizar
 
 |**Hash / Rama**|**Commit Message**|**Descripción**|
 | :- | :- | :- |
-|main / 1a2b3c4|chore: initial repository setup|Estructura de directorios inicial, .gitignore, README.md con descripción del proyecto y badges de tecnologías.|
-|develop / 2b3c4d5|feat: docker-compose base configuration|docker-compose.yml con servicios frontend, backend y PostgreSQL. Variables de entorno en .env.example.|
-|feature/HU-1.1 / 3c4d5e6|feat: backend cursos CRUD endpoints|Implementación completa del router /cursos con GET, POST, PUT, DELETE. Modelo SQLAlchemy + schema Pydantic + migración Alembic.|
-|feature/HU-1.2 / 4d5e6f7|feat: backend aulas CRUD endpoints|Implementación del router /aulas. Campos: identificacion, capacidad, tipo (LAB/TEO). Validaciones de capacidad mínima.|
-|feature/HU-2.1-2.2 / 5e6f7g8|feat: CP-SAT optimizer core module|Implementación del módulo scheduler.py con modelo CP-SAT. Variables booleanas (seccion, aula, dia, hora). Restricciones de no-superposición y capacidad.|
-|feature/frontend-auth / 6f7g8h9|feat: React login page with role selection|Pantalla de login con identidad de UC. Selector de rol (admin/estudiante). Integración con endpoint /auth/login del backend.|
-|develop / 7g8h9i0|test: integration tests for optimizer endpoint|Tests de integración para /optimizar con pytest. Casos: dataset válido, dataset con infactibilidad, dataset vacío.|
+|history/main / ac9af7f|chore: initial repository setup|Estructura de directorios inicial, .gitignore, README.md con descripción del proyecto y badges de tecnologías.|
+|history/develop / a80fab0|feat: docker-compose base configuration|docker-compose.yml con servicios frontend, backend y PostgreSQL. Variables de entorno en .env.example.|
+|history/feature/HU-1.1 / 9331150|feat: backend cursos CRUD endpoints|Implementación completa del router /cursos con GET, POST, PUT, DELETE. Modelo SQLAlchemy + schema Pydantic + migración Alembic.|
+|history/feature/HU-1.2 / 939d349|feat: backend aulas CRUD endpoints|Implementación del router /aulas. Campos: identificacion, capacidad, tipo (LAB/TEO). Validaciones de capacidad mínima.|
+|history/feature/HU-2.1-2.2 / daa52fc|feat: CP-SAT optimizer core module|Implementación del módulo scheduler.py con modelo CP-SAT. Variables booleanas (seccion, aula, dia, hora). Restricciones de no-superposición y capacidad.|
+|history/feature/frontend-auth / 3a05ca5|feat: React login page with role selection|Pantalla de login con identidad de UC. Selector de rol (admin/estudiante). Integración con endpoint /auth/login del backend.|
+|history/develop / 6d9681b|test: integration tests for optimizer endpoint|Tests de integración para /optimizar con pytest. Casos: dataset válido, dataset con infactibilidad, dataset vacío.|
 
 
 
