@@ -4,7 +4,7 @@
 ---
 
 ### 1. Análisis del Problema
-**Problema Central:** La elaboración manual de horarios en la Universidad Continental es ineficiente, toma de 2-4 semanas y genera constantes conflictos de recursos (aulas, docentes).
+**Problema Central:** El sistema actual de programación académica (Banner) en la Universidad Continental es ineficiente y produce horarios no factibles para los estudiantes, caracterizados por discrepancias de disponibilidad y cruces constantes de recursos.
 
 #### Ambigüedades Identificadas (Sobresaliente: ≥4)
 *   **AMB-01:** Definición de "horarios académicos" (¿Incluye exámenes o solo clases regulares?).
@@ -71,9 +71,9 @@
 ---
 
 ### 4. Declaración de la Visión
-*"Para la Universidad Continental, el SGOHA es una plataforma inteligente que automatiza la creación de horarios en segundos, eliminando errores al 100%, a diferencia del proceso manual actual; garantizamos eficiencia, escalabilidad y una experiencia de usuario institucional moderna."*
+*"Para la Universidad Continental, el SGOHA es una plataforma inteligente que automatiza la creación de horarios en segundos, eliminando errores al 100%, a diferencia de los procesos rígidos e ineficientes del sistema actual (Banner); garantizamos factibilidad absoluta, escalabilidad y una experiencia de usuario institucional moderna."*
 
-*   **Valor:** Reducción del 99% en tiempo administrativo y 0% de conflictos post-generación.
+*   **Valor:** Reducción drástica en tiempos de validación y 0% de conflictos post-generación.
 *   **Alcance:** Dashboard administrativo (Gestión), Motor de Optimización, y Dashboard Estudiantil (Consulta).
 
 ---

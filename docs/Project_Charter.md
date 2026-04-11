@@ -18,7 +18,7 @@ Universidad Continental — SGOHA v1.0
 
 **3.2 Justificación del Proyecto**
 
-La elaboración manual de horarios académicos en la Universidad Continental representa una ineficiencia crítica del proceso administrativo. El volumen de restricciones simultáneas (disponibilidad de docentes, capacidad de aulas, demanda de secciones) supera la capacidad cognitiva humana para resolverlas de manera óptima y libre de errores en tiempos razonables. La implementación del SGOHA responde directamente a la necesidad estratégica de digitalizar y automatizar este proceso utilizando tecnología matemática comprobada (CP-SAT), alineándose con el plan de transformación digital de la institución.
+A pesar de contar con un sistema ERP (Banner), la programación de horarios en la Universidad Continental presenta fallas críticas de factibilidad. El motor actual no logra procesar eficientemente el volumen de restricciones simultáneas (disponibilidad de docentes, capacidad de aulas, demanda de secciones), resultando en horarios que no coinciden con la disponibilidad real y presentan constantes cruces de recursos. La implementación del SGOHA responde directamente a la necesidad estratégica de reemplazar este proceso subóptimo por una solución basada en tecnología matemática comprobada (CP-SAT), garantizando factibilidad absoluta y alineándose con el plan de transformación digital de la institución.
 
 **3.3 Objetivo General del Proyecto**
 

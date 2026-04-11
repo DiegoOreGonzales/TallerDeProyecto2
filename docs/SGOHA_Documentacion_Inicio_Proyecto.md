@@ -35,11 +35,11 @@ Repositorio: <https://github.com/DiegoOreGonzales/TallerDeProyecto2.git>
 
 La Universidad Continental es una institución de educación superior privada con múltiples facultades y programas académicos activos. Cada semestre, la institución debe elaborar horarios académicos que asignen secciones de cursos a aulas físicas en bloques de tiempo específicos, considerando la disponibilidad de docentes y la demanda estudiantil de cada sección.
 
-El proceso actual de elaboración de horarios es realizado manualmente por coordinadores académicos utilizando hojas de cálculo y herramientas ofimáticas básicas. Este proceso consume entre 2 y 4 semanas de trabajo intensivo y frecuentemente resulta en conflictos que deben resolverse de manera reactiva al inicio del semestre.
+La Universidad Continental utiliza el sistema ERP Banner para la gestión de matrículas; sin embargo, la programación académica generada por los procesos actuales presenta ineficiencias críticas. Los horarios resultantes no son factibles para los estudiantes debido a discrepancias severas entre la disponibilidad horaria real y la oferta programada, además de presentar cruces de horarios y aulas que impactan la operatividad institucional de manera constante.
 
 **1.2 Enunciado del Problema Principal**
 
-|PROBLEMA CENTRAL: La elaboración manual de horarios académicos en la Universidad Continental es un proceso ineficiente, propenso a errores y no escalable que genera conflictos de recursos (aulas, docentes) que impactan negativamente en la calidad del servicio educativo y la experiencia de estudiantes y docentes.|
+|PROBLEMA CENTRAL: El sistema actual de programación académica (Banner) en la Universidad Continental es ineficiente y produce horarios no factibles para los estudiantes, caracterizados por discrepancias entre la disponibilidad y la carga horaria, así como cruces constantes de recursos que degradan la experiencia educativa y la eficiencia administrativa.|
 | :- |
 
 **1.3 Identificación de Ambigüedades**
@@ -82,13 +82,13 @@ Durante el análisis inicial del problema se identificaron las siguientes ambig�
 
 **1.6 Árbol de Causas y Efectos del Problema**
 
-|CAUSA RAÍZ: Ausencia de un sistema automatizado para la generación de horarios académicos.|
+|CAUSA RAÍZ: Limitaciones del motor de programación actual para manejar restricciones complejas de simultaneidad y optimización matemática.|
 | :- |
 ||
 |CAUSAS DIRECTAS:|
-|`  `C1. El proceso manual no puede procesar simultáneamente todas las restricciones de asignación.|
-|`  `C2. Las herramientas ofimáticas actuales (Excel) no tienen capacidad de detección automática de conflictos.|
-|`  `C3. La información de disponibilidad de docentes y aulas no está centralizada ni estandarizada.|
+|`  `C1. El sistema actual no garantiza la factibilidad de los horarios respecto a la disponibilidad real de estudiantes y docentes.|
+|`  `C2. El ERP Banner no cuenta con un motor de optimización matemática (solver) que resuelva el problema de asignación de manera integral.|
+|`  `C3. Insuficiencia en las validaciones algorítmicas de cruces de horarios y aforos en los procesos de carga masiva.|
 ||
 |EFECTOS DIRECTOS:|
 |`  `E1. Conflictos de horarios (docente en dos secciones, aula doblemente asignada).|
@@ -156,7 +156,7 @@ Los requerimientos no funcionales describen atributos de calidad del sistema que
 
 **3.1 Descripción del Problema Central**
 
-La Universidad Continental enfrenta un proceso manual y propenso <a name="_int_rrj28bd1"></a>a errores en la elaboración de horarios académicos cada semestre. Actualmente, los coordinadores académicos dedican entre 2 y 4 semanas para construir horarios que satisfagan restricciones de aulas, docentes y demanda estudiantil. Este proceso genera conflictos frecuentes: superposición de docentes, asignación de aulas con capacidad insuficiente y desbalance en la distribución de carga horaria.
+La Universidad Continental enfrenta ineficiencias críticas en la programación académica a pesar de contar con el sistema ERP Banner. Actualmente, el motor de generación de horarios integrado produce resultados no factibles que presentan discrepancias severas con la disponibilidad horaria real de estudiantes y docentes, además de generar cruces de recursos y asignaciones subóptimas de aulas. Este problema impacta negativamente en el inicio de cada semestre, requiriendo correcciones de emergencia y degradando la experiencia universitaria.
 
 **3.2 Alternativas de Enfoque Evaluadas**
 
@@ -230,7 +230,7 @@ Se selecciona el enfoque CP-SAT  por las siguientes razones técnicas y de conte
 
 **4.1 Enunciado de Visión**
 
-*"Para la Universidad Continental, que necesita optimizar la programación académica semestral, el Sistema de Generación Óptima de Horarios es una plataforma web inteligente que automatiza la creación de horarios libres de conflictos en menos de 10 segundos, a diferencia del proceso manual actual que demanda semanas de trabajo y genera errores frecuentes, nuestro producto provee un motor matemático basado en Programación con Restricciones que garantiza asignaciones correctas de aulas, docentes y secciones, generando valor medible en reducción de tiempo administrativo (≥80%) y eliminación de conflictos de horarios (100%)."*
+*"Para la Universidad Continental, que necesita optimizar la programación académica semestral, el Sistema de Generación Óptima de Horarios es una plataforma web inteligente que automatiza la creación de horarios libres de conflictos en menos de 10 segundos, a diferencia de los procesos rígidos e ineficientes del sistema actual (Banner) que genera horarios con cruces y discrepancias, nuestro producto provee un motor matemático basado en Programación con Restricciones que garantiza asignaciones correctas de aulas, docentes y secciones, generando valor medible en reducción de tiempo administrativo (≥80%) y eliminación de conflictos de horarios (100%)."*
 
 **4.2 Componentes de la Visión**
 
@@ -241,7 +241,7 @@ Se selecciona el enfoque CP-SAT  por las siguientes razones técnicas y de conte
 |EL (Producto)|Sistema de Generación Óptima de Horarios Académicos (SGOHA)|
 |ES UN (Categoría)|Aplicación web SPA con motor de inteligencia operativa basado en CP-SAT|
 |QUE (Beneficio clave)|Genera horarios factibles en <10 segundos, eliminando conflictos de aulas y docentes al 100%|
-|A DIFERENCIA DE (Alternativa)|El proceso manual actual que consume 2-4 semanas y produce errores de asignación frecuentes|
+|A DIFERENCIA DE (Alternativa)|El sistema actual (Banner) que genera horarios con cruces de recursos y discrepancias de disponibilidad|
 |NUESTRO PRODUCTO (Diferenciador)|Garantía matemática de factibilidad + interfaz institucional moderna + acceso por roles|
 
 
@@ -252,7 +252,7 @@ Se selecciona el enfoque CP-SAT  por las siguientes razones técnicas y de conte
 
 |**Indicador de Valor**|**Métrica Objetivo**|
 | :- | :- |
-|Reducción del tiempo de elaboración de horarios|De 2-4 semanas a < 10 segundos (reducción ≥ 99%)|
+|Reducción del tiempo de procesamiento y validación|De días de revisión a < 10 segundos (reducción significativa)|
 |Tasa de conflictos de horarios post-generación|0% de conflictos en aulas y docentes (garantía matemática)|
 |Adopción por rol administrativo|100% de coordinadores académicos utilizan el sistema|
 |Satisfacción estudiantil con consulta de horarios|Acceso 24/7 desde cualquier dispositivo (SPA responsiva)|
@@ -293,7 +293,7 @@ Se selecciona el enfoque CP-SAT  por las siguientes razones técnicas y de conte
 
 **5.2 Justificación del Proyecto**
 
-La elaboración manual de horarios académicos en la Universidad Continental representa una ineficiencia crítica del proceso administrativo. El volumen de restricciones simultáneas (disponibilidad de docentes, capacidad de aulas, demanda de secciones) supera la capacidad cognitiva humana para resolverlas de manera óptima y libre de errores en tiempos razonables. La implementación del SGOHA responde directamente a la necesidad estratégica de digitalizar y automatizar este proceso utilizando tecnología matemática comprobada (CP-SAT), alineándose con el plan de transformación digital de la institución.
+A pesar de contar con un sistema ERP (Banner), la programación de horarios en la Universidad Continental presenta fallas críticas de factibilidad. El motor actual no logra procesar eficientemente el volumen de restricciones simultáneas (disponibilidad de docentes, capacidad de aulas, demanda de secciones), resultando en horarios que no coinciden con la disponibilidad real y presentan constantes cruces de recursos. La implementación del SGOHA responde directamente a la necesidad estratégica de reemplazar este proceso subóptimo por una solución basada en tecnología matemática comprobada (CP-SAT), garantizando factibilidad absoluta y alineándose con el plan de transformación digital de la institución.
 
 **5.3 Objetivo General del Proyecto**
 

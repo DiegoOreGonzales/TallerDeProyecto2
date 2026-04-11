@@ -27,11 +27,11 @@ Repositorio: <https://github.com/DiegoOreGonzales/TallerDeProyecto2.git>
 
 La Universidad Continental es una institución de educación superior privada con múltiples facultades y programas académicos activos. Cada semestre, la institución debe elaborar horarios académicos que asignen secciones de cursos a aulas físicas en bloques de tiempo específicos, considerando la disponibilidad de docentes y la demanda estudiantil de cada sección.
 
-El proceso actual de elaboración de horarios es realizado manualmente por coordinadores académicos utilizando hojas de cálculo y herramientas ofimáticas básicas. Este proceso consume entre 2 y 4 semanas de trabajo intensivo y frecuentemente resulta en conflictos que deben resolverse de manera reactiva al inicio del semestre.
+La Universidad Continental utiliza el sistema ERP Banner para la gestión de matrículas; sin embargo, la programación académica generada por los procesos actuales presenta ineficiencias críticas. Los horarios resultantes no son factibles para los estudiantes debido a discrepancias severas entre la disponibilidad horaria real y la oferta programada, además de presentar cruces de horarios y aulas que impactan la operatividad institucional de manera constante.
 
 **7.2 Enunciado del Problema Principal**
 
-|PROBLEMA CENTRAL: La elaboración manual de horarios académicos en la Universidad Continental es un proceso ineficiente, propenso a errores y no escalable que genera conflictos de recursos (aulas, docentes) que impactan negativamente en la calidad del servicio educativo y la experiencia de estudiantes y docentes.|
+|PROBLEMA CENTRAL: El sistema actual de programación académica (Banner) en la Universidad Continental es ineficiente y produce horarios no factibles para los estudiantes, caracterizados por discrepancias entre la disponibilidad y la carga horaria, así como cruces constantes de recursos que degradan la experiencia educativa y la eficiencia administrativa.|
 | :- |
 
 **7.3 Identificación de Ambigüedades**
@@ -71,13 +71,13 @@ Durante el análisis inicial del problema se identificaron las siguientes ambig�
 
 **7.6 Árbol de Causas y Efectos del Problema**
 
-|CAUSA RAÍZ: Ausencia de un sistema automatizado para la generación de horarios académicos.|
+|CAUSA RAÍZ: Limitaciones del motor de programación actual para manejar restricciones complejas de simultaneidad y optimización matemática.|
 | :- |
 ||
 |CAUSAS DIRECTAS:|
-|`  `C1. El proceso manual no puede procesar simultáneamente todas las restricciones de asignación.|
-|`  `C2. Las herramientas ofimáticas actuales (Excel) no tienen capacidad de detección automática de conflictos.|
-|`  `C3. La información de disponibilidad de docentes y aulas no está centralizada ni estandarizada.|
+|`  `C1. El sistema actual no garantiza la factibilidad de los horarios respecto a la disponibilidad real de estudiantes y docentes.|
+|`  `C2. El ERP Banner no cuenta con un motor de optimización matemática (solver) que resuelva el problema de asignación de manera integral.|
+|`  `C3. Insuficiencia en las validaciones algorítmicas de cruces de horarios y aforos en los procesos de carga masiva.|
 ||
 |EFECTOS DIRECTOS:|
 |`  `E1. Conflictos de horarios (docente en dos secciones, aula doblemente asignada).|
