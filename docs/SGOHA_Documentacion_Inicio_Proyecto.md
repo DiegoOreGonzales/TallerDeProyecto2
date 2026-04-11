@@ -285,7 +285,7 @@ Se selecciona el enfoque CP-SAT  por las siguientes razones técnicas y de conte
 |Nombre del Proyecto|Sistema de Generación Óptima de Horarios Académicos (SGOHA)|
 |Patrocinador|Universidad Continental — Dirección de Tecnologías de la Información|
 |Cliente Principal|Coordinación Académica de la Universidad Continental|
-|Líder del Proyecto (Scrum Master)|Ore Gonzales Diego Isaas — Equipo de Desarrollo Ágil|
+|Líder del Proyecto (Scrum Master)|Ore Gonzales Diego Isaac — Equipo de Desarrollo Ágil|
 |Fecha de Inicio|Marzo 2026|
 |Fecha Estimada de Entrega|Julio 2026 (Incremento 1.0 funcional)|
 |Versión del Charter|1\.0|
