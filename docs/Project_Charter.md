@@ -10,7 +10,7 @@ Universidad Continental — SGOHA v1.0
 |Nombre del Proyecto|Sistema de Generación Óptima de Horarios Académicos (SGOHA)|
 |Patrocinador|Universidad Continental — Dirección de Tecnologías de la Información|
 |Cliente Principal|Coordinación Académica de la Universidad Continental|
-|Líder del Proyecto (Scrum Master)|Por designar — Equipo de Desarrollo Ágil|
+|Líder del Proyecto (Scrum Master)|Diego Isaac Oré Gonzales|
 |Fecha de Inicio|Marzo 2026|
 |Fecha Estimada de Entrega|Julio 2026 (Incremento 1.0 funcional)|
 |Versión del Charter|1\.0|
@@ -18,7 +18,7 @@ Universidad Continental — SGOHA v1.0
 
 **3.2 Justificación del Proyecto**
 
-La elaboración manual de horarios académicos en la Universidad Continental representa una ineficiencia crítica del proceso administrativo. El volumen de restricciones simultáneas (disponibilidad de docentes, capacidad de aulas, demanda de secciones) supera la capacidad cognitiva humana para resolverlas de manera óptima y libre de errores en tiempos razonables. La implementación del SGOHA responde directamente a la necesidad estratégica de digitalizar y automatizar este proceso utilizando tecnología matemática comprobada (CP-SAT), alineándose con el plan de transformación digital de la institución.
+A pesar de contar con un sistema ERP (Banner), la programación de horarios en la Universidad Continental presenta fallas críticas de factibilidad. El motor actual no logra procesar eficientemente el volumen de restricciones simultáneas (disponibilidad de docentes, capacidad de aulas, demanda de secciones), resultando en horarios que no coinciden con la disponibilidad real y presentan constantes cruces de recursos. La implementación del SGOHA responde directamente a la necesidad estratégica de reemplazar este proceso subóptimo por una solución basada en tecnología matemática comprobada (CP-SAT), garantizando factibilidad absoluta y alineándose con el plan de transformación digital de la institución.
 
 **3.3 Objetivo General del Proyecto**
 
@@ -80,7 +80,7 @@ Desarrollar e implementar un sistema web integral que automatice la generación 
 |**Rol**|**Nombre**|**Firma / Estado**|
 | :- | :- | :- |
 |Patrocinador del Proyecto|Dirección TI — Universidad Continental|Pendiente de firma|
-|Product Owner|Coordinación Académica|Pendiente de firma|
-|Scrum Master|Líder del Equipo de Desarrollo|Pendiente de firma|
-|Líder Técnico Backend|Miembro del Equipo|Pendiente de firma|
-|Líder Técnico Frontend|Miembro del Equipo|Pendiente de firma|
+|Product Owner|Jose Anthony Bacilio de la Cruz|Pendiente de firma|
+|Scrum Master|Diego Isaac Oré Gonzales|Pendiente de firma|
+|Líder Técnico Backend|Aldo Alexandre Requena Lavi|Pendiente de firma|
+|Líder Técnico Frontend|Luis Alberto Gutierrez Taipe|Pendiente de firma|
