@@ -57,49 +57,54 @@ const Classrooms: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 animate-in fade-in duration-500">
       {isAdding && (
-        <div className="bg-white p-8 rounded-3xl shadow-xl border border-slate-100 animate-in slide-in-from-top-4 duration-300">
-          <h3 className="text-xl font-bold text-slate-800 mb-6">Configurar Nueva Aula</h3>
-          <form onSubmit={handleAdd} className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div>
-              <label className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Nombre/Código</label>
+        <section className="bg-surface-container-low p-8 rounded-3xl border border-white/5 shadow-2xl animate-in slide-in-from-top-4 duration-300">
+          <div className="flex justify-between items-center mb-8">
+            <h3 className="text-xl font-bold font-headline text-white">Configurar Nueva Aula</h3>
+            <button onClick={() => setIsAdding(false)} className="text-neutral-500 hover:text-white transition-colors">
+              <span className="material-symbols-outlined">close</span>
+            </button>
+          </div>
+          <form onSubmit={handleAdd} className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="space-y-2">
+              <label className="text-xs font-black text-neutral-500 uppercase tracking-widest ml-1">Nombre/Código</label>
               <input 
                 type="text" required 
-                className="w-full px-5 py-3.5 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-red-500 focus:bg-white transition-all font-medium text-slate-700"
+                className="w-full px-5 py-3.5 bg-white/5 border border-white/10 rounded-xl focus:ring-1 focus:ring-orange-500 text-white placeholder:text-neutral-700 transition-all font-medium"
                 placeholder="Ej: A-102"
                 value={newAula.nombre}
                 onChange={e => setNewAula({...newAula, nombre: e.target.value})}
               />
             </div>
-            <div>
-              <label className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Capacidad</label>
+            <div className="space-y-2">
+              <label className="text-xs font-black text-neutral-500 uppercase tracking-widest ml-1">Capacidad</label>
               <input 
                 type="number" required 
-                className="w-full px-5 py-3.5 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-red-500 focus:bg-white transition-all font-medium text-slate-700"
+                className="w-full px-5 py-3.5 bg-white/5 border border-white/10 rounded-xl focus:ring-1 focus:ring-orange-500 text-white transition-all font-medium"
                 value={newAula.capacidad}
                 onChange={e => setNewAula({...newAula, capacidad: parseInt(e.target.value)})}
               />
             </div>
-            <div>
-              <label className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Tipo</label>
+            <div className="space-y-2">
+              <label className="text-xs font-black text-neutral-500 uppercase tracking-widest ml-1">Tipo de Ambiente</label>
               <select 
-                className="w-full px-5 py-3.5 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-red-500 focus:bg-white transition-all font-medium text-slate-700"
+                className="w-full px-5 py-3.5 bg-white/5 border border-white/10 rounded-xl focus:ring-1 focus:ring-orange-500 text-white transition-all font-medium appearance-none"
                 value={newAula.tipo}
                 onChange={e => setNewAula({...newAula, tipo: e.target.value})}
               >
-                <option value="Teoría">Teoría</option>
-                <option value="Laboratorio">Laboratorio</option>
-                <option value="Taller">Taller</option>
+                <option value="Teoría" className="bg-neutral-900">Teoría</option>
+                <option value="Laboratorio" className="bg-neutral-900">Laboratorio</option>
+                <option value="Taller" className="bg-neutral-900">Taller</option>
               </select>
             </div>
             <div className="flex items-end">
-              <button type="submit" className="w-full py-3.5 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-all shadow-lg active:scale-95">
+              <button type="submit" className="btn-primary w-full">
                 Registrar Aula
               </button>
             </div>
           </form>
-        </div>
+        </section>
       )}
 
       <CrudTable 
@@ -112,19 +117,19 @@ const Classrooms: React.FC = () => {
         renderRow={(aula: Aula) => (
           <>
             <td className="px-8 py-5">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center text-lg shadow-inner">
-                  🏢
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 bg-white/5 border border-white/5 rounded-xl flex items-center justify-center text-orange-500">
+                  <span className="material-symbols-outlined">meeting_room</span>
                 </div>
-                <span className="font-bold text-slate-800">{aula.nombre}</span>
+                <span className="font-bold text-on-surface font-headline">{aula.nombre}</span>
               </div>
             </td>
-            <td className="px-8 py-5 text-slate-600 font-medium">{aula.capacidad} estudiantes</td>
+            <td className="px-8 py-5 text-on-surface-variant font-medium font-label">{aula.capacidad} estudiantes</td>
             <td className="px-8 py-5">
               <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border ${
                 aula.tipo === 'Laboratorio' 
-                ? 'bg-purple-50 text-purple-600 border-purple-100' 
-                : 'bg-green-50 text-green-600 border-green-100'
+                ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' 
+                : 'bg-green-500/10 text-green-400 border-green-500/20'
               }`}>
                 {aula.tipo}
               </span>

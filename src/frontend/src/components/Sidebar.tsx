@@ -3,63 +3,83 @@ import React from 'react';
 interface SidebarProps {
   currentView: string;
   setCurrentView: (view: string) => void;
+  userRole: string;
+  onLogout: () => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView }) => {
-  const menuItems = [
-    { id: 'dashboard', label: 'Panel', icon: '📊' },
-    { id: 'cursos', label: 'Cursos', icon: '📚' },
-    { id: 'aulas', label: 'Aulas', icon: '🏢' },
-    { id: 'secciones', label: 'Secciones', icon: '👥' },
+const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView, userRole, onLogout }) => {
+  const adminMenuItems = [
+    { id: 'dashboard', label: 'Dashboard', icon: 'monitoring' },
+    { id: 'cursos', label: 'Cursos', icon: 'book' },
+    { id: 'aulas', label: 'Aulas', icon: 'domain' },
+    { id: 'secciones', label: 'Secciones', icon: 'groups' },
+    { id: 'docentes', label: 'Docentes', icon: 'school' },
   ];
 
+  const studentMenuItems = [
+    { id: 'dashboard', label: 'Mi Horario', icon: 'calendar_month' },
+  ];
+
+  const menuItems = userRole === 'admin' ? adminMenuItems : studentMenuItems;
+
   return (
-    <aside className="fixed top-0 left-0 h-full w-64 bg-slate-900 text-white p-6 shadow-2xl z-50">
-      <div className="flex flex-col h-full">
-        {/* Brand/Logo */}
-        <div className="flex items-center gap-3 mb-10 px-2 animate-in fade-in duration-700">
-          <div className="w-10 h-10 bg-red-600 rounded-xl flex items-center justify-center font-black text-xl shadow-lg shadow-red-900/40">
-            C
-          </div>
-          <span className="font-black text-lg tracking-tight uppercase">Continental</span>
+    <aside className="h-screen w-72 fixed left-0 top-0 border-r border-white/10 glass-panel z-50 flex flex-col py-6 shadow-[20px_0_40px_-15px_rgba(0,0,0,0.5)]">
+      {/* Logo UC */}
+      <div className="px-6 mb-8">
+        <div className="flex items-center gap-3 mb-3">
+          <img 
+            src="/logo-uc.png" 
+            alt="UC" 
+            className="h-8 object-contain brightness-0 invert opacity-70"
+          />
         </div>
+        <h1 className="text-2xl font-black text-orange-500 tracking-tighter font-headline">SGOHA</h1>
+        <p className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold mt-0.5">
+          Generación de Horarios
+        </p>
+      </div>
 
-        {/* Navigation */}
-        <nav className="flex-1 space-y-2">
-          {menuItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setCurrentView(item.id)}
-              className={`w-full flex items-center gap-4 px-5 py-4 rounded-2xl font-bold transition-all duration-200 group ${
-                currentView === item.id
-                  ? 'bg-gradient-to-r from-red-600 to-red-700 text-white shadow-lg shadow-red-900/30'
-                  : 'text-slate-400 hover:bg-white/5 hover:text-white'
-              }`}
-            >
-              <span className={`text-xl transition-transform duration-300 ${currentView === item.id ? 'scale-110' : 'group-hover:scale-110'}`}>
-                {item.icon}
-              </span>
-              <span className="text-sm tracking-wide">{item.label}</span>
-              {currentView === item.id && (
-                <div className="ml-auto w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div>
-              )}
-            </button>
-          ))}
-        </nav>
+      {/* Sección de rol */}
+      <div className="px-6 mb-6">
+        <div className="px-4 py-2.5 bg-surface-container-high rounded-xl border border-white/5">
+          <span className={`text-[10px] font-black uppercase tracking-widest ${
+            userRole === 'admin' ? 'text-orange-500' : userRole === 'docente' ? 'text-blue-400' : 'text-green-400'
+          }`}>
+            {userRole === 'admin' ? '🔑 Administrador' : userRole === 'docente' ? '👨‍🏫 Docente' : '🎓 Estudiante'}
+          </span>
+        </div>
+      </div>
 
-        {/* Profile/About */}
-        <div className="mt-auto pt-6 border-t border-white/5">
-          <div className="bg-white/5 p-4 rounded-2xl border border-white/5 group hover:bg-white/10 transition-all cursor-pointer">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-slate-700 to-slate-800 flex items-center justify-center font-bold text-xs border border-white/10">
-                AD
-              </div>
-              <div>
-                <p className="text-xs font-black text-white uppercase tracking-tighter">Admin User</p>
-                <p className="text-[10px] text-slate-500 font-bold uppercase">Continental OS</p>
-              </div>
-            </div>
-          </div>
+      {/* Navigation */}
+      <nav className="flex-1 space-y-1">
+        {menuItems.map((item) => (
+          <button
+            key={item.id}
+            onClick={() => setCurrentView(item.id)}
+            className={`w-full flex items-center gap-4 px-8 py-3.5 transition-all duration-300 ease-out hover:translate-x-1 group relative ${
+              currentView === item.id
+                ? 'bg-gradient-to-r from-orange-500/10 to-transparent text-orange-500 border-l-4 border-orange-500'
+                : 'text-neutral-500 hover:text-neutral-200'
+            }`}
+          >
+            <span className={`material-symbols-outlined text-xl ${currentView === item.id ? 'fill-1' : ''}`}>
+              {item.icon}
+            </span>
+            <span className="font-medium font-headline text-sm">{item.label}</span>
+          </button>
+        ))}
+      </nav>
+
+      {/* Footer Actions */}
+      <div className="px-6 mt-auto space-y-3">
+        <div className="pt-4 border-t border-white/5">
+          <button 
+            onClick={onLogout}
+            className="w-full flex items-center gap-4 text-neutral-500 px-2 py-3 hover:text-red-400 transition-colors duration-300 group"
+          >
+            <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">logout</span>
+            <span className="text-sm font-medium">Cerrar Sesión</span>
+          </button>
         </div>
       </div>
     </aside>

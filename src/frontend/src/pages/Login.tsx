@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 interface LoginProps {
-  onLogin: (role: 'admin' | 'student') => void;
+  onLogin: (role: string, name: string) => void;
 }
 
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
@@ -15,91 +15,127 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
     setLoading(true);
     setError('');
 
-    // Simulating a login delay and role assignment
-    // In a real app, this would call the backend /auth/login endpoint
-    setTimeout(() => {
-      if (username === 'admin' && password === 'admin') {
-        onLogin('admin');
-      } else if (username === 'estudiante' && password === 'ucontinental') {
-        onLogin('student');
+    try {
+      const response = await fetch('http://localhost:8000/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem('access_token', data.access_token);
+        onLogin(data.user_role, data.user_name);
       } else {
-        setError('Credenciales incorrectas. Pruebe con admin/admin o estudiante/ucontinental');
+        const err = await response.json();
+        setError(err.detail || 'Credenciales incorrectas');
       }
+    } catch {
+      setError('Error de conexión con el servidor');
+    } finally {
       setLoading(false);
-    }, 1000);
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-900 overflow-hidden relative font-sans">
-      {/* Background decoration */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-red-600/10 blur-[120px]"></div>
-      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-red-800/10 blur-[120px]"></div>
-
-      <div className="bg-white/5 backdrop-blur-xl p-8 rounded-3xl shadow-2xl border border-white/10 w-full max-w-md relative z-10 animate-in fade-in zoom-in duration-500">
-        <div className="text-center mb-10">
-          <div className="inline-block p-4 rounded-2xl bg-gradient-to-br from-red-500 to-red-700 shadow-xl mb-6">
-            <span className="text-white text-4xl block">🎓</span>
-          </div>
-          <h1 className="text-3xl font-black text-white tracking-tight mb-2">Portal Académico</h1>
-          <p className="text-slate-400 font-medium">Universidad Continental</p>
-        </div>
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="block text-slate-300 text-sm font-bold mb-2 ml-1" htmlFor="username">
-              Usuario
-            </label>
-            <input
-              id="username"
-              type="text"
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all"
-              placeholder="Ej: admin o estudiante"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-slate-300 text-sm font-bold mb-2 ml-1" htmlFor="password">
-              Contraseña
-            </label>
-            <input
-              id="password"
-              type="password"
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-
-          {error && (
-            <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-medium animate-shake">
-              ⚠️ {error}
-            </div>
-          )}
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-bold py-4 rounded-xl shadow-lg shadow-red-900/20 transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed"
-          >
-            {loading ? (
-              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-            ) : (
-              "Ingresar al Sistema"
-            )}
-          </button>
-        </form>
-
-        <div className="mt-8 pt-8 border-t border-white/5 text-center">
-          <p className="text-slate-500 text-xs uppercase tracking-widest font-bold">
-            Dirección de Transformación Digital
-          </p>
-        </div>
+    <div className="bg-[#131313] text-on-surface min-h-screen flex items-center justify-center overflow-hidden relative">
+      {/* Background Effects */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-orange-500/20 blur-[80px]"></div>
+        <div className="absolute top-1/2 -right-48 w-[500px] h-[500px] rounded-full bg-blue-500/20 blur-[80px]"></div>
+        <div className="absolute -bottom-32 left-1/4 w-80 h-80 border-4 border-orange-500/10 rotate-12 opacity-10"></div>
       </div>
+
+      <main className="relative z-10 w-full max-w-[420px] px-6 animate-in fade-in slide-in-from-bottom-8 duration-700">
+        {/* Logo UC Real */}
+        <div className="text-center mb-10">
+          <div className="flex justify-center mb-6">
+            <img 
+              src="/logo-uc.png" 
+              alt="Universidad Continental" 
+              className="h-16 object-contain brightness-0 invert"
+            />
+          </div>
+          <h1 className="text-3xl font-black tracking-tighter text-white">SGOHA</h1>
+          <p className="text-on-surface-variant font-medium text-sm mt-1">Sistema de Generación Óptima de Horarios</p>
+        </div>
+
+        {/* Login Card */}
+        <div className="glass-panel border border-white/5 rounded-xl p-8 shadow-2xl shadow-black/50">
+          <h2 className="text-xl font-bold text-white mb-8 tracking-tight">Iniciar Sesión</h2>
+          
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-xs font-bold uppercase tracking-widest text-on-surface-variant ml-1" htmlFor="username">Usuario</label>
+                <div className="relative group">
+                  <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-orange-500 transition-colors text-xl">person</span>
+                  <input 
+                    className="w-full bg-surface-container-low border-0 focus:ring-1 focus:ring-orange-500/50 text-white rounded-lg py-3.5 pl-12 pr-4 placeholder:text-neutral-600 transition-all" 
+                    id="username" 
+                    placeholder="admin / estudiante / docente" 
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    autoComplete="username"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-bold uppercase tracking-widest text-on-surface-variant ml-1" htmlFor="password">Contraseña</label>
+                <div className="relative group">
+                  <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-orange-500 transition-colors text-xl">lock</span>
+                  <input 
+                    className="w-full bg-surface-container-low border-0 focus:ring-1 focus:ring-orange-500/50 text-white rounded-lg py-3.5 pl-12 pr-12 placeholder:text-neutral-600 transition-all" 
+                    id="password" 
+                    placeholder="••••••••" 
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    autoComplete="current-password"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {error && (
+              <div className="flex items-center gap-2 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
+                <span className="material-symbols-outlined text-red-400 text-sm">error</span>
+                <p className="text-red-400 text-xs font-bold">{error}</p>
+              </div>
+            )}
+
+            <div className="pt-2">
+              <button 
+                type="submit"
+                disabled={loading}
+                className="w-full bg-gradient-to-br from-orange-400 to-[#D15800] text-white font-bold py-4 rounded-xl shadow-[0_10px_25px_-5px_rgba(255,107,0,0.4)] hover:shadow-[0_15px_30px_-5px_rgba(255,107,0,0.6)] hover:scale-[1.01] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50"
+              >
+                {loading ? (
+                  <span className="material-symbols-outlined animate-spin text-xl">sync</span>
+                ) : null}
+                <span>{loading ? 'Verificando...' : 'Ingresar al Sistema'}</span>
+                {!loading && <span className="material-symbols-outlined text-xl">arrow_forward</span>}
+              </button>
+            </div>
+          </form>
+
+          <div className="mt-8 flex items-center justify-between">
+            <div className="h-px bg-white/5 flex-grow"></div>
+            <span className="text-[10px] font-bold text-on-surface-variant px-4 tracking-tighter uppercase">Autenticación UC</span>
+            <div className="h-px bg-white/5 flex-grow"></div>
+          </div>
+        </div>
+
+        <footer className="mt-12 text-center">
+          <p className="text-[11px] text-neutral-500 font-medium tracking-tight">
+             © 2026 Universidad Continental. Todos los derechos reservados.
+          </p>
+        </footer>
+      </main>
+      
+      <div className="fixed bottom-0 left-0 w-full h-1.5 bg-gradient-to-r from-orange-500 via-blue-500 to-orange-500 opacity-50"></div>
     </div>
   );
 };

@@ -6,60 +6,69 @@ interface LayoutProps {
   currentView: string;
   setCurrentView: (view: string) => void;
   onLogout: () => void;
+  userRole: 'admin' | 'student';
+  userName: string;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children, currentView, setCurrentView, onLogout }) => {
+const Layout: React.FC<LayoutProps> = ({ children, currentView, setCurrentView, onLogout, userRole, userName }) => {
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
+    <div className="min-h-screen bg-neutral-900 border-x border-white/5">
       {/* Sidebar - Fixed on the left */}
-      <Sidebar currentView={currentView} setCurrentView={setCurrentView} />
+      <Sidebar currentView={currentView} setCurrentView={setCurrentView} userRole={userRole} onLogout={onLogout} />
       
       {/* Main Content Area */}
-      <main className="ml-64 p-8 min-h-screen transition-all duration-300">
-        {/* Header Section */}
-        <header className="flex justify-between items-center mb-8 bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-          <div>
-            <h1 className="text-3xl font-extrabold text-slate-800 tracking-tight capitalize">
-              {currentView === 'dashboard' ? 'Panel de Control' : currentView}
-            </h1>
-            <p className="text-slate-500 mt-1 font-medium text-sm text-left">
-              Universidad Continental • <span className="text-red-600 font-bold">Gestión Académica</span>
-            </p>
+      <main className="ml-72 min-h-screen">
+        {/* TopAppBar - Sticky glass panel */}
+        <header className="sticky top-0 z-40 w-full px-8 py-4 flex justify-between items-center glass-panel shadow-2xl shadow-orange-900/5">
+          <div className="flex items-center gap-8">
+            <h2 className="text-3xl font-bold font-headline tracking-tight text-white uppercase italic">
+              {currentView === 'dashboard' ? 'Ciclo 2024-II' : currentView}
+            </h2>
+            {userRole === 'admin' && (
+              <div className="flex items-center gap-6">
+                <button className="text-orange-500 font-bold border-b-2 border-orange-500 pb-1 text-sm font-label">General</button>
+                <button className="text-neutral-400 font-medium hover:text-white transition-colors text-sm font-label">Facultades</button>
+                <button className="text-neutral-400 font-medium hover:text-white transition-colors text-sm font-label">Estadísticas</button>
+              </div>
+            )}
           </div>
-          
-          <div className="flex gap-4 items-center">
-            <div className="hidden md:flex flex-col items-end mr-2">
-              <span className="text-sm font-bold text-slate-700">Administrador de Sistema</span>
-              <span className="text-xs text-green-500 flex items-center gap-1 font-medium">
-                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> Sistema en línea
-              </span>
+
+          <div className="flex items-center gap-4">
+            <div className="relative group">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-neutral-500 text-xl">search</span>
+              <input 
+                className="bg-white/5 border-none rounded-full pl-10 pr-4 py-2 text-sm focus:ring-1 focus:ring-orange-500 w-64 transition-all duration-300 focus:w-80 text-white placeholder:text-neutral-600" 
+                placeholder="Buscar registros..." 
+                type="text"
+              />
             </div>
-            <button className="relative p-2.5 text-slate-400 hover:text-red-600 transition-all bg-slate-50 hover:bg-red-50 rounded-xl border border-slate-200 shadow-sm">
-              <span className="text-xl">🔔</span>
-              <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
-            </button>
-            <div className="h-10 w-[1px] bg-slate-200 mx-1"></div>
-            <button 
-              onClick={onLogout}
-              className="flex items-center gap-2 px-5 py-2.5 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-all shadow-lg shadow-slate-200 uppercase text-[10px] tracking-widest"
-            >
-              <span>Cerrar Sesión</span>
-            </button>
+            
+            {/* User Info - NEW: Showing the username */}
+            <div className="flex flex-col items-end px-2">
+              <span className="text-sm font-black text-white tracking-widest uppercase">{userName}</span>
+              <span className="text-[10px] font-bold text-orange-500 uppercase tracking-tighter">{userRole}</span>
+            </div>
+
+            <div className="h-10 w-10 rounded-full overflow-hidden border-2 border-orange-500/20 ml-2 cursor-pointer hover:border-orange-500 transition-all">
+              <img 
+                className="w-full h-full object-cover" 
+                alt="Profile"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZK_r32kKnQ32V4LO9qUMeIG8Sx5y1b5075rSYkyQH0hcDHSYxbuyXZwWUA2moj9cniEFfhaa0r02ls8JNESmj7n_8Th-rwr9jQupozzD411W4Kl3xyLtGZHqVgJzIsM8p6QrJ27iJk-v8jbTRmGfIblP-3kBNWUpIZQwVo4KjQh5y0-4VJKZm1-kQXAJLo96XSV8_yUvZu5exOl661_b7hANeI-Wa6Xvh0MaQToxi329p3o6dt5PnmeI_8qssjjajZbaCx9ATdTQ"
+              />
+            </div>
           </div>
         </header>
 
         {/* Dynamic Page Content */}
-        <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 ease-out">
+        <div className="p-8 space-y-8 animate-in fade-in zoom-in-95 duration-500">
           {children}
         </div>
 
         {/* Footer */}
-        <footer className="mt-12 py-6 border-t border-slate-200 flex justify-between items-center text-slate-400 text-xs font-medium">
-          <p>© 2024 Universidad Continental | Todos los derechos reservados.</p>
-          <div className="flex gap-6 uppercase tracking-widest">
-            <a href="#" className="hover:text-red-500 transition-colors">Soporte</a>
-            <a href="#" className="hover:text-red-500 transition-colors">Legal</a>
-          </div>
+        <footer className="p-8 mt-auto border-t border-white/5 text-center">
+          <p className="text-[11px] text-neutral-500 font-medium tracking-tight uppercase">
+             © 2026 Universidad Continental | Transformación Digital
+          </p>
         </footer>
       </main>
     </div>

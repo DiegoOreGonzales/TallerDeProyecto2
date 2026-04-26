@@ -16,6 +16,18 @@ services:
       timeout: 5s
       retries: 5
 
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: scheduling_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@ucontinental.edu.pe
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "5050:80"
+    depends_on:
+      db:
+        condition: service_healthy
+
   backend:
     build:
       context: ./src/backend

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Float, Boolean, Table
+from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, Table
 from sqlalchemy.orm import relationship
 from .database import Base
 
@@ -16,8 +16,10 @@ class User(Base):
     username = Column(String, unique=True, index=True)
     email = Column(String, unique=True, index=True)
     hashed_password = Column(String)
-    role = Column(String)  # admin, docente, estudiante, coordinador
+    role = Column(String)  # admin, docente, estudiante
     is_active = Column(Boolean, default=True)
+    # Preferencia de turno para docentes: MAÑANA, TARDE, COMPLETO
+    turno_preferido = Column(String, default="COMPLETO")
     
     secciones = relationship("Seccion", back_populates="docente")
 
@@ -26,7 +28,7 @@ class Aula(Base):
     id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String, unique=True)
     capacidad = Column(Integer)
-    tipo = Column(String)  # Laboratorio, Teoría, Taller
+    tipo = Column(String)  # Teoría, Laboratorio, Taller
     
     horarios = relationship("Horario", back_populates="aula")
 
@@ -35,11 +37,12 @@ class Curso(Base):
     id = Column(Integer, primary_key=True, index=True)
     codigo = Column(String, unique=True)
     nombre = Column(String)
-    creditos = Column(Integer)
+    creditos = Column(Integer)       # 1 crédito = 1 bloque de 1.5h semanal
+    tipo = Column(String, default="Teoría")  # Teoría, Laboratorio
+    periodo = Column(Integer, default=1)     # Período académico (1-10)
     
     secciones = relationship("Seccion", back_populates="curso")
     
-    # Prerrequisitos (Relación muchos a muchos recursiva)
     required_by = relationship(
         "Curso",
         secondary=prerrequisitos,
@@ -51,10 +54,12 @@ class Curso(Base):
 class Seccion(Base):
     __tablename__ = "secciones"
     id = Column(Integer, primary_key=True, index=True)
-    codigo = Column(String, unique=True) # ej: AS2N1
+    codigo = Column(String, unique=True)
     curso_id = Column(Integer, ForeignKey("cursos.id"))
     docente_id = Column(Integer, ForeignKey("users.id"))
     capac_estimada = Column(Integer)
+    # Turno de la sección: MAÑANA, TARDE, COMPLETO
+    turno = Column(String, default="COMPLETO")
     
     curso = relationship("Curso", back_populates="secciones")
     docente = relationship("User", back_populates="secciones")
@@ -66,9 +71,8 @@ class Horario(Base):
     seccion_id = Column(Integer, ForeignKey("secciones.id"))
     aula_id = Column(Integer, ForeignKey("aulas.id"))
     
-    dia_semana = Column(Integer)  # 0-6 (Lunes-Domingo)
-    hora_inicio = Column(Integer) # Formato 24h
-    hora_fin = Column(Integer)
+    dia_semana = Column(Integer)  # 0-5 (Lunes-Sábado)
+    bloque = Column(Integer)      # 0-8 (slot index)
     
     seccion = relationship("Seccion", back_populates="horarios")
     aula = relationship("Aula", back_populates="horarios")

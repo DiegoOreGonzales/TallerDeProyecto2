@@ -1,54 +1,37 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from pydantic import BaseModel
-from typing import List, Optional
+from typing import List
 from ..database import get_db
-from ..models import Curso
+from ..models import Curso as CursoModel
+from ..schemas import Curso as CursoSchema, CursoCreate
 
 router = APIRouter(prefix="/cursos", tags=["Cursos"])
 
-class CursoBase(BaseModel):
-    codigo: str
-    nombre: str
-    creditos: int = 4
-
-class CursoCreate(CursoBase):
-    pass
-
-class CursoUpdate(BaseModel):
-    nombre: Optional[str] = None
-    creditos: Optional[int] = None
-
-class CursoOut(CursoBase):
-    id: int
-    class Config:
-        from_attributes = True
-
-@router.post("/", response_model=CursoOut)
+@router.post("/", response_model=CursoSchema)
 def create_curso(curso: CursoCreate, db: Session = Depends(get_db)):
-    db_curso = db.query(Curso).filter(Curso.codigo == curso.codigo).first()
-    if db_curso:
+    existing = db.query(CursoModel).filter(CursoModel.codigo == curso.codigo).first()
+    if existing:
         raise HTTPException(status_code=400, detail="El código de curso ya existe")
-    new_curso = Curso(**curso.model_dump())
+    new_curso = CursoModel(**curso.model_dump())
     db.add(new_curso)
     db.commit()
     db.refresh(new_curso)
     return new_curso
 
-@router.get("/", response_model=List[CursoOut])
+@router.get("/", response_model=List[CursoSchema])
 def get_cursos(db: Session = Depends(get_db)):
-    return db.query(Curso).all()
+    return db.query(CursoModel).order_by(CursoModel.periodo, CursoModel.codigo).all()
 
-@router.get("/{curso_id}", response_model=CursoOut)
+@router.get("/{curso_id}", response_model=CursoSchema)
 def get_curso(curso_id: int, db: Session = Depends(get_db)):
-    curso = db.query(Curso).filter(Curso.id == curso_id).first()
+    curso = db.query(CursoModel).filter(CursoModel.id == curso_id).first()
     if not curso:
         raise HTTPException(status_code=404, detail="Curso no encontrado")
     return curso
 
 @router.delete("/{curso_id}")
 def delete_curso(curso_id: int, db: Session = Depends(get_db)):
-    curso = db.query(Curso).filter(Curso.id == curso_id).first()
+    curso = db.query(CursoModel).filter(CursoModel.id == curso_id).first()
     if not curso:
         raise HTTPException(status_code=404, detail="Curso no encontrado")
     db.delete(curso)

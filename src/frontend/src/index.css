@@ -3,55 +3,63 @@
 @tailwind utilities;
 
 :root {
-  /* Colores Primarios - Universidad Continental */
-  --color-primary: #1A4D8C;
-  --color-primary-dark: #0F3A68;
-  --color-primary-light: #3B6EA5;
+  /* Paleta Stitch - Universidad Continental */
+  --bg-color: #131313;
+  --surface-color: #20201f;
+  --primary-color: #ff6b00;
+  --primary-dim: #ffb693;
+  --on-surface: #e5e2e1;
+  --on-surface-variant: #e2bfb0;
   
-  --color-secondary: #2E8B57;
-  --color-secondary-dark: #236B43;
-  
-  --color-accent-warning: #F4A261;
-  --color-accent-danger: #E76F51;
-  
-  /* Fondos */
-  --color-bg-primary: #F8F9FA;
-  --color-bg-secondary: #E9ECEF;
-  --color-bg-card: #FFFFFF;
-  
-  /* Texto */
-  --color-text-primary: #212529;
-  --color-text-secondary: #6C757D;
-  --color-text-muted: #ADB5BD;
-  
-  /* Bordes */
-  --color-border: #DEE2E6;
-  
-  /* Semántica Horarios */
-  --color-slot-available: #D8F3DC;
-  --color-slot-occupied: #C7E2F2;
-  --color-slot-conflict: #FAD2D9;
-  --color-slot-selected: #FFE8B6;
-  --color-slot-resource: #E2D5F0;
-  
-  /* Sombras */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  
-  /* Bordes */
-  --radius-sm: 0.375rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
+  --surface-container-lowest: #0e0e0e;
+  --surface-container-low: #1c1b1b;
+  --surface-container: #20201f;
+  --surface-container-high: #2a2a2a;
+  --surface-container-highest: #353535;
+
+  --tertiary-color: #059eff;
+  --error-color: #ffb4ab;
 }
 
-body {
-  margin: 0;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background-color: var(--color-bg-primary);
-  color: var(--color-text-primary);
+@layer base {
+  body {
+    @apply bg-[var(--bg-color)] text-[var(--on-surface)] antialiased selection:bg-orange-500/30;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
 }
 
-.bg-continental {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+@layer components {
+  .glass-panel {
+    @apply backdrop-blur-3xl bg-neutral-900/70;
+  }
+  
+  .card-premium {
+    @apply bg-surface-container border border-white/5 rounded-3xl overflow-hidden transition-all duration-300 hover:border-white/10;
+  }
+  
+  .btn-primary {
+    @apply bg-gradient-to-r from-[#FFB693] to-[#FF6B00] text-black font-black px-6 py-3 rounded-xl shadow-lg shadow-orange-500/20 hover:scale-[1.02] transition-all;
+  }
+
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    @apply inline-block align-middle;
+  }
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-white/10 rounded-full hover:bg-white/20 transition-colors;
 }
