@@ -127,7 +127,7 @@ Los requerimientos no funcionales describen atributos de calidad del sistema que
 
 |**ID**|**Categoría**|**Descripción**|**Métrica de Verificación**|**Traza RF**|
 | :- | :- | :- | :- | :- |
-|RNF-01|Rendimiento|El algoritmo de optimización CP-SAT debe entregar una solución factible en un máximo de 10 segundos para un conjunto de datos estándar (≤100 secciones, ≤30 aulas).|Prueba de performance con dataset de 100 secciones; tiempo medido con pytest-benchmark; debe ser ≤10s en percentil 95.|RF-06, RF-07, RF-08, RF-09|
+|RNF-01|Rendimiento|El algoritmo de optimización CP-SAT debe entregar una solución factible en un máximo de 2 segundos para un conjunto de datos estándar (≤100 secciones, ≤30 aulas).|Prueba de performance con dataset de 100 secciones; tiempo medido con pytest-benchmark; debe ser ≤2s en percentil 95.|RF-06, RF-07, RF-08, RF-09|
 |RNF-02|Usabilidad|La interfaz debe ser responsiva y funcionar correctamente en dispositivos de escritorio y móviles (breakpoints: 768px, 1024px, 1280px).|Tests de UI en Chrome DevTools con viewports estándar; no debe haber elementos cortados o superpuestos.|RF-10, RF-06|
 |RNF-03|Seguridad|Todas las rutas del backend que manipulen datos deben requerir autenticación JWT válida. Las rutas de admin deben verificar adicionalmente el rol.|Tests de seguridad: petición sin token retorna 401; petición de estudiante a endpoint admin retorna 403.|RF-01, RF-11|
 |RNF-04|Mantenibilidad|El código TypeScript del frontend debe tener cobertura de tipos al 100% (sin uso de 'any'). El código Python debe seguir PEP-8 verificado con flake8.|Pipeline CI ejecuta ESLint (0 errores tipo 'any') y flake8 (0 violaciones PEP-8) en cada PR.|Todos los RF|
@@ -203,7 +203,7 @@ CP-SAT es el solucionador de Programación con Restricciones de Google OR-Tools.
 |**Criterio**|**Análisis**|**Puntuación**|
 | :- | :- | :- |
 |Completitud de solución|Garantiza factibilidad completa: TODAS las restricciones duras se satisfacen o declara infactibilidad|10/10|
-|Tiempo de cómputo|Entrega solución factible en <10 segundos para conjuntos estándar (requerimiento NF)|9/10|
+|Tiempo de cómputo|Entrega solución factible en <2 segundos para conjuntos estándar (requerimiento NF)|9/10|
 |Facilidad de implementación|API declarativa en Python; restricciones expresadas en lenguaje natural|8/10|
 |Integración con stack Python|Google OR-Tools es biblioteca de producción, mantenida activamente por Google|10/10|
 |Mantenibilidad|Código declarativo, fácil de agregar nuevas restricciones sin refactorizar|9/10|
@@ -213,7 +213,7 @@ CP-SAT es el solucionador de Programación con Restricciones de Google OR-Tools.
 Se selecciona el enfoque CP-SAT  por las siguientes razones técnicas y de contexto:
 
 - **Garantía de factibilidad:** A diferencia de los algoritmos evolutivos, CP-SAT garantiza que si existe una solución que satisface todas las restricciones, la encontrará. Esto es crítico en un entorno académico donde los conflictos de horarios tienen impacto directo en estudiantes y docentes.
-- **Alineación con el requerimiento no funcional de rendimiento:** El solucionador CP-SAT está optimizado para encontrar la primera solución factible en tiempos muy reducidos (generalmente < 5 segundos para instancias con ~50 secciones), cumpliendo el límite de 10 segundos establecido.
+- **Alineación con el requerimiento no funcional de rendimiento:** El solucionador CP-SAT está optimizado para encontrar la primera solución factible en tiempos muy reducidos (generalmente < 1.5 segundos para instancias con ~50 secciones), cumpliendo el límite de 2 segundos establecido.
 - **Expresividad declarativa:** Las restricciones del dominio (no-superposición de aulas, no-superposición de docentes, capacidad) se expresan directamente como constraints matemáticas sin necesidad de funciones de fitness ni operadores evolutivos.
 - **Soporte industrial y mantenimiento activo:** Google OR-Tools es una biblioteca de código abierto respaldada por Google, con documentación extensa, comunidad activa y compatibilidad garantizada con Python 3.11.
 - **Extensibilidad futura:** CP-SAT permite agregar fácilmente soft constraints (preferencias) como agrupamiento de horas de docentes o minimización de traslados, correspondiente al roadmap de mejoras identificado.
@@ -230,7 +230,7 @@ Se selecciona el enfoque CP-SAT  por las siguientes razones técnicas y de conte
 
 **4.1 Enunciado de Visión**
 
-*"Para la Universidad Continental, que necesita optimizar la programación académica semestral, el Sistema de Generación Óptima de Horarios es una plataforma web inteligente que automatiza la creación de horarios libres de conflictos en menos de 10 segundos, a diferencia de los procesos rígidos e ineficientes del sistema actual (Banner) que genera horarios con cruces y discrepancias, nuestro producto provee un motor matemático basado en Programación con Restricciones que garantiza asignaciones correctas de aulas, docentes y secciones, generando valor medible en reducción de tiempo administrativo (≥80%) y eliminación de conflictos de horarios (100%)."*
+*"Para la Universidad Continental, que necesita optimizar la programación académica semestral, el Sistema de Generación Óptima de Horarios es una plataforma web inteligente que automatiza la creación de horarios libres de conflictos en menos de 2 segundos, a diferencia de los procesos rígidos e ineficientes del sistema actual (Banner) que genera horarios con cruces y discrepancias, nuestro producto provee un motor matemático basado en Programación con Restricciones que garantiza asignaciones correctas de aulas, docentes y secciones, generando valor medible en reducción de tiempo administrativo (≥80%) y eliminación de conflictos de horarios (100%)."*
 
 **4.2 Componentes de la Visión**
 
@@ -240,7 +240,7 @@ Se selecciona el enfoque CP-SAT  por las siguientes razones técnicas y de conte
 |QUE (Necesidad)|Requiere automatizar la programación semestral de horarios académicos sin conflictos de recursos|
 |EL (Producto)|Sistema de Generación Óptima de Horarios Académicos (SGOHA)|
 |ES UN (Categoría)|Aplicación web SPA con motor de inteligencia operativa basado en CP-SAT|
-|QUE (Beneficio clave)|Genera horarios factibles en <10 segundos, eliminando conflictos de aulas y docentes al 100%|
+|QUE (Beneficio clave)|Genera horarios factibles en <2 segundos, eliminando conflictos de aulas y docentes al 100%|
 |A DIFERENCIA DE (Alternativa)|El sistema actual (Banner) que genera horarios con cruces de recursos y discrepancias de disponibilidad|
 |NUESTRO PRODUCTO (Diferenciador)|Garantía matemática de factibilidad + interfaz institucional moderna + acceso por roles|
 
@@ -252,11 +252,11 @@ Se selecciona el enfoque CP-SAT  por las siguientes razones técnicas y de conte
 
 |**Indicador de Valor**|**Métrica Objetivo**|
 | :- | :- |
-|Reducción del tiempo de procesamiento y validación|De días de revisión a < 10 segundos (reducción significativa)|
+|Reducción del tiempo de procesamiento y validación|De días de revisión a < 2 segundos (reducción significativa)|
 |Tasa de conflictos de horarios post-generación|0% de conflictos en aulas y docentes (garantía matemática)|
 |Adopción por rol administrativo|100% de coordinadores académicos utilizan el sistema|
 |Satisfacción estudiantil con consulta de horarios|Acceso 24/7 desde cualquier dispositivo (SPA responsiva)|
-|Tiempo de respuesta del algoritmo|≤ 10 segundos para conjuntos de datos estándar (≤ 100 secciones)|
+|Tiempo de respuesta del algoritmo|≤ 2 segundos para conjuntos de datos estándar (≤ 100 secciones)|
 
 **4.4 Alcance de la Versión 1.0**
 
@@ -306,7 +306,7 @@ Desarrollar e implementar un sistema web integral que automatice la generación 
 1. Construir una interfaz SPA con React 18 que provea dashboards diferenciados por rol (Administrador/Estudiante).
 1. Implementar módulos CRUD para Cursos, Aulas y Secciones con validaciones de integridad de datos.
 1. Integrar el solucionador CP-SAT con las restricciones de no-superposición de aulas, no-superposición de docentes y capacidad física.
-1. Validar que el sistema entregue horarios factibles en un máximo de 10 segundos para el conjunto de datos estándar definido.
+1. Validar que el sistema entregue horarios factibles en un máximo de 2 segundos para el conjunto de datos estándar definido.
 
 **5.5 Entregables del Proyecto**
 
@@ -344,7 +344,7 @@ Desarrollar e implementar un sistema web integral que automatice la generación 
 **5.8 Criterios de Éxito del Proyecto**
 
 - El sistema genera horarios sin ningún conflicto de aulas ni docentes en el 100% de las ejecuciones.
-- El tiempo de respuesta del algoritmo no supera los 10 segundos para datasets de hasta 100 secciones.
+- El tiempo de respuesta del algoritmo no supera los 2 segundos para datasets de hasta 100 secciones.
 - Los módulos CRUD de Cursos, Aulas y Secciones operan correctamente con validaciones de integridad.
 - La autenticación por roles restringe correctamente el acceso: estudiantes no acceden a funciones administrativas.
 - El repositorio GitHub contiene ≥5 commits significativos, uso de ramas y documentación inicial.
@@ -384,7 +384,7 @@ Los siguientes supuestos han sido identificados y documentados. Si alguno result
 |SUP-04|Las restricciones de horarios académicos de la universidad se limitan a: no-superposición de aulas, no-superposición de docentes y capacidad física. No existen restricciones institucionales adicionales no documentadas.|Alto — restricciones ocultas invalidarían el modelo CP-SAT; requeriría revisión completa del motor.|
 |SUP-05|El servidor de producción donde se desplegará el sistema tendrá acceso a internet para descarga de imágenes Docker y actualizaciones de seguridad.|Medio — en entornos offline se requeriría preparar imágenes pre-construidas para distribución.|
 |SUP-06|Las credenciales de acceso de estudiantes serán provistas por el área de TI de la universidad con la información de matrícula vigente.|Medio — sin datos de estudiantes, el módulo de consulta de horarios no podrá ser validado con usuarios reales.|
-|SUP-07|El número máximo de secciones por semestre no superará las 200 unidades, lo que mantiene el problema dentro del rango de eficiencia del solucionador CP-SAT.|Alto — instancias mayores podrían superar el límite de 10 segundos; se requeriría optimización del modelo.|
+|SUP-07|El número máximo de secciones por semestre no superará las 200 unidades, lo que mantiene el problema dentro del rango de eficiencia del solucionador CP-SAT.|Alto — instancias mayores podrían superar el límite de 2 segundos; se requeriría optimización del modelo.|
 
 
 
@@ -395,7 +395,7 @@ Las restricciones son factores externos o internos que limitan las opciones disp
 |**ID**|**Restricción**|**Justificación**|
 | :- | :- | :- |
 |RES-01|El stack tecnológico está predefinido: React + FastAPI + PostgreSQL + Docker. No se permite sustituir ningún componente principal.|Restricción técnica de la institución para garantizar mantenibilidad post-entrega por el equipo de TI existente.|
-|RES-02|El sistema debe responder al algoritmo de optimización en un máximo de 10 segundos. Este es un requerimiento no funcional vinculante.|Experiencia de usuario inaceptable para tiempos mayores en un contexto administrativo de carga masiva.|
+|RES-02|El sistema debe responder al algoritmo de optimización en un máximo de 2 segundos. Este es un requerimiento no funcional vinculante.|Experiencia de usuario inaceptable para tiempos mayores en un contexto administrativo de carga masiva.|
 |RES-03|El proyecto debe desarrollarse en un plazo máximo de 6 meses (marzo-julio 2026) con el equipo actual sin incorporación de nuevos miembros.|Restricción presupuestaria y de calendario académico de la universidad.|
 |RES-04|Toda la infraestructura de despliegue debe estar basada en contenedores Docker; no se permiten instalaciones directas en el servidor de producción.|Política de TI de la universidad para garantizar reproducibilidad y aislamiento de entornos.|
 |RES-05|Los datos académicos son confidenciales; el sistema debe implementar autenticación por roles y no exponer datos de estudiantes a usuarios no autorizados.|Cumplimiento con la Ley N° 29733 de Protección de Datos Personales del Perú.|

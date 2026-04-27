@@ -46,7 +46,7 @@
 12. **RF-12:** Notificación de infactibilidad del modelo.
 
 #### Requerimientos No Funcionales (RNF)
-1. **RNF-01 [Rendimiento]:** Generación de solución en ≤ 10 segundos para dataset estándar.
+1. **RNF-01 [Rendimiento]:** Generación de solución en ≤ 2 segundos para dataset estándar.
 2. **RNF-02 [Usabilidad]:** Interfaz responsiva (Mobile first design principles).
 3. **RNF-03 [Seguridad]:** Protección de endpoints con JWT y verificación de roles.
 4. **RNF-04 [Mantenibilidad]:** Código TypeScript 100% tipado y Python siguiendo PEP-8.
@@ -116,7 +116,7 @@
 
 #### Restricciones (RES)
 1. **RES-01:** Stack predefinido: FastAPI, React, PostgreSQL, Docker.
-2. **RES-02:** Tiempo máximo de procesamiento algorítmico de 10 segundos.
+2. **RES-02:** Tiempo máximo de procesamiento algorítmico de 2 segundos.
 3. **RES-03:** Plazo inamovible de 6 meses (Ciclo académico).
 4. **RES-04:** Uso exclusivo de Google OR-Tools (Licencia libre).
 5. **RES-05:** Cumplimiento de la Ley de Protección de Datos Personales (Perú).

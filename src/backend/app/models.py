@@ -18,8 +18,10 @@ class User(Base):
     hashed_password = Column(String)
     role = Column(String)  # admin, docente, estudiante
     is_active = Column(Boolean, default=True)
-    # Preferencia de turno para docentes: MAÑANA, TARDE, COMPLETO
+    # Preferencia de turno para docentes/estudiantes: MAÑANA, TARDE, COMPLETO
     turno_preferido = Column(String, default="COMPLETO")
+    # Ciclo actual para estudiantes (1-10)
+    ciclo = Column(Integer, default=None, nullable=True)
     
     secciones = relationship("Seccion", back_populates="docente")
 

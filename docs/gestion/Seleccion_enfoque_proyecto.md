@@ -44,7 +44,7 @@ CP-SAT es el solucionador de Programación con Restricciones de Google OR-Tools.
 |**Criterio**|**Análisis**|**Puntuación**|
 | :- | :- | :- |
 |Completitud de solución|Garantiza factibilidad completa: TODAS las restricciones duras se satisfacen o declara infactibilidad|10/10|
-|Tiempo de cómputo|Entrega solución factible en <10 segundos para conjuntos estándar (requerimiento NF)|9/10|
+|Tiempo de cómputo|Entrega solución factible en <2 segundos para conjuntos estándar (requerimiento NF)|9/10|
 |Facilidad de implementación|API declarativa en Python; restricciones expresadas en lenguaje natural|8/10|
 |Integración con stack Python|Google OR-Tools es biblioteca de producción, mantenida activamente por Google|10/10|
 |Mantenibilidad|Código declarativo, fácil de agregar nuevas restricciones sin refactorizar|9/10|
@@ -54,7 +54,7 @@ CP-SAT es el solucionador de Programación con Restricciones de Google OR-Tools.
 Se selecciona el enfoque CP-SAT  por las siguientes razones técnicas y de contexto:
 
 - **Garantía de factibilidad:** A diferencia de los algoritmos evolutivos, CP-SAT garantiza que si existe una solución que satisface todas las restricciones, la encontrará. Esto es crítico en un entorno académico donde los conflictos de horarios tienen impacto directo en estudiantes y docentes.
-- **Alineación con el requerimiento no funcional de rendimiento:** El solucionador CP-SAT está optimizado para encontrar la primera solución factible en tiempos muy reducidos (generalmente < 5 segundos para instancias con ~50 secciones), cumpliendo el límite de 10 segundos establecido.
+- **Alineación con el requerimiento no funcional de rendimiento:** El solucionador CP-SAT está optimizado para encontrar la primera solución factible en tiempos muy reducidos (generalmente < 1.5 segundos para instancias con ~50 secciones), cumpliendo el límite de 2 segundos establecido.
 - **Expresividad declarativa:** Las restricciones del dominio (no-superposición de aulas, no-superposición de docentes, capacidad) se expresan directamente como constraints matemáticas sin necesidad de funciones de fitness ni operadores evolutivos.
 - **Soporte industrial y mantenimiento activo:** Google OR-Tools es una biblioteca de código abierto respaldada por Google, con documentación extensa, comunidad activa y compatibilidad garantizada con Python 3.11.
 - **Extensibilidad futura:** CP-SAT permite agregar fácilmente soft constraints (preferencias) como agrupamiento de horas de docentes o minimización de traslados, correspondiente al roadmap de mejoras identificado.

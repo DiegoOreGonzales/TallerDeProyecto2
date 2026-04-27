@@ -15,7 +15,7 @@ Los siguientes supuestos han sido identificados y documentados. Si alguno result
 |SUP-04|Las restricciones de horarios académicos de la universidad se limitan a: no-superposición de aulas, no-superposición de docentes y capacidad física. No existen restricciones institucionales adicionales no documentadas.|Alto — restricciones ocultas invalidarían el modelo CP-SAT; requeriría revisión completa del motor.|
 |SUP-05|El servidor de producción donde se desplegará el sistema tendrá acceso a internet para descarga de imágenes Docker y actualizaciones de seguridad.|Medio — en entornos offline se requeriría preparar imágenes pre-construidas para distribución.|
 |SUP-06|Las credenciales de acceso de estudiantes serán provistas por el área de TI de la universidad con la información de matrícula vigente.|Medio — sin datos de estudiantes, el módulo de consulta de horarios no podrá ser validado con usuarios reales.|
-|SUP-07|El número máximo de secciones por semestre no superará las 200 unidades, lo que mantiene el problema dentro del rango de eficiencia del solucionador CP-SAT.|Alto — instancias mayores podrían superar el límite de 10 segundos; se requeriría optimización del modelo.|
+|SUP-07|El número máximo de secciones por semestre no superará las 200 unidades, lo que mantiene el problema dentro del rango de eficiencia del solucionador CP-SAT.|Alto — instancias mayores podrían superar el límite de 2 segundos; se requeriría optimización del modelo.|
 
 **4.2 Restricciones del Proyecto**
 
@@ -24,7 +24,7 @@ Las restricciones son factores externos o internos que limitan las opciones disp
 |**ID**|**Restricción**|**Justificación**|
 | :- | :- | :- |
 |RES-01|El stack tecnológico está predefinido: React + FastAPI + PostgreSQL + Docker. No se permite sustituir ningún componente principal.|Restricción técnica de la institución para garantizar mantenibilidad post-entrega por el equipo de TI existente.|
-|RES-02|El sistema debe responder al algoritmo de optimización en un máximo de 10 segundos. Este es un requerimiento no funcional vinculante.|Experiencia de usuario inaceptable para tiempos mayores en un contexto administrativo de carga masiva.|
+|RES-02|El sistema debe responder al algoritmo de optimización en un máximo de 2 segundos. Este es un requerimiento no funcional vinculante.|Experiencia de usuario inaceptable para tiempos mayores en un contexto administrativo de carga masiva.|
 |RES-03|El proyecto debe desarrollarse en un plazo máximo de 6 meses (marzo-julio 2026) con el equipo actual sin incorporación de nuevos miembros.|Restricción presupuestaria y de calendario académico de la universidad.|
 |RES-04|Toda la infraestructura de despliegue debe estar basada en contenedores Docker; no se permiten instalaciones directas en el servidor de producción.|Política de TI de la universidad para garantizar reproducibilidad y aislamiento de entornos.|
 |RES-05|Los datos académicos son confidenciales; el sistema debe implementar autenticación por roles y no exponer datos de estudiantes a usuarios no autorizados.|Cumplimiento con la Ley N° 29733 de Protección de Datos Personales del Perú.|

@@ -34,6 +34,7 @@ class UserCreateReq(BaseModel):
     password: str
     role: str = "docente"
     turno_preferido: str = "COMPLETO"
+    ciclo_actual: Optional[int] = None
 
 @router.post("/login", response_model=Token)
 def login(user: UserLogin, db: Session = Depends(get_db)):
@@ -56,12 +57,19 @@ def register(user: UserCreateReq, db: Session = Depends(get_db)):
     existing = db.query(User).filter(User.username == user.username).first()
     if existing:
         raise HTTPException(status_code=400, detail="Usuario ya existe")
+    if user.role == "estudiante":
+        if user.ciclo_actual is None or not (1 <= user.ciclo_actual <= 10):
+            raise HTTPException(status_code=400, detail="Ciclo inválido. Debe ser entre 1 y 10.")
+        if user.turno_preferido not in ["MAÑANA", "TARDE", "COMPLETO"]:
+            raise HTTPException(status_code=400, detail="Turno inválido.")
+            
     new_user = User(
         username=user.username,
         email=user.email,
         hashed_password=get_password_hash(user.password),
         role=user.role,
         turno_preferido=user.turno_preferido,
+        ciclo=user.ciclo_actual if user.role == "estudiante" else None
     )
     db.add(new_user)
     db.commit()

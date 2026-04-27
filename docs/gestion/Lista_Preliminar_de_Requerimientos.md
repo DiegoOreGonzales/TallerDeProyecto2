@@ -28,7 +28,7 @@ Los requerimientos no funcionales describen atributos de calidad del sistema que
 
 |**ID**|**Categoría**|**Descripción**|**Métrica de Verificación**|**Traza RF**|
 | :- | :- | :- | :- | :- |
-|RNF-01|Rendimiento|El algoritmo de optimización CP-SAT debe entregar una solución factible en un máximo de 10 segundos para un conjunto de datos estándar (≤100 secciones, ≤30 aulas).|Prueba de performance con dataset de 100 secciones; tiempo medido con pytest-benchmark; debe ser ≤10s en percentil 95.|RF-06, RF-07, RF-08, RF-09|
+|RNF-01|Rendimiento|El algoritmo de optimización CP-SAT debe entregar una solución factible en un máximo de 2 segundos para un conjunto de datos estándar (≤100 secciones, ≤30 aulas).|Prueba de performance con dataset de 100 secciones; tiempo medido con pytest-benchmark; debe ser ≤2s en percentil 95.|RF-06, RF-07, RF-08, RF-09|
 |RNF-02|Usabilidad|La interfaz debe ser responsiva y funcionar correctamente en dispositivos de escritorio y móviles (breakpoints: 768px, 1024px, 1280px).|Tests de UI en Chrome DevTools con viewports estándar; no debe haber elementos cortados o superpuestos.|RF-10, RF-06|
 |RNF-03|Seguridad|Todas las rutas del backend que manipulen datos deben requerir autenticación JWT válida. Las rutas de admin deben verificar adicionalmente el rol.|Tests de seguridad: petición sin token retorna 401; petición de estudiante a endpoint admin retorna 403.|RF-01, RF-11|
 |RNF-04|Mantenibilidad|El código TypeScript del frontend debe tener cobertura de tipos al 100% (sin uso de 'any'). El código Python debe seguir PEP-8 verificado con flake8.|Pipeline CI ejecuta ESLint (0 errores tipo 'any') y flake8 (0 violaciones PEP-8) en cada PR.|Todos los RF|

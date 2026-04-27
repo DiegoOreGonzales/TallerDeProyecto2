@@ -7,6 +7,7 @@ class UserBase(BaseModel):
     email: EmailStr
     role: str
     turno_preferido: str = "COMPLETO"
+    ciclo: Optional[int] = None
 
 class UserCreate(UserBase):
     password: str

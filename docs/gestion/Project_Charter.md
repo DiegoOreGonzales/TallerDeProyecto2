@@ -31,7 +31,7 @@ Desarrollar e implementar un sistema web integral que automatice la generación 
 1. Construir una interfaz SPA con React 18 que provea dashboards diferenciados por rol (Administrador/Estudiante).
 1. Implementar módulos CRUD para Cursos, Aulas y Secciones con validaciones de integridad de datos.
 1. Integrar el solucionador CP-SAT con las restricciones de no-superposición de aulas, no-superposición de docentes y capacidad física.
-1. Validar que el sistema entregue horarios factibles en un máximo de 10 segundos para el conjunto de datos estándar definido.
+1. Validar que el sistema entregue horarios factibles en un máximo de 2 segundos para el conjunto de datos estándar definido.
 
 **3.5 Entregables del Proyecto**
 
@@ -69,7 +69,7 @@ Desarrollar e implementar un sistema web integral que automatice la generación 
 **3.8 Criterios de Éxito del Proyecto**
 
 - El sistema genera horarios sin ningún conflicto de aulas ni docentes en el 100% de las ejecuciones.
-- El tiempo de respuesta del algoritmo no supera los 10 segundos para datasets de hasta 100 secciones.
+- El tiempo de respuesta del algoritmo no supera los 2 segundos para datasets de hasta 100 secciones.
 - Los módulos CRUD de Cursos, Aulas y Secciones operan correctamente con validaciones de integridad.
 - La autenticación por roles restringe correctamente el acceso: estudiantes no acceden a funciones administrativas.
 - El repositorio GitHub contiene ≥5 commits significativos, uso de ramas y documentación inicial.
