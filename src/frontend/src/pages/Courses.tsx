@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CrudTable from '../components/CrudTable';
+import FacultiesPanel from '../components/FacultiesPanel';
 
 interface Curso {
   id: number;
@@ -9,7 +10,11 @@ interface Curso {
   tipo: string;
 }
 
-const Courses: React.FC = () => {
+interface CoursesProps {
+  activeTab?: string;
+}
+
+const Courses: React.FC<CoursesProps> = ({ activeTab = 'general' }) => {
   const [cursos, setCursos] = useState<Curso[]>([]);
   const [isAdding, setIsAdding] = useState(false);
   const [newCurso, setNewCurso] = useState({ codigo: '', nombre: '', creditos: 4, tipo: 'Teoría' });
@@ -59,6 +64,20 @@ const Courses: React.FC = () => {
       }
     }
   };
+
+  if (activeTab === 'facultades') {
+    return <FacultiesPanel />;
+  }
+
+  if (activeTab === 'estadisticas') {
+    return (
+      <div className="p-12 text-center bg-surface-container-low rounded-3xl border border-white/5 shadow-2xl animate-in fade-in zoom-in-95 duration-500">
+        <span className="material-symbols-outlined text-6xl text-orange-500/20 mb-4">analytics</span>
+        <h3 className="text-xl font-bold text-white mb-2">Módulo de Estadísticas</h3>
+        <p className="text-neutral-500 max-w-md mx-auto">Próximamente: Análisis detallado de carga académica y distribución de recursos por facultad.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
