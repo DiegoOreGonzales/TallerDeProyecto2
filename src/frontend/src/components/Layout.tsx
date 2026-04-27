@@ -8,9 +8,20 @@ interface LayoutProps {
   onLogout: () => void;
   userRole: 'admin' | 'student';
   userName: string;
+  activeSubTab?: string;
+  onSubTabChange?: (tab: string) => void;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children, currentView, setCurrentView, onLogout, userRole, userName }) => {
+const Layout: React.FC<LayoutProps> = ({ 
+  children, 
+  currentView, 
+  setCurrentView, 
+  onLogout, 
+  userRole, 
+  userName,
+  activeSubTab = 'general',
+  onSubTabChange
+}) => {
   return (
     <div className="min-h-screen bg-neutral-900 border-x border-white/5">
       {/* Sidebar - Fixed on the left */}
@@ -24,11 +35,26 @@ const Layout: React.FC<LayoutProps> = ({ children, currentView, setCurrentView, 
             <h2 className="text-3xl font-bold font-headline tracking-tight text-white uppercase italic">
               {currentView === 'dashboard' ? 'Ciclo 2024-II' : currentView}
             </h2>
-            {userRole === 'admin' && (
+            {userRole === 'admin' && currentView === 'cursos' && (
               <div className="flex items-center gap-6">
-                <button className="text-orange-500 font-bold border-b-2 border-orange-500 pb-1 text-sm font-label">General</button>
-                <button className="text-neutral-400 font-medium hover:text-white transition-colors text-sm font-label">Facultades</button>
-                <button className="text-neutral-400 font-medium hover:text-white transition-colors text-sm font-label">Estadísticas</button>
+                <button 
+                  onClick={() => onSubTabChange?.('general')}
+                  className={`${activeSubTab === 'general' ? 'text-orange-500 font-bold border-b-2 border-orange-500' : 'text-neutral-400 font-medium hover:text-white'} pb-1 text-sm font-label transition-all`}
+                >
+                  General
+                </button>
+                <button 
+                  onClick={() => onSubTabChange?.('facultades')}
+                  className={`${activeSubTab === 'facultades' ? 'text-orange-500 font-bold border-b-2 border-orange-500' : 'text-neutral-400 font-medium hover:text-white'} pb-1 text-sm font-label transition-all`}
+                >
+                  Facultades
+                </button>
+                <button 
+                  onClick={() => onSubTabChange?.('estadisticas')}
+                  className={`${activeSubTab === 'estadisticas' ? 'text-orange-500 font-bold border-b-2 border-orange-500' : 'text-neutral-400 font-medium hover:text-white'} pb-1 text-sm font-label transition-all`}
+                >
+                  Estadísticas
+                </button>
               </div>
             )}
           </div>

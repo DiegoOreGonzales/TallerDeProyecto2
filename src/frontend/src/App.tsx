@@ -13,6 +13,7 @@ function App() {
   const [userRole, setUserRole] = useState('estudiante');
   const [userName, setUserName] = useState('');
   const [currentView, setCurrentView] = useState('dashboard');
+  const [coursesSubTab, setCoursesSubTab] = useState('general');
 
   useEffect(() => {
     const savedSession = localStorage.getItem('session_active');
@@ -65,7 +66,7 @@ function App() {
       case 'dashboard':
         return <Dashboard role={userRole} />;
       case 'cursos':
-        return userRole === 'admin' ? <Courses /> : <Dashboard role={userRole} />;
+        return userRole === 'admin' ? <Courses activeTab={coursesSubTab} /> : <Dashboard role={userRole} />;
       case 'aulas':
         return userRole === 'admin' ? <Classrooms /> : <Dashboard role={userRole} />;
       case 'secciones':
@@ -84,6 +85,8 @@ function App() {
       onLogout={handleLogout} 
       userRole={userRole}
       userName={userName}
+      activeSubTab={coursesSubTab}
+      onSubTabChange={setCoursesSubTab}
     >
       {renderContent()}
     </Layout>
