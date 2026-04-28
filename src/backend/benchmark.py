@@ -6,7 +6,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from app.database import SessionLocal, engine, Base
 from app.models import User, Aula, Curso, Seccion, Horario
-from app.core.scheduler import generate_schedule
+from app.core.scheduler import SchedulerEngine
 
 def run_benchmark():
     print("Iniciando Benchmarking SGOHA...")
@@ -54,14 +54,17 @@ def run_benchmark():
         # Ejecutar y Medir
         print("Ejecutando algoritmo CP-SAT...")
         start_time = time.time()
-        result = generate_schedule(db)
+        engine = SchedulerEngine(db)
+        result = engine.generate()
         end_time = time.time()
         
         elapsed_time = end_time - start_time
         
+        status_res = "SUCCESS" if isinstance(result, list) else result.get("error", "ERROR")
+        
         log_content = f"=== REPORTE DE BENCHMARK SGOHA ===\n"
         log_content += f"Configuracion: 10 Docentes, 30 Aulas, 30 Cursos, 100 Secciones\n"
-        log_content += f"Status de Resolucion: {result['status']}\n"
+        log_content += f"Status de Resolucion: {status_res}\n"
         log_content += f"Tiempo total de ejecucion: {elapsed_time:.4f} segundos\n"
         log_content += f"Cumple RNF-01 (<= 2.0s): {'SI' if elapsed_time <= 2.0 else 'NO'}\n"
         

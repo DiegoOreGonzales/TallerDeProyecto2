@@ -1,6 +1,6 @@
 import pytest
 from app.models import Aula, Curso, Seccion, User
-from app.core.scheduler import generate_schedule
+from app.core.scheduler import SchedulerEngine
 
 def test_scheduler_factible(db_session):
     # Crear datos mínimos
@@ -21,12 +21,14 @@ def test_scheduler_factible(db_session):
     db_session.commit()
     
     # Generar horario
-    result = generate_schedule(db_session)
-    assert result["status"] == "success"
+    engine = SchedulerEngine(db_session)
+    result = engine.generate()
+    
+    assert isinstance(result, list)
     # Debe generar 2 bloques (creditos=2)
-    assert len(result["horarios"]) == 2
-    assert result["horarios"][0]["seccion_id"] == seccion.id
-    assert result["horarios"][0]["aula_id"] == aula.id
+    assert len(result) == 2
+    assert result[0]["seccion_id"] == seccion.id
+    assert result[0]["aula_id"] == aula.id
 
 def test_scheduler_infactible_capacidad(db_session):
     docente = User(username="docente2", email="d2@test.com", hashed_password="pw", role="docente", turno_preferido="COMPLETO")
@@ -45,6 +47,8 @@ def test_scheduler_infactible_capacidad(db_session):
     db_session.commit()
     
     # Debe fallar porque el aula (20) no soporta la seccion (40)
-    result = generate_schedule(db_session)
-    assert result["status"] == "error"
-    assert "Infactible" in result["message"]
+    engine = SchedulerEngine(db_session)
+    result = engine.generate()
+    assert isinstance(result, dict)
+    assert "error" in result
+    assert "INFACTIBILIDAD" in result["error"]
