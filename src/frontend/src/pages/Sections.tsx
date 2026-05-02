@@ -25,6 +25,7 @@ const Sections: React.FC = () => {
     docente_id: 0, 
     capac_estimada: 40 
   });
+  const [periodFilter, setPeriodFilter] = useState<number | 'all'>('all');
 
   useEffect(() => {
     fetchData();
@@ -79,6 +80,10 @@ const Sections: React.FC = () => {
       }
     }
   };
+
+  const filteredSecciones = periodFilter === 'all'
+    ? secciones
+    : secciones.filter(s => s.curso?.periodo === periodFilter || (cursos.find(c => c.id === s.curso_id) as any)?.periodo === periodFilter);
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -143,15 +148,35 @@ const Sections: React.FC = () => {
         </section>
       )}
 
+      <div className="flex items-center gap-4 bg-surface-container-low p-4 rounded-2xl border border-white/5">
+        <span className="material-symbols-outlined text-neutral-500 ml-2">filter_list</span>
+        <label className="text-xs font-black text-neutral-500 uppercase tracking-widest">Filtrar Secciones por Ciclo:</label>
+        <select 
+          className="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-xs font-bold text-white focus:ring-1 focus:ring-orange-500 appearance-none min-w-[120px]"
+          value={periodFilter}
+          onChange={e => setPeriodFilter(e.target.value === 'all' ? 'all' : parseInt(e.target.value))}
+        >
+          <option value="all" className="bg-neutral-900">Todos</option>
+          {[1,2,3,4,5,6,7,8,9,10].map(p => (
+            <option key={p} value={p} className="bg-neutral-900">Periodo {p}</option>
+          ))}
+        </select>
+      </div>
+
       <CrudTable 
         title="Secciones y Grupos"
         description="Vinculación de cursos con docentes y planificación de aforo."
-        headers={['NRC / Código', 'Curso Asignado', 'Docente Responsable', 'Capacidad']}
-        data={secciones}
+        headers={['Ciclo', 'NRC / Código', 'Curso Asignado', 'Docente Responsable', 'Capacidad']}
+        data={filteredSecciones}
         onAdd={() => setIsAdding(true)}
         onDelete={handleDelete}
         renderRow={(sec: Seccion) => (
           <>
+            <td className="px-8 py-5">
+              <span className="text-sm font-black text-white bg-white/5 px-2 py-1 rounded">
+                P{(sec.curso as any)?.periodo || (cursos.find(c => c.id === sec.curso_id) as any)?.periodo}
+              </span>
+            </td>
             <td className="px-8 py-5">
               <span className="font-black text-orange-500 tracking-tighter text-lg">{sec.codigo}</span>
             </td>

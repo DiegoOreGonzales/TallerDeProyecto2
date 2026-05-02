@@ -12,8 +12,9 @@ interface Curso {
 const Courses: React.FC = () => {
   const [cursos, setCursos] = useState<Curso[]>([]);
   const [isAdding, setIsAdding] = useState(false);
-  const [newCurso, setNewCurso] = useState({ codigo: '', nombre: '', creditos: 4, tipo: 'Teoría' });
+  const [newCurso, setNewCurso] = useState({ codigo: '', nombre: '', creditos: 4, tipo: 'Teoría', periodo: 1 });
   const [loading, setLoading] = useState(true);
+  const [periodFilter, setPeriodFilter] = useState<number | 'all'>('all');
 
   useEffect(() => {
     fetchCursos();
@@ -42,7 +43,7 @@ const Courses: React.FC = () => {
       if (response.ok) {
         fetchCursos();
         setIsAdding(false);
-        setNewCurso({ codigo: '', nombre: '', creditos: 4, tipo: 'Teoría' });
+        setNewCurso({ codigo: '', nombre: '', creditos: 4, tipo: 'Teoría', periodo: 1 });
       }
     } catch (error) {
       console.error('Error adding curso:', error);
@@ -59,6 +60,10 @@ const Courses: React.FC = () => {
       }
     }
   };
+
+  const filteredCursos = periodFilter === 'all' 
+    ? cursos 
+    : cursos.filter(c => (c as any).periodo === periodFilter);
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -113,6 +118,15 @@ const Courses: React.FC = () => {
                 />
               </div>
             </div>
+            <div className="space-y-2">
+              <label className="text-xs font-black text-neutral-500 uppercase tracking-widest ml-1">Periodo (Ciclo)</label>
+              <input 
+                type="number" min="1" max="10" required 
+                className="w-full px-5 py-3.5 bg-white/5 border border-white/10 rounded-xl focus:ring-1 focus:ring-orange-500 text-white transition-all font-medium"
+                value={newCurso.periodo}
+                onChange={e => setNewCurso({...newCurso, periodo: parseInt(e.target.value)})}
+              />
+            </div>
             <div className="flex items-end">
               <button type="submit" className="btn-primary w-full py-4 uppercase text-[10px] tracking-widest">
                 Guardar Curso
@@ -122,15 +136,35 @@ const Courses: React.FC = () => {
         </section>
       )}
 
+      <div className="flex items-center gap-4 bg-surface-container-low p-4 rounded-2xl border border-white/5">
+        <span className="material-symbols-outlined text-neutral-500 ml-2">filter_list</span>
+        <label className="text-xs font-black text-neutral-500 uppercase tracking-widest">Filtrar por Ciclo:</label>
+        <select 
+          className="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-xs font-bold text-white focus:ring-1 focus:ring-orange-500 appearance-none min-w-[120px]"
+          value={periodFilter}
+          onChange={e => setPeriodFilter(e.target.value === 'all' ? 'all' : parseInt(e.target.value))}
+        >
+          <option value="all" className="bg-neutral-900">Todos</option>
+          {[1,2,3,4,5,6,7,8,9,10].map(p => (
+            <option key={p} value={p} className="bg-neutral-900">Periodo {p}</option>
+          ))}
+        </select>
+      </div>
+
       <CrudTable 
         title="Gestión de Cursos"
         description="Listado maestro de asignaturas disponibles para el periodo académico."
-        headers={['Código', 'Nombre', 'Configuración']}
-        data={cursos}
+        headers={['Ciclo', 'Código', 'Nombre', 'Configuración']}
+        data={filteredCursos}
         onAdd={() => setIsAdding(true)}
         onDelete={handleDelete}
         renderRow={(curso: Curso) => (
           <>
+            <td className="px-8 py-5">
+              <span className="text-sm font-black text-white bg-white/5 px-2 py-1 rounded">
+                P{(curso as any).periodo}
+              </span>
+            </td>
             <td className="px-8 py-5">
               <span className="px-3 py-1 bg-white/5 text-orange-400 rounded-lg text-xs font-black tracking-widest uppercase border border-white/10">
                 {curso.codigo}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 interface LoginProps {
-  onLogin: (role: string, name: string) => void;
+  onLogin: (role: string, name: string, cycle: number | null, shift: string) => void;
 }
 
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
@@ -25,7 +25,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem('access_token', data.access_token);
-        onLogin(data.user_role, data.user_name);
+        onLogin(data.user_role, data.user_name, data.user_cycle, data.user_shift);
       } else {
         const err = await response.json();
         setError(err.detail || 'Credenciales incorrectas');

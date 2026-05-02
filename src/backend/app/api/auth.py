@@ -17,6 +17,8 @@ class Token(BaseModel):
     token_type: str
     user_role: str
     user_name: str
+    user_cycle: Optional[int] = None
+    user_shift: str
 
 class UserOut(BaseModel):
     id: int
@@ -50,6 +52,8 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
         "token_type": "bearer",
         "user_role": db_user.role,
         "user_name": db_user.username,
+        "user_cycle": db_user.ciclo,
+        "user_shift": db_user.turno_preferido,
     }
 
 @router.post("/register", response_model=UserOut)
