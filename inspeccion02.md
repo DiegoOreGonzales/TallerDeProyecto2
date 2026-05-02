@@ -4,7 +4,7 @@ Este documento consolida la lista de artefactos desarrollados para la Inspecció
 
 ## 🔗 URL del Video de Exposición (4-5 min)
 > [!IMPORTANT]
-> **Enlace del Video:** [Pegue aquí su URL de OneDrive o Google Drive]
+> **Enlace del Video:** [https://drive.google.com/file/d/1FBu6zLQCNtREE31lret5gViFf04RSqaZ/view?usp=sharing]
 
 ---
 
