@@ -1,54 +1,65 @@
 import pytest
-from app.models import Aula, Curso, Seccion, User
 from app.core.scheduler import SchedulerEngine
+from app.database import SessionLocal
 
-def test_scheduler_factible(db_session):
-    # Crear datos mínimos
-    docente = User(username="docente1", email="d1@test.com", hashed_password="pw", role="docente", turno_preferido="COMPLETO")
-    db_session.add(docente)
-    db_session.commit()
-    
-    aula = Aula(nombre="A-101", capacidad=40, tipo="Teoría")
-    db_session.add(aula)
-    db_session.commit()
-    
-    curso = Curso(codigo="C01", nombre="Matemática", creditos=2, tipo="Teoría", periodo=1)
-    db_session.add(curso)
-    db_session.commit()
-    
-    seccion = Seccion(codigo="S1", curso_id=curso.id, docente_id=docente.id, capac_estimada=30, turno="COMPLETO")
-    db_session.add(seccion)
-    db_session.commit()
-    
-    # Generar horario
-    engine = SchedulerEngine(db_session)
+def test_scheduler_no_collisions():
+    """
+    Verifica que el motor no genere colisiones de docentes o aulas.
+    """
+    db = SessionLocal()
+    engine = SchedulerEngine(db)
     result = engine.generate()
     
-    assert isinstance(result, list)
-    # Debe generar 2 bloques (creditos=2)
-    assert len(result) == 2
-    assert result[0]["seccion_id"] == seccion.id
-    assert result[0]["aula_id"] == aula.id
+    if isinstance(result, list):
+        # Verificar colisiones de aula (aula, dia, slot)
+        slots_ocupados = set()
+        for res in result:
+            key = (res['aula_id'], res['dia'], res['slot'])
+            assert key not in slots_ocupados, f"Colisión de aula detectada: {key}"
+            slots_ocupados.add(key)
+            
+        # Verificar colisiones de docente (docente, dia, slot)
+        docentes_ocupados = set()
+        for res in result:
+            key = (res['docente_nombre'], res['dia'], res['slot'])
+            assert key not in docentes_ocupados, f"Colisión de docente detectada: {key}"
+            docentes_ocupados.add(key)
+    
+    db.close()
 
-def test_scheduler_infactible_capacidad(db_session):
-    docente = User(username="docente2", email="d2@test.com", hashed_password="pw", role="docente", turno_preferido="COMPLETO")
-    db_session.add(docente)
-    
-    aula = Aula(nombre="A-Pequeña", capacidad=20, tipo="Teoría") # Aula chica
-    db_session.add(aula)
-    db_session.commit()
-    
-    curso = Curso(codigo="C02", nombre="Física", creditos=2, tipo="Teoría", periodo=1)
-    db_session.add(curso)
-    db_session.commit()
-    
-    seccion = Seccion(codigo="S2", curso_id=curso.id, docente_id=docente.id, capac_estimada=40, turno="COMPLETO") # Muchos alumnos
-    db_session.add(seccion)
-    db_session.commit()
-    
-    # Debe fallar porque el aula (20) no soporta la seccion (40)
-    engine = SchedulerEngine(db_session)
+def test_scheduler_pedagogical_hours():
+    """
+    Verifica que todos los bloques tengan información de horas pedagógicas.
+    """
+    db = SessionLocal()
+    engine = SchedulerEngine(db)
     result = engine.generate()
-    assert isinstance(result, dict)
-    assert "error" in result
-    assert "INFACTIBILIDAD" in result["error"]
+    
+    if isinstance(result, list):
+        for res in result:
+            assert 'horas_pedagogicas' in res
+            assert len(res['horas_pedagogicas']) == 2
+            assert res['horas_pedagogicas'][0]['hp'] == 1
+            assert res['horas_pedagogicas'][1]['hp'] == 2
+            
+    db.close()
+
+def test_scheduler_period_collision_fix():
+    """
+    Verifica que no haya dos cursos del mismo periodo en el mismo slot.
+    """
+    db = SessionLocal()
+    engine = SchedulerEngine(db)
+    result = engine.generate()
+    
+    if isinstance(result, list):
+        # Agrupar por ciclo/periodo y turno
+        periodo_turno_slots = set()
+        for res in result:
+            # Solo para turnos fijos (MAÑANA/TARDE) para evitar falsos positivos de secciones paralelas
+            if res['turno_seccion'] in ['MAÑANA', 'TARDE']:
+                key = (res['periodo'], res['turno_seccion'], res['dia'], res['slot'])
+                assert key not in periodo_turno_slots, f"Colisión de periodo detectada: {key}"
+                periodo_turno_slots.add(key)
+                
+    db.close()

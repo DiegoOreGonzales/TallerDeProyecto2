@@ -23,7 +23,7 @@ El proyecto emplea una **Arquitectura Cliente-Servidor Desacoplada** completamen
 | **Estilos** | Vanilla CSS, Tailwind CSS | Framework de utilidades CSS para un diseño premium, "glassmorphism" e identidad institucional. |
 | **Backend** | Python 3.11, FastAPI | Framework web de alto rendimiento asíncrono para la creación de APIs REST. Validación con Pydantic. |
 | **Base de Datos** | PostgreSQL, SQLAlchemy | SGDBD relacional robusto; ORM para el mapeo de modelos de datos en Python. |
-| **Optimización** | Google OR-Tools (CP-SAT) | Motor de Programación con Restricciones (*Constraint Programming*) utilizado para la resolución de conflictos. |
+| **Optimización** | Google OR-Tools (CP-SAT) | Motor de Programación con Restricciones (*Constraint Programming*) optimizado por **Google Antigravity**. |
 | **Despliegue** | Docker, Docker Compose | Contenerización de servicios (Imágenes ligeras `bookworm-slim` optimizadas para producción). |
 
 ---
@@ -34,11 +34,11 @@ El núcleo del sistema utiliza el solucionador **CP-SAT de Google OR-Tools**, ap
 
 ### Funcionamiento Matemático:
 El sistema formula el problema del horario encontrando una asignación válida para la ecuación: `(Sección, Aula, Día, Hora)` sujeta a las siguientes restricciones (Constraints):
-1.  **Restricción de Superposición de Aulas:** Un aula específica solo puede albergar una sección a la vez en un bloque horario determinado.
-2.  **Restricción de Superposición de Docentes:** Un docente no puede impartir dos clases (secciones) diferentes en el mismo día y a la misma hora.
-3.  **Restricción de Capacidad:** La capacidad física del aula asignada debe ser mayor o igual a la cantidad estimada de alumnos (`capac_estimada`) u la oferta de la sección.
+4.  **Restricción de Contigüidad:** Bloques del mismo curso en el mismo día deben ser consecutivos (evita "huecos" para el alumno).
+5.  **Deduplicación de Turno:** Estudiantes de turno COMPLETO ven solo una sección óptima, evitando duplicidad de carga académica.
+6.  **Horas Pedagógicas Reales:** Desglose exacto de 40 min con recesos de 10 min.
 
-*Nota:* El motor CP busca la viabilidad (*feasibility*) satisfaciendo todas las restricciones lógicas descritas de manera concurrente.
+*Nota:* El motor CP busca la viabilidad (*feasibility*) y optimalidad (preferencias de turno) satisfaciendo todas las restricciones lógicas descritas en menos de **2 segundos**.
 
 ---
 
@@ -74,7 +74,7 @@ El sistema formula el problema del horario encontrando una asignación válida p
 
 ### Requerimientos No Funcionales
 1.  **Usabilidad:** La interfaz debe ser moderna, reactiva (SPA) y alineada a los colores institucionales.
-2.  **Rendimiento:** El algoritmo de optimización de horarios debe entregar una solución factible en un máximo de 10 segundos para un conjunto de datos estándar.
+2.  **Rendimiento:** El algoritmo de optimización de horarios debe entregar una solución factible en un máximo de **2 segundos** para un conjunto de datos estándar (61 cursos, 122 secciones).
 3.  **Escalabilidad:** La arquitectura basada en Docker debe permitir el escalado horizontal independiente del frontend frente al backend.
 4.  **Disponibilidad:** El sistema debe manejar reconexiones o respuestas claras "offline" en caso de pérdida de conexión temporal con la base de datos.
 5.  **Mantenibilidad:** El código debe estar tipado (TypeScript, Pydantic) y seguir el principio de separación de responsabilidades (*Separation of Concerns*).

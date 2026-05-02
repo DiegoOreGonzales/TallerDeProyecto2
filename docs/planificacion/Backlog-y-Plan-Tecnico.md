@@ -44,7 +44,7 @@ Para cumplir con los requisitos de eficiencia energética, seguridad y optimizac
 *Objetivo: Ejecutar el algoritmo CSP para generar soluciones válidas.*
 
 - **HU-05: Generación Base Automática:** Como Coordinador, quiero ejecutar el motor CSP para obtener una propuesta de horario que no tenga solapamientos ni infrinja prerrequisitos.
-    - *Criterio 1:* Tiempo de ejecución menor a 30 segundos para un set de 50 cursos.
+    - *Criterio 1:* Tiempo de ejecución menor a 2 segundos para un set de 50 cursos.
     - *Criterio 2:* Reporte de restricciones "blandas" no cumplidas (ej. preferencias de turno).
 - **HU-06: Ajuste Manual (Híbrido):** Como Coordinador, quiero mover un bloque de horario manualmente y recibir feedback instantáneo si causo un conflicto.
     - *Criterio 1:* Uso de `Drag & Drop`.
