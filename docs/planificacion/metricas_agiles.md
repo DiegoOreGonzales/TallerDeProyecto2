@@ -11,23 +11,59 @@
 | Metodología | Scrum |
 | Duración de Sprint | 2 semanas |
 | Total Sprints | 6 (Sprint 0 – Sprint 5) |
+| Período del proyecto | Marzo – Junio 2026 (17 semanas académicas) |
 | Equipo | 4 integrantes |
-| Herramienta de gestión | Jira / GitHub Projects |
+| Herramienta de gestión | Jira (Proyecto SGOHA) / GitHub |
 | Unidad de estimación | Story Points (SP) — escala Fibonacci |
 | Backlog total estimado | **89 SP** |
+
+### 1.1 Cronograma de Sprints
+
+Los 6 sprints se distribuyen **secuencialmente** a lo largo del semestre, con semanas de holgura entre algunos sprints para Sprint Reviews, Retrospectivas y Sprint Planning:
+
+| Sprint | Inicio | Fin | Semanas | Evento posterior |
+|:---:|:---|:---|:---:|:---|
+| Sprint 0 | 09 Mar 2026 | 22 Mar 2026 | Sem 1–2 | Sprint Review + Planning S1 |
+| Sprint 1 | 23 Mar 2026 | 05 Abr 2026 | Sem 3–4 | Sprint Review + Inspección 01 |
+| Sprint 2 | 13 Abr 2026 | 26 Abr 2026 | Sem 6–7 | Sprint Review + Planning S3 |
+| Sprint 3 | 27 Abr 2026 | 10 May 2026 | Sem 8–9 | Sprint Review + Inspección 02 |
+| Sprint 4 | 18 May 2026 | 31 May 2026 | Sem 11–12 | Sprint Review + Planning S5 |
+| Sprint 5 | 01 Jun 2026 | 14 Jun 2026 | Sem 13–14 | Sprint Review Final |
+| *Buffer* | *15 Jun 2026* | *28 Jun 2026* | *Sem 15–16* | *Entrega final + Inspección 03* |
+
+> **Nota:** Las semanas 5, 10 y entre sprints se utilizan para ceremonias Scrum (Planning, Review, Retrospectiva) y preparación de inspecciones. El buffer final permite correcciones post-Sprint 5 y preparación de la defensa.
+
+```mermaid
+gantt
+    title Cronograma SGOHA — Sprints Secuenciales
+    dateFormat  YYYY-MM-DD
+    section Desarrollo
+    Sprint 0 - Setup y Auth       :s0, 2026-03-09, 14d
+    Sprint 1 - CRUD               :s1, 2026-03-23, 14d
+    Sprint 2 - Motor CP-SAT       :s2, 2026-04-13, 14d
+    Sprint 3 - Dashboard          :s3, 2026-04-27, 14d
+    Sprint 4 - TDD y Quality      :s4, 2026-05-18, 14d
+    Sprint 5 - Docs y Benchmark   :s5, 2026-06-01, 14d
+    section Ceremonias
+    Inspección 01                 :milestone, 2026-04-06, 0d
+    Inspección 02                 :milestone, 2026-05-11, 0d
+    Inspección 03 / Entrega       :milestone, 2026-06-28, 0d
+    section Buffer
+    Buffer final                  :2026-06-15, 14d
+```
 
 ---
 
 ## 2. Velocidad del Equipo por Sprint
 
-| Sprint | SP Planificados | SP Completados | Velocidad Real | Observaciones |
-|:---:|:---:|:---:|:---:|:---|
-| Sprint 0 | 13 | 13 | 13 | Setup completo: Docker, DB, Auth. Sin impedimentos. |
-| Sprint 1 | 15 | 13 | 13 | CRUD Cursos y Aulas completado. Secciones parcial (2 SP carry-over). |
-| Sprint 2 | 18 | 15 | 15 | Motor CP-SAT v1 funcional. Restricciones blandas pospuestas. Cuello de botella: curva OR-Tools. |
-| Sprint 3 | 16 | 16 | 16 | Dashboard, filtros por rol. Velocidad normalizada. |
-| Sprint 4 | 15 | 17 | 17 | Soft constraints + TDD completo. Equipo en ritmo óptimo. +2 SP adicionales completados. |
-| Sprint 5 | 12 | 15 | 15 | Documentación, benchmark, optimización. Cierre de deuda técnica. |
+| Sprint | Período | SP Planificados | SP Completados | Velocidad Real | Observaciones |
+|:---:|:---|:---:|:---:|:---:|:---|
+| Sprint 0 | 09–22 Mar | 13 | 13 | 13 | Setup completo: Docker, DB, Auth. Sin impedimentos. |
+| Sprint 1 | 23 Mar–05 Abr | 15 | 13 | 13 | CRUD Cursos y Aulas completado. Secciones parcial (2 SP carry-over). |
+| Sprint 2 | 13–26 Abr | 18 | 15 | 15 | Motor CP-SAT v1 funcional. Restricciones blandas pospuestas. Cuello de botella: curva OR-Tools. |
+| Sprint 3 | 27 Abr–10 May | 16 | 16 | 16 | Dashboard, filtros por rol. Velocidad normalizada. |
+| Sprint 4 | 18–31 May | 15 | 17 | 17 | Soft constraints + TDD completo. Equipo en ritmo óptimo. +2 SP adicionales completados. |
+| Sprint 5 | 01–14 Jun | 12 | 15 | 15 | Documentación, benchmark, optimización. Cierre de deuda técnica. |
 
 ### 2.1 Gráfico de Velocidad
 
