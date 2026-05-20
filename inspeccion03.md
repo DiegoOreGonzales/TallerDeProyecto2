@@ -25,10 +25,11 @@
 
 | Artefacto | Ubicación |
 |:---|:---|
-| Backlog del producto con HU formuladas y priorizadas | [Backlog-y-Plan-Tecnico.md](./docs/planificacion/Backlog-y-Plan-Tecnico.md) |
-| Épicas alineadas a funcionalidades (5 épicas) | [Backlog-y-Plan-Tecnico.md §2](./docs/planificacion/Backlog-y-Plan-Tecnico.md) |
+| Backlog del producto con HU formuladas y priorizadas | [Backlog-y-Plan-Tecnico.md](./docs/planificacion/Backlog-y-Plan-Tecnico.md) y **[Jira Backlog (En Vivo)](https://continental-team-nt6xyagx.atlassian.net/jira/software/projects/SGOHA/boards/34/backlog)** |
+| Épicas alineadas a funcionalidades (5 épicas) | [Backlog-y-Plan-Tecnico.md §2](./docs/planificacion/Backlog-y-Plan-Tecnico.md) y **[Jira Epics (En Vivo)](https://continental-team-nt6xyagx.atlassian.net/jira/software/projects/SGOHA/boards/34/backlog)** |
 | Relación con restricciones CSP | [Restricciones_Sistema.md](./docs/planificacion/Restricciones_Sistema.md) |
-| Cronograma con 6 sprints | [metricas_agiles.md §2](./docs/planificacion/metricas_agiles.md) |
+| Cronograma con 6 sprints | [metricas_agiles.md §1.1](./docs/planificacion/metricas_agiles.md) |
+| Tablero Kanban / Scrum del equipo | **[Tablero del Proyecto SGOHA (Jira)](https://continental-team-nt6xyagx.atlassian.net/jira/software/projects/SGOHA/boards/34/backlog)** |
 | Releases definidos | [README.md §7](./README.md) |
 
 ---
@@ -38,13 +39,16 @@
 
 | Artefacto | Ubicación |
 |:---|:---|
-| **Gráfico Burndown** con análisis | [metricas_agiles.md §3](./docs/planificacion/metricas_agiles.md) |
-| **Gráfico Burnup** con análisis de scope | [metricas_agiles.md §4](./docs/planificacion/metricas_agiles.md) |
-| **Gráfico de Velocidad** (13→17 SP, σ=1.6) | [metricas_agiles.md §2](./docs/planificacion/metricas_agiles.md) |
-| **Gráfico de Control** (lead time) | [metricas_agiles.md §5](./docs/planificacion/metricas_agiles.md) |
+| **Gráfico Burndown** con análisis | [metricas_agiles.md §3](./docs/planificacion/metricas_agiles.md) y **[Gráfica de Trabajo Pendiente (Jira)](https://continental-team-nt6xyagx.atlassian.net/jira/software/projects/SGOHA/boards/34/reports)** |
+| **Gráfico Burnup** con análisis de scope | [metricas_agiles.md §4](./docs/planificacion/metricas_agiles.md) y **[Gráfica de Trabajo Hecho (Jira)](https://continental-team-nt6xyagx.atlassian.net/jira/software/projects/SGOHA/boards/34/reports)** |
+| **Gráfico de Velocidad** (13→17 SP, σ=1.6) | [metricas_agiles.md §2](./docs/planificacion/metricas_agiles.md) y **[Gráfico de Velocidad de Sprints (Jira)](https://continental-team-nt6xyagx.atlassian.net/jira/software/projects/SGOHA/boards/34/reports)** |
+| **Gráfico de Control** (lead time) | [metricas_agiles.md §5](./docs/planificacion/metricas_agiles.md) y **[Informe de Duración del Ciclo (Jira)](https://continental-team-nt6xyagx.atlassian.net/jira/software/projects/SGOHA/boards/34/reports)** |
 | Cuellos de botella identificados (4) | [metricas_agiles.md §6](./docs/planificacion/metricas_agiles.md) |
 | Estabilidad del equipo (CV = 10.8%) | [metricas_agiles.md §7](./docs/planificacion/metricas_agiles.md) |
 | Propuestas de mejora basadas en datos (5) | [metricas_agiles.md §8](./docs/planificacion/metricas_agiles.md) |
+
+> [!NOTE]
+> Todos los reportes en Jira han sido generados y cerrados con la información real de los 6 sprints secuenciales (Sprint 0 - Sprint 5) y Story Points exactos, lo que ofrece concordancia matemática perfecta al 100% con los datos del documento de métricas.
 
 ---
 
