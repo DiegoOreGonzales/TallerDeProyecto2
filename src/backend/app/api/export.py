@@ -104,7 +104,6 @@ def export_pdf_all(db: Session = Depends(get_db)):
         for d in range(6):
             entry = grid.get((d, sl))
             if entry:
-                pdf.set_font('Helvetica', 'B', 6)
                 # Colored cell for assigned slot
                 pdf.set_fill_color(200, 230, 255)
                 x = pdf.get_x()

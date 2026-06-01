@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .database import engine
 from . import models
-from .api import auth, cursos, aulas, scheduler, secciones
+from .api import auth, cursos, aulas, scheduler, secciones, export, ical_export
 
 # Crear las tablas en la base de datos (PMV simple)
 models.Base.metadata.create_all(bind=engine)
@@ -15,6 +15,8 @@ app.include_router(cursos.router, prefix="/api")
 app.include_router(aulas.router, prefix="/api")
 app.include_router(scheduler.router, prefix="/api")
 app.include_router(secciones.router, prefix="/api")
+app.include_router(export.router, prefix="/api")
+app.include_router(ical_export.router, prefix="/api")
 
 # Configurar CORS
 app.add_middleware(

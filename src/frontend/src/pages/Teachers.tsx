@@ -12,7 +12,7 @@ const Teachers: React.FC = () => {
   const [docentes, setDocentes] = useState<Docente[]>([]);
   const [isAdding, setIsAdding] = useState(false);
   const [newDocente, setNewDocente] = useState({ username: '', email: '', password: '', turno_preferido: 'COMPLETO', role: 'docente' });
-  const [, setLoading] = useState(true);
+
 
   useEffect(() => {
     fetchDocentes();
@@ -25,8 +25,6 @@ const Teachers: React.FC = () => {
       setDocentes(data);
     } catch (error) {
       console.error('Error fetching docentes:', error);
-    } finally {
-      setLoading(false);
     }
   };
 

@@ -7,11 +7,11 @@ interface Seccion {
   curso_id: number;
   docente_id: number;
   capac_estimada: number;
-  curso?: { nombre: string; codigo: string; periodo?: number };
+  curso?: { nombre: string; codigo: string; periodo: number };
   docente?: { username: string };
 }
 
-interface Curso { id: number; nombre: string; codigo: string; periodo?: number }
+interface Curso { id: number; nombre: string; codigo: string; periodo: number }
 interface User { id: number; username: string }
 
 const Sections: React.FC = () => {

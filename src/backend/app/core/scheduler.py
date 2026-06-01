@@ -96,7 +96,7 @@ class SchedulerEngine:
             if not valid_aulas[s.id]:
                 return {
                     "error": f"INFACTIBILIDAD: Sección '{s.codigo}' (tipo: {s.curso.tipo}, "
-                             f"aforo: {s.capac_estimada}) no tiene aula compatible."
+                    f"aforo: {s.capac_estimada}) no tiene aula compatible."
                 }
 
         # ═══════════════════════════════════════════════════════

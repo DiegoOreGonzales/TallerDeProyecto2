@@ -51,8 +51,8 @@ class Curso(Base):
     required_by = relationship(
         "Curso",
         secondary=prerrequisitos,
-        primaryjoin =id == prerrequisitos.c.curso_id,
-        secondaryjoin =id == prerrequisitos.c.prerrequisito_id,
+        primaryjoin=id == prerrequisitos.c.curso_id,
+        secondaryjoin=id == prerrequisitos.c.prerrequisito_id,
         backref="prerequisites"
     )
 

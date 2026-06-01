@@ -25,10 +25,11 @@
 
 | Artefacto | Ubicación |
 |:---|:---|
-| Backlog del producto con HU formuladas y priorizadas | [Backlog-y-Plan-Tecnico.md](./docs/planificacion/Backlog-y-Plan-Tecnico.md) |
-| Épicas alineadas a funcionalidades (5 épicas) | [Backlog-y-Plan-Tecnico.md §2](./docs/planificacion/Backlog-y-Plan-Tecnico.md) |
+| Backlog del producto con HU formuladas y priorizadas | [Backlog-y-Plan-Tecnico.md](./docs/planificacion/Backlog-y-Plan-Tecnico.md) y **[Jira Backlog SGH2 (En Vivo)](https://continental-team-nt6xyagx.atlassian.net/jira/software/projects/SGH2/boards/67/backlog)** |
+| Épicas alineadas a funcionalidades (5 épicas) | [Backlog-y-Plan-Tecnico.md §2](./docs/planificacion/Backlog-y-Plan-Tecnico.md) y **[Jira Epics SGH2-6 a SGH2-10 (En Vivo)](https://continental-team-nt6xyagx.atlassian.net/jira/software/projects/SGH2/boards/67/backlog)** |
 | Relación con restricciones CSP | [Restricciones_Sistema.md](./docs/planificacion/Restricciones_Sistema.md) |
-| Cronograma con 6 sprints | [metricas_agiles.md §2](./docs/planificacion/metricas_agiles.md) |
+| Cronograma con 7 sprints (Sprint 4 activo) | [metricas_agiles.md §1.1](./docs/planificacion/metricas_agiles.md) |
+| Tablero Scrum del equipo | **[Tablero SGH2 (Jira)](https://continental-team-nt6xyagx.atlassian.net/jira/software/projects/SGH2/boards/67)** |
 | Releases definidos | [README.md §7](./README.md) |
 
 ---
@@ -38,13 +39,16 @@
 
 | Artefacto | Ubicación |
 |:---|:---|
-| **Gráfico Burndown** con análisis | [metricas_agiles.md §3](./docs/planificacion/metricas_agiles.md) |
-| **Gráfico Burnup** con análisis de scope | [metricas_agiles.md §4](./docs/planificacion/metricas_agiles.md) |
-| **Gráfico de Velocidad** (13→17 SP, σ=1.6) | [metricas_agiles.md §2](./docs/planificacion/metricas_agiles.md) |
-| **Gráfico de Control** (lead time) | [metricas_agiles.md §5](./docs/planificacion/metricas_agiles.md) |
+| **Gráfico Burndown** con análisis | [metricas_agiles.md §3](./docs/planificacion/metricas_agiles.md) y **[Gráfica de Trabajo Pendiente — SGH2 (Jira)](https://continental-team-nt6xyagx.atlassian.net/jira/software/projects/SGH2/boards/67/reports)** |
+| **Gráfico Burnup** con análisis de scope | [metricas_agiles.md §4](./docs/planificacion/metricas_agiles.md) y **[Gráfica de Trabajo Hecho — SGH2 (Jira)](https://continental-team-nt6xyagx.atlassian.net/jira/software/projects/SGH2/boards/67/reports)** |
+| **Gráfico de Velocidad** (13→17 SP, σ=1.6) | [metricas_agiles.md §2](./docs/planificacion/metricas_agiles.md) y **[Gráfico de Velocidad de Sprints — SGH2 (Jira)](https://continental-team-nt6xyagx.atlassian.net/jira/software/projects/SGH2/boards/67/reports)** |
+| **Gráfico de Control** (lead time) | [metricas_agiles.md §5](./docs/planificacion/metricas_agiles.md) y **[Informe de Duración del Ciclo — SGH2 (Jira)](https://continental-team-nt6xyagx.atlassian.net/jira/software/projects/SGH2/boards/67/reports)** |
 | Cuellos de botella identificados (4) | [metricas_agiles.md §6](./docs/planificacion/metricas_agiles.md) |
 | Estabilidad del equipo (CV = 10.8%) | [metricas_agiles.md §7](./docs/planificacion/metricas_agiles.md) |
 | Propuestas de mejora basadas en datos (5) | [metricas_agiles.md §8](./docs/planificacion/metricas_agiles.md) |
+
+> [!NOTE]
+> Todos los reportes en Jira (proyecto **SGH2**, board 67) reflejan el ciclo de vida real: Sprints 0–3 cerrados con historias en **Listo**, Sprint 4 **activo** (18–31 Mayo 2026) con historias en **En curso**, y Sprints 5–6 planificados. Los Story Points (78 SP totales) concuerdan al 100% con las métricas documentadas.
 
 ---
 
