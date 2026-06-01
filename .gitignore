@@ -13,3 +13,6 @@ env/
 .DS_Store
 *.log
 docker/*.db
+
+# Generated files
+out.txt

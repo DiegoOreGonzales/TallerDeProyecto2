@@ -6,7 +6,7 @@ interface LayoutProps {
   currentView: string;
   setCurrentView: (view: string) => void;
   onLogout: () => void;
-  userRole: 'admin' | 'student';
+  userRole: string;
   userName: string;
 }
 

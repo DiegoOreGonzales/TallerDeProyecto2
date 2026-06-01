@@ -69,7 +69,27 @@ El núcleo del sistema utiliza el solucionador **CP-SAT de Google OR-Tools**, ap
 
 ---
 
-## 4.2. Tests y Cobertura (TDD)
+## 4.2. Documentación de Gestión y Evaluación
+
+| Documento | Descripción |
+| :--- | :--- |
+| [analisis_requerimientos_mape.md](./docs/gestion/analisis_requerimientos_mape.md) | Análisis de requerimientos y mapeo de stakeholders (MAPE) |
+| [Guia_Exposicion_SGOHA.md](./docs/gestion/Guia_Exposicion_SGOHA.md) | Guía de exposición del proyecto (5 min, calificación objetivo 20) |
+| [Project_Charter.md](./docs/gestion/Project_Charter.md) | Project Charter del proyecto SGOHA |
+| [Declaración_de_la_visión_del_proyecto.md](./docs/gestion/Declaración_de_la_visión_del_proyecto.md) | Visión y alcance del proyecto |
+| [Declaración_del_equipo_del_proyecto.md](./docs/gestion/Declaración_del_equipo_del_proyecto.md) | Organización del equipo y Git Flow |
+| [Lista_Preliminar_de_Requerimientos.md](./docs/gestion/Lista_Preliminar_de_Requerimientos.md) | Lista preliminar de requerimientos |
+| [Seleccion_enfoque_proyecto.md](./docs/gestion/Seleccion_enfoque_proyecto.md) | Justificación del stack tecnológico (CP-SAT vs GA vs Tabú) |
+| [inspeccion02.md](./docs/evaluaciones/inspeccion02.md) | Artefactos de la Inspección 02 |
+| [inspeccion03.md](./docs/evaluaciones/inspeccion03.md) | Consolidación de artefactos para Inspección 03 |
+| [inspeccion04.md](./docs/evaluaciones/inspeccion04.md) | Rúbrica de evaluación — Inspección 04 |
+| [analisis_validacion_problema.md](./docs/evaluaciones/analisis_validacion_problema.md) | Análisis y validación del problema (Inspección 04) |
+| [parcial.md](./docs/evaluaciones/parcial.md) | Evaluación de planificación, SDD y gestión del repositorio |
+| [Evaluacion_Nueva_Rubrica.md](./docs/evaluaciones/Evaluacion_Nueva_Rubrica.md) | Evaluación del proyecto frente a la nueva rúbrica |
+
+---
+
+## 4.3. Tests y Cobertura (TDD)
 
 ```bash
 # Ejecutar tests

@@ -58,16 +58,16 @@ El equipo está compuesto por 4 integrantes trabajando bajo el marco Scrum en sp
 
 ### 2.1 Costos por Sprint
 
-El proyecto se ejecuta en **6 Sprints** de 2 semanas cada uno (12 semanas = 3 meses de desarrollo efectivo).
+El proyecto se ejecuta en **6 Sprints** de 2 semanas cada uno, distribuidos secuencialmente a lo largo del semestre académico (Marzo – Junio 2026). Las semanas entre sprints se destinan a ceremonias Scrum e inspecciones.
 
 | Sprint | Duración | Objetivo Principal | RRHH (S/.) | Infra (S/.) | Total Sprint (S/.) |
 |:---:|:---|:---|:---:|:---:|:---:|
-| Sprint 0 | Sem 1–2 | Setup: Docker, DB, Auth, Exploración OR-Tools | 1,850.00 | 585.00 | 2,435.00 |
-| Sprint 1 | Sem 3–4 | CRUD: Cursos, Aulas, Secciones | 1,850.00 | 585.00 | 2,435.00 |
-| Sprint 2 | Sem 5–6 | Motor CP-SAT v1 (restricciones duras) | 1,850.00 | 585.00 | 2,435.00 |
-| Sprint 3 | Sem 7–8 | Dashboard, Filtros, UX | 1,850.00 | 585.00 | 2,435.00 |
-| Sprint 4 | Sem 9–10 | Soft constraints, benchmark, TDD | 1,850.00 | 585.00 | 2,435.00 |
-| Sprint 5 | Sem 11–12 | Optimización, documentación, entrega | 1,850.00 | 590.00 | 2,440.00 |
+| Sprint 0 | 09–22 Mar | Setup: Docker, DB, Auth, Exploración OR-Tools | 1,850.00 | 585.00 | 2,435.00 |
+| Sprint 1 | 23 Mar–05 Abr | CRUD: Cursos, Aulas, Secciones | 1,850.00 | 585.00 | 2,435.00 |
+| Sprint 2 | 13–26 Abr | Motor CP-SAT v1 (restricciones duras) | 1,850.00 | 585.00 | 2,435.00 |
+| Sprint 3 | 27 Abr–10 May | Dashboard, Filtros, UX | 1,850.00 | 585.00 | 2,435.00 |
+| Sprint 4 | 18–31 May | Soft constraints, benchmark, TDD | 1,850.00 | 585.00 | 2,435.00 |
+| Sprint 5 | 01–14 Jun | Optimización, documentación, entrega | 1,850.00 | 590.00 | 2,440.00 |
 | **TOTAL** | | | **S/. 11,100.00** | **S/. 3,515.00** | **S/. 14,615.00** |
 
 ### 2.2 Costo Acumulado del Proyecto
