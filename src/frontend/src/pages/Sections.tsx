@@ -7,11 +7,11 @@ interface Seccion {
   curso_id: number;
   docente_id: number;
   capac_estimada: number;
-  curso?: { nombre: string; codigo: string };
+  curso?: { nombre: string; codigo: string; periodo: number };
   docente?: { username: string };
 }
 
-interface Curso { id: number; nombre: string; codigo: string }
+interface Curso { id: number; nombre: string; codigo: string; periodo: number }
 interface User { id: number; username: string }
 
 const Sections: React.FC = () => {
@@ -83,7 +83,11 @@ const Sections: React.FC = () => {
 
   const filteredSecciones = periodFilter === 'all'
     ? secciones
-    : secciones.filter(s => s.curso?.periodo === periodFilter || (cursos.find(c => c.id === s.curso_id) as any)?.periodo === periodFilter);
+    : secciones.filter(s => s.curso?.periodo === periodFilter || Re_findPeriodo(s.curso_id) === periodFilter);
+
+  function Re_findPeriodo(cursoId: number) {
+    return cursos.find(c => c.id === cursoId)?.periodo;
+  }
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -174,7 +178,7 @@ const Sections: React.FC = () => {
           <>
             <td className="px-8 py-5">
               <span className="text-sm font-black text-white bg-white/5 px-2 py-1 rounded">
-                P{(sec.curso as any)?.periodo || (cursos.find(c => c.id === sec.curso_id) as any)?.periodo}
+                P{sec.curso?.periodo || cursos.find(c => c.id === sec.curso_id)?.periodo}
               </span>
             </td>
             <td className="px-8 py-5">

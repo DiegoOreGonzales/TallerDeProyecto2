@@ -10,6 +10,7 @@ prerrequisitos = Table(
     Column('prerrequisito_id', Integer, ForeignKey('cursos.id'), primary_key=True)
 )
 
+
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True)
@@ -22,8 +23,9 @@ class User(Base):
     turno_preferido = Column(String, default="COMPLETO")
     # Ciclo actual para estudiantes (1-10)
     ciclo = Column(Integer, default=None, nullable=True)
-    
+
     secciones = relationship("Seccion", back_populates="docente")
+
 
 class Aula(Base):
     __tablename__ = "aulas"
@@ -31,8 +33,9 @@ class Aula(Base):
     nombre = Column(String, unique=True)
     capacidad = Column(Integer)
     tipo = Column(String)  # Teoría, Laboratorio, Taller
-    
+
     horarios = relationship("Horario", back_populates="aula")
+
 
 class Curso(Base):
     __tablename__ = "cursos"
@@ -42,16 +45,17 @@ class Curso(Base):
     creditos = Column(Integer)       # 1 crédito = 1 bloque de 1.5h semanal
     tipo = Column(String, default="Teoría")  # Teoría, Laboratorio
     periodo = Column(Integer, default=1)     # Período académico (1-10)
-    
+
     secciones = relationship("Seccion", back_populates="curso")
-    
+
     required_by = relationship(
         "Curso",
         secondary=prerrequisitos,
-        primaryjoin=id==prerrequisitos.c.curso_id,
-        secondaryjoin=id==prerrequisitos.c.prerrequisito_id,
+        primaryjoin=id == prerrequisitos.c.curso_id,
+        secondaryjoin=id == prerrequisitos.c.prerrequisito_id,
         backref="prerequisites"
     )
+
 
 class Seccion(Base):
     __tablename__ = "secciones"
@@ -62,19 +66,20 @@ class Seccion(Base):
     capac_estimada = Column(Integer)
     # Turno de la sección: MAÑANA, TARDE, COMPLETO
     turno = Column(String, default="COMPLETO")
-    
+
     curso = relationship("Curso", back_populates="secciones")
     docente = relationship("User", back_populates="secciones")
     horarios = relationship("Horario", back_populates="seccion")
+
 
 class Horario(Base):
     __tablename__ = "horarios"
     id = Column(Integer, primary_key=True, index=True)
     seccion_id = Column(Integer, ForeignKey("secciones.id"))
     aula_id = Column(Integer, ForeignKey("aulas.id"))
-    
+
     dia_semana = Column(Integer)  # 0-5 (Lunes-Sábado)
     bloque = Column(Integer)      # 0-8 (slot index)
-    
+
     seccion = relationship("Seccion", back_populates="horarios")
     aula = relationship("Aula", back_populates="horarios")

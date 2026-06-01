@@ -4,12 +4,13 @@ from sqlalchemy.orm import Session
 from io import BytesIO
 from fpdf import FPDF
 from ..database import get_db
-from ..models import Horario, Seccion, Aula, Curso, User
-from ..core.scheduler import SLOT_TIME_MAP, DAY_LABELS
+from ..models import Horario, Seccion, Curso, User
+from ..core.scheduler import SLOT_TIME_MAP
 
 router = APIRouter(prefix="/export", tags=["Exportación"])
 
 DAY_HEADERS = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
+
 
 class HorarioPDF(FPDF):
     def header(self):
@@ -26,7 +27,11 @@ class HorarioPDF(FPDF):
         self.set_y(-15)
         self.set_font('Helvetica', 'I', 8)
         self.set_text_color(128, 128, 128)
-        self.cell(0, 10, f'Página {self.page_no()} | Generado por SGOHA - Sistema de Generación Óptima de Horarios Académicos', 0, 0, 'C')
+        footer_text = (
+            f"Página {self.page_no()} | "
+            "Generado por SGOHA - Sistema de Generación Óptima de Horarios Académicos"
+        )
+        self.cell(0, 10, footer_text, 0, 0, 'C')
 
 
 def build_schedule_grid(horarios_data):
@@ -89,16 +94,11 @@ def export_pdf_all(db: Session = Depends(get_db)):
     pdf.set_text_color(0, 0, 0)
     for sl in range(9):
         slot_info = SLOT_TIME_MAP.get(sl, {})
-        time_str = f"{slot_info.get('inicio', '')}\n{slot_info.get('fin', '')}"
-
         # Alternar colores de fila
         if sl % 2 == 0:
             pdf.set_fill_color(240, 245, 250)
         else:
             pdf.set_fill_color(255, 255, 255)
-
-        x_start = pdf.get_x()
-        y_start = pdf.get_y()
 
         # Time column
         pdf.set_font('Helvetica', 'B', 7)
@@ -107,8 +107,6 @@ def export_pdf_all(db: Session = Depends(get_db)):
         for d in range(6):
             entry = grid.get((d, sl))
             if entry:
-                pdf.set_font('Helvetica', 'B', 6)
-                text = f"{entry['curso']}\n{entry['aula']} | {entry['docente']}"
                 # Colored cell for assigned slot
                 pdf.set_fill_color(200, 230, 255)
                 x = pdf.get_x()

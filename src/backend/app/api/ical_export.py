@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from datetime import datetime, timedelta
 from ..database import get_db
 from ..models import Horario, Seccion, Curso, User
-from ..core.scheduler import SLOT_TIME_MAP, DAY_LABELS
+from ..core.scheduler import SLOT_TIME_MAP
 
 router = APIRouter(prefix="/export", tags=["Exportación"])
 
