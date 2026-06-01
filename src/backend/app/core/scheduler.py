@@ -1,6 +1,6 @@
 from ortools.sat.python import cp_model
 from sqlalchemy.orm import Session
-from ..models import Seccion, Aula, User, Horario
+from ..models import Seccion, Aula, User
 
 # ═══════════════════════════════════════════════════════════════
 # CONFIGURACIÓN DE GRILLA TEMPORAL
@@ -224,7 +224,6 @@ class SchedulerEngine:
                                     vars_pt.append(x[(s.id, a_id, d, sl)])
                         if len(vars_pt) > 1:
                             self.model.Add(sum(vars_pt) <= 1)
-
 
         # ═══════════════════════════════════════════════════════
         # FUNCIÓN OBJETIVO (todo lo "suave" va aquí)

@@ -7,6 +7,7 @@ from ..schemas import Aula as AulaSchema, AulaCreate
 
 router = APIRouter(prefix="/aulas", tags=["Aulas"])
 
+
 @router.post("/", response_model=AulaSchema)
 def create_aula(aula: AulaCreate, db: Session = Depends(get_db)):
     existing = db.query(AulaModel).filter(AulaModel.nombre == aula.nombre).first()
@@ -18,9 +19,11 @@ def create_aula(aula: AulaCreate, db: Session = Depends(get_db)):
     db.refresh(new_aula)
     return new_aula
 
+
 @router.get("/", response_model=List[AulaSchema])
 def get_aulas(db: Session = Depends(get_db)):
     return db.query(AulaModel).all()
+
 
 @router.delete("/{aula_id}")
 def delete_aula(aula_id: int, db: Session = Depends(get_db)):

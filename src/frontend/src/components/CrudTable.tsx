@@ -1,16 +1,16 @@
 import React from 'react';
 
-interface CrudTableProps {
+interface CrudTableProps<T extends { id: number }> {
   title: string;
   description: string;
   headers: string[];
-  data: any[];
+  data: T[];
   onAdd: () => void;
   onDelete: (id: number) => void;
-  renderRow: (item: any) => React.ReactNode;
+  renderRow: (item: T) => React.ReactNode;
 }
 
-const CrudTable: React.FC<CrudTableProps> = ({ 
+function CrudTable<T extends { id: number }>({ 
   title, 
   description, 
   headers, 
@@ -18,15 +18,15 @@ const CrudTable: React.FC<CrudTableProps> = ({
   onAdd, 
   onDelete, 
   renderRow 
-}) => {
+}: CrudTableProps<T>) {
   const [searchTerm, setSearchTerm] = React.useState('');
 
   // Lógica de filtrado local (RF-05)
   const filteredData = React.useMemo(() => {
     if (!searchTerm.trim()) return data;
     const lowerSearch = searchTerm.toLowerCase();
-    return data.filter(item => 
-      Object.values(item).some(val => 
+    return data.filter(item =>
+      Object.values(item).some(val =>
         String(val).toLowerCase().includes(lowerSearch)
       )
     );

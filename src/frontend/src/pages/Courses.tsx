@@ -7,13 +7,14 @@ interface Curso {
   nombre: string;
   creditos: number;
   tipo: string;
+  periodo: number;
 }
 
 const Courses: React.FC = () => {
   const [cursos, setCursos] = useState<Curso[]>([]);
   const [isAdding, setIsAdding] = useState(false);
   const [newCurso, setNewCurso] = useState({ codigo: '', nombre: '', creditos: 4, tipo: 'Teoría', periodo: 1 });
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [periodFilter, setPeriodFilter] = useState<number | 'all'>('all');
 
   useEffect(() => {
@@ -63,7 +64,7 @@ const Courses: React.FC = () => {
 
   const filteredCursos = periodFilter === 'all' 
     ? cursos 
-    : cursos.filter(c => (c as any).periodo === periodFilter);
+    : cursos.filter(c => c.periodo === periodFilter);
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -162,7 +163,7 @@ const Courses: React.FC = () => {
           <>
             <td className="px-8 py-5">
               <span className="text-sm font-black text-white bg-white/5 px-2 py-1 rounded">
-                P{(curso as any).periodo}
+                P{curso.periodo}
               </span>
             </td>
             <td className="px-8 py-5">

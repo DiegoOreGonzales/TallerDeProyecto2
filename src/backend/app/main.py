@@ -25,9 +25,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get("/")
 async def root():
     return {"message": "Bienvenido al Sistema de Generación Óptima de Horarios"}
+
 
 @app.get("/health")
 async def health_check():
