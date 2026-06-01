@@ -1,0 +1,5 @@
+=== REPORTE DE BENCHMARK SGOHA ===
+Configuracion: 10 Docentes, 30 Aulas, 30 Cursos, 100 Secciones
+Status de Resolucion: SUCCESS
+Tiempo total de ejecucion: 0.0333 segundos
+Cumple RNF-01 (<= 2.0s): SI

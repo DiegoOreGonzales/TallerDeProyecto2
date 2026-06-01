@@ -2,6 +2,7 @@ import sys
 import os
 import time
 
+os.environ['DATABASE_URL'] = 'sqlite:///./test_benchmark.db'
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from app.database import SessionLocal, engine, Base
@@ -54,8 +55,8 @@ def run_benchmark():
         # Ejecutar y Medir
         print("Ejecutando algoritmo CP-SAT...")
         start_time = time.time()
-        engine = SchedulerEngine(db)
-        result = engine.generate()
+        scheduler_engine = SchedulerEngine(db)
+        result = scheduler_engine.generate()
         end_time = time.time()
         
         elapsed_time = end_time - start_time

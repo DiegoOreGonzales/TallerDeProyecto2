@@ -1,6 +1,9 @@
 import pytest
 import os
 
+# Establecer DATABASE_URL por defecto para evitar cargar psycopg2
+os.environ.setdefault("DATABASE_URL", "sqlite:///./test.db")
+
 # Solo configurar DB si no estamos ejecutando tests aislados
 # Los tests de test_optimization_model.py no requieren DB
 if os.environ.get("SKIP_DB_SETUP") != "1":

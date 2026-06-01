@@ -396,5 +396,18 @@ TallerDeProyecto2/
 
 ---
 
+## 📜 Control de Versiones e Historial de Cambios (Changelog)
+
+| Versión | Fecha | Hito / Sprint | Cambios Clave | Autor Principal |
+| :---: | :---: | :---: | :--- | :--- |
+| `v0.1.0` | 22 Mar 2026 | Sprint 0 | Inicialización del repositorio, dockerización, base de datos PostgreSQL y modelo de autenticación base. | Luis / Aldo |
+| `v0.2.0` | 05 Abr 2026 | Sprint 1 | Modelado CRUD de Cursos, Aulas, Secciones e interfaz base de login con JWT. | Diego / Jose |
+| `v0.3.0` | 26 Abr 2026 | Sprint 2 | Implementación del motor CP-SAT de Google OR-Tools en `scheduler.py` con 9 restricciones duras. | Jose Bacilio |
+| `v0.4.0` | 10 May 2026 | Sprint 3 | Panel interactivo de grilla horaria 6x9 y lógica de reajuste manual drag-and-drop en React. | Aldo / Luis |
+| `v1.0.0` | 29 May 2026 | Sprint 4 | **Lanzamiento MVP Inspección 04:** Suite de TDD (cobertura 99%), exportación backend a PDF (`fpdf2`) y calendario iCal (`.ics`). | Jose Bacilio |
+| `v1.0.1` | 01 Jun 2026 | Corrección | Saneamiento del pipeline de CI/CD: Corrección de tipos TypeScript y formato PEP-8 de flake8. | Todo el equipo |
+
+---
+
 *Documento elaborado por el equipo SGOHA — Taller de Proyecto 2 — Universidad Continental*
-*Última actualización: 31 de Mayo de 2026*
+*Última actualización: 01 de Junio de 2026*
