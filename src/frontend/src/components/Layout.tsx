@@ -6,7 +6,7 @@ interface LayoutProps {
   currentView: string;
   setCurrentView: (view: string) => void;
   onLogout: () => void;
-  userRole: 'admin' | 'student';
+  userRole: string;
   userName: string;
 }
 
@@ -26,9 +26,26 @@ const Layout: React.FC<LayoutProps> = ({ children, currentView, setCurrentView, 
             </h2>
             {userRole === 'admin' && (
               <div className="flex items-center gap-6">
-                <button className="text-orange-500 font-bold border-b-2 border-orange-500 pb-1 text-sm font-label">General</button>
-                <button className="text-neutral-400 font-medium hover:text-white transition-colors text-sm font-label">Facultades</button>
-                <button className="text-neutral-400 font-medium hover:text-white transition-colors text-sm font-label">Estadísticas</button>
+                <button 
+                  onClick={() => setCurrentView('dashboard')}
+                  className={`pb-1 text-sm font-label transition-colors ${
+                    currentView === 'dashboard' 
+                      ? 'text-orange-500 font-bold border-b-2 border-orange-500' 
+                      : 'text-neutral-400 font-medium hover:text-white'
+                  }`}
+                >
+                  General
+                </button>
+                <button 
+                  onClick={() => setCurrentView('facultades')}
+                  className={`pb-1 text-sm font-label transition-colors ${
+                    currentView === 'facultades' 
+                      ? 'text-purple-400 font-bold border-b-2 border-purple-500' 
+                      : 'text-neutral-400 font-medium hover:text-white'
+                  }`}
+                >
+                  Facultades
+                </button>
               </div>
             )}
           </div>

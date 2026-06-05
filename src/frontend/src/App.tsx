@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Layout from './components/Layout';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
@@ -6,6 +6,7 @@ import Courses from './pages/Courses';
 import Classrooms from './pages/Classrooms';
 import Sections from './pages/Sections';
 import Teachers from './pages/Teachers';
+import Faculties from './pages/Faculties';
 import './index.css';
 
 function App() {
@@ -84,6 +85,8 @@ function App() {
         return userRole === 'admin' ? <Sections /> : <Dashboard role={userRole} cycle={userCycle} shift={userShift} />;
       case 'docentes':
         return userRole === 'admin' ? <Teachers /> : <Dashboard role={userRole} cycle={userCycle} shift={userShift} />;
+      case 'facultades':
+        return <Faculties />;
       default:
         return <Dashboard role={userRole} cycle={userCycle} shift={userShift} />;
 

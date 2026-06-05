@@ -35,6 +35,7 @@ services:
     container_name: scheduling_backend
     volumes:
       - ./src/backend:/app
+      - ./docs:/docs
     ports:
       - "8000:8000"
     environment:

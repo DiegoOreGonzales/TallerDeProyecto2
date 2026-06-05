@@ -7,7 +7,7 @@ interface Seccion {
   curso_id: number;
   docente_id: number;
   capac_estimada: number;
-  curso?: { nombre: string; codigo: string };
+  curso?: { nombre: string; codigo: string; periodo?: number };
   docente?: { username: string };
 }
 

@@ -13,7 +13,6 @@ const Courses: React.FC = () => {
   const [cursos, setCursos] = useState<Curso[]>([]);
   const [isAdding, setIsAdding] = useState(false);
   const [newCurso, setNewCurso] = useState({ codigo: '', nombre: '', creditos: 4, tipo: 'Teoría', periodo: 1 });
-  const [loading, setLoading] = useState(true);
   const [periodFilter, setPeriodFilter] = useState<number | 'all'>('all');
 
   useEffect(() => {
@@ -27,8 +26,6 @@ const Courses: React.FC = () => {
       setCursos(data);
     } catch (error) {
       console.error('Error fetching cursos:', error);
-    } finally {
-      setLoading(false);
     }
   };
 

@@ -14,10 +14,12 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView, userRole
     { id: 'aulas', label: 'Aulas', icon: 'domain' },
     { id: 'secciones', label: 'Secciones', icon: 'groups' },
     { id: 'docentes', label: 'Docentes', icon: 'school' },
+    { id: 'facultades', label: 'Facultades', icon: 'account_balance' },
   ];
 
   const studentMenuItems = [
     { id: 'dashboard', label: 'Mi Horario', icon: 'calendar_month' },
+    { id: 'facultades', label: 'Facultades', icon: 'account_balance' },
   ];
 
   const menuItems = userRole === 'admin' ? adminMenuItems : studentMenuItems;

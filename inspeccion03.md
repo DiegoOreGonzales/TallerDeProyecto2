@@ -221,3 +221,55 @@ TallerDeProyecto2/
 ├── inspeccion03.md                     ← Este documento
 └── README.md
 ```
+
+---
+
+## 🎤 Guía de Exposición: Pitch de Alto Impacto (Rúbrica Sobresaliente)
+
+> [!IMPORTANT]
+> **Estrategia de Exposición (4-5 minutos):** Enfoque directo en el valor técnico, decisiones basadas en datos y coherencia entre negocio (Jira/presupuesto) y desarrollo (SDD/algoritmo). No leas diapositivas; narra la historia de cómo resolviste un problema **NP-Hard** combinando ingeniería de software rigurosa y optimización matemática.
+
+### 📌 Criterio 1: Planificación del Proyecto en Jira
+* **Qué decir:** *"Nuestro backlog no es una lista estática de tareas, sino un motor de valor. Formulamos historias de usuario enfocadas en la resolución del problema CSP (Constraint Satisfaction Problem). Estructuramos el desarrollo en 5 épicas críticas con 6 sprints y mapeamos las dependencias mediante un cronograma con ruta crítica validada. Esto nos permite garantizar que cada sprint tenga un incremento de software funcional alineado con las restricciones del negocio."*
+* **Palabras clave:** *Ruta crítica, priorización basada en riesgo/complejidad, backlog trazable a CSP.*
+
+### 📌 Criterio 2: Métricas Ágiles
+* **Qué decir:** *"Gestionamos el proyecto basándonos en evidencia empírica. Analizamos el gráfico Burnup para controlar desviaciones de alcance y el Burndown para asegurar el ritmo de entrega de cada sprint. Registramos una velocidad promedio de 15 puntos con un coeficiente de variación de apenas 10.8%, lo que demuestra la alta estabilidad de nuestro equipo. Además, mediante el Diagrama de Flujo Acumulado e Histogramas de Lead Time, identificamos cuellos de botella y tomamos medidas correctivas inmediatas."*
+* **Palabras clave:** *Estabilidad del equipo (CV = 10.8%), burnup de alcance, control de Lead Time, mejora continua basada en datos.*
+
+### 📌 Criterio 3: Presupuesto del Proyecto
+* **Qué decir:** *"El costo total de desarrollo de nuestro prototipo PoC asciende a S/. 15,380. Esto incluye un desglose transparente de RRHH estructurado en 4 roles clave, costos de infraestructura cloud en AWS y costos indirectos. Además, incorporamos principios de Green Software estimando de forma proactiva la huella de carbono de la ejecución del algoritmo de optimización, garantizando un presupuesto sostenible y responsable."*
+* **Palabras clave:** *Costos integrales (RRHH, Cloud, indirectos), Green Software, evolución temporal de costos.*
+
+### 📌 Criterio 4: Análisis de Costos
+* **Qué decir:** *"Demostramos que resolver un problema complejo de optimización no tiene que ser costoso. Justificamos la relación entre la complejidad NP-Hard del problema de horarios y el costo del procesamiento cloud. Propusimos una optimización sostenible mediante pre-filtrado de datos en memoria, reduciendo las consultas en un 70% y asegurando un Retorno de Inversión (ROI) estimado del 94.7% a los dos años."*
+* **Palabras clave:** *NP-Hard, optimización sostenible (pre-filtrado -70%), ROI de 94.7% a 2 años.*
+
+### 📌 Criterio 5: Gestión de Riesgos y Oportunidades
+* **Qué decir:** *"Mitigamos la incertidumbre de forma activa. Desarrollamos una matriz de riesgos cualitativa y cuantitativa (probabilidad x impacto), identificando 7 riesgos críticos mapeados directamente a restricciones duras del CSP (como colisión de horarios) y dependencias de API. Asimismo, estructuramos 5 oportunidades estratégicas para capitalizar el uso de herramientas inteligentes de desarrollo como Google Antigravity para acelerar la entrega."*
+* **Palabras clave:** *Matriz probabilidad-impacto, mitigación de colisiones de CSP, oportunidades de automatización.*
+
+### 📌 Criterio 6: Spec-Driven Development (SDD)
+* **Qué decir:** *"Redujimos a cero la ambigüedad antes de escribir una sola línea de código. Nuestro `constitution.md` establece las reglas y principios éticos del sistema. El documento `specs.md` especifica de manera matemática las entradas y salidas, consolidando 14 reglas de negocio estrictas y 10 casos de borde extremadamente complejos. Esto permitió al equipo de desarrollo avanzar con total claridad y sin bloqueos de diseño."*
+* **Palabras clave:** *Constitution.md, specs.md, 14 reglas de negocio, 10 edge-cases documentados.*
+
+### 📌 Criterio 7: Coherencia SDD
+* **Qué decir:** *"Garantizamos la fidelidad de nuestro software. Existe una trazabilidad de extremo a extremo que conecta el requisito funcional, el modelo matemático formal, la especificación en `specs.md` y la implementación real en Python. Para probar la hipótesis, validamos con éxito 5 escenarios complejos (PoC) diseñados en la especificación, demostrando la eliminación de conflictos de solapamiento en tiempo de ejecución."*
+* **Palabras clave:** *Trazabilidad Requisito-Spec-Impl-Test, validación de 5 escenarios PoC sin solapamientos.*
+
+### 📌 Criterio 8: Gestión del Repositorio GitHub
+* **Qué decir:** *"Adoptamos estándares de la industria para desarrollo colaborativo. Seguimos la metodología Git Flow con ramas dedicadas de feature, release y main. Todos nuestros commits siguen la nomenclatura semántica (Conventional Commits), lo que facilita el despliegue automático y control de versiones. Nuestra documentación en el README incluye guías completas de instalación, arquitectura y dependencias contenerizadas en Docker."*
+* **Palabras clave:** *Git Flow, commits semánticos, Docker, README detallado.*
+
+### 📌 Criterio 9: Trazabilidad del Desarrollo
+* **Qué decir:** *"Cada línea de código tiene un propósito de negocio claro. Mapeamos de forma directa cada ID de commit de GitHub a su respectiva historia de usuario en Jira. Además, implementamos una matriz RACI para definir las responsabilidades del equipo y establecemos una rigurosa Definition of Done (DoD) que exige pruebas automatizadas completas para aceptar cualquier entrega."*
+* **Palabras clave:** *Backlog to commits mapping, matriz RACI, Definition of Done.*
+
+### 📌 Criterio 10: Análisis del Problema y Toma de Decisiones
+* **Qué decir:** *"La solución que construimos está fundamentada técnicamente. Realizamos análisis comparativos profundos de trade-offs de arquitectura (PERN vs MERN) y tecnologías de resolución matemática (Google OR-Tools CP-SAT contra algoritmos genéticos y búsqueda tabú). Demostramos que CP-SAT de OR-Tools garantiza la obtención de óptimos globales en menos de 2 segundos, optimizando adicionalmente 8 KPIs institucionales."*
+* **Palabras clave:** *Trade-off PERN vs MERN, motor CP-SAT de OR-Tools, 8 KPIs de optimización.*
+
+### 📌 Criterio 11: Calidad Global de los Artefactos
+* **Qué decir:** *"Finalmente, el valor de nuestro proyecto radica en su consistencia sistémica global. Toda nuestra planificación, costos y gestión de riesgos se integran de forma orgánica con el software entregado. Como resultado de esta rigurosidad, nuestra suite de TDD (con 40 tests automatizados) reporta un 99% de cobertura en el núcleo del motor del scheduler, garantizando estabilidad y mantenibilidad en producción."*
+* **Palabras clave:** *Coherencia transversal, cobertura del 99% con pytest, 40 tests automatizados.*
+

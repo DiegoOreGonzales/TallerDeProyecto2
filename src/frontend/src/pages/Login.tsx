@@ -25,6 +25,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem('access_token', data.access_token);
+        localStorage.setItem('user_career', data.user_career || "Ingeniería de Sistemas e Informática");
         onLogin(data.user_role, data.user_name, data.user_cycle, data.user_shift);
       } else {
         const err = await response.json();
