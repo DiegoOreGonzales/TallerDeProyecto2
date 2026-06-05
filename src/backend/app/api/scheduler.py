@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from ..database import get_db
 from ..core.scheduler import SchedulerEngine, SLOT_TIME_MAP, DAY_LABELS
 from ..models import Horario, Seccion, Aula, Curso, User
@@ -9,11 +9,19 @@ router = APIRouter(prefix="/scheduler", tags=["Scheduler"])
 
 @router.get("/")
 def get_schedules(db: Session = Depends(get_db)):
-    horarios = db.query(Horario).all()
+    # Optimizamos cargando de manera ansiosa (eager loading) las relaciones
+    # Esto reduce el número de consultas a base de datos de 1+2N a 1 (Green Software optimization)
+    horarios = db.query(Horario).options(
+        joinedload(Horario.seccion).joinedload(Seccion.curso),
+        joinedload(Horario.seccion).joinedload(Seccion.docente),
+        joinedload(Horario.aula)
+    ).all()
+    
     result = []
     for h in horarios:
         slot_info = SLOT_TIME_MAP.get(h.bloque, {})
-        docente = db.query(User).filter(User.id == h.seccion.docente_id).first()
+        # Usamos la relación ya precargada en vez de hacer una query adicional por cada iteración
+        docente = h.seccion.docente
         result.append({
             "seccion_id": h.seccion_id,
             "seccion_codigo": h.seccion.codigo,

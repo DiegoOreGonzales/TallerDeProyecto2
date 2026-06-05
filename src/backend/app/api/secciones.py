@@ -8,8 +8,9 @@ router = APIRouter(prefix="/secciones", tags=["Secciones"])
 
 
 @router.get("/", response_model=List[schemas.Seccion])
-def get_secciones(db: Session = Depends(get_db)):
-    return db.query(models.Seccion).all()
+def get_secciones(skip: int = 0, limit: int = 50, db: Session = Depends(get_db)):
+    # Paginación para minimizar payloads (Green Software)
+    return db.query(models.Seccion).offset(skip).limit(limit).all()
 
 
 @router.post("/", response_model=schemas.Seccion)
