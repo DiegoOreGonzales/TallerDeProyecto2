@@ -54,7 +54,6 @@ services:
     container_name: scheduling_frontend
     volumes:
       - ./src/frontend:/app
-      - /app/node_modules
     ports:
       - "5173:5173"
     depends_on:

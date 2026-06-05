@@ -12,7 +12,7 @@ COPY . .
 # Exponer el puerto de Vite
 EXPOSE 5173
 
-# Limpiar node_modules viejo (volumen Docker persistente) e instalar desde cero
-# Solo instala dependencies (excluye Cypress, Playwright, Sharp, etc.)
-CMD sh -c "rm -rf node_modules/.package-lock.json node_modules/.baseline* 2>/dev/null; npm config set registry https://registry.npmjs.org/ && npm install --omit=dev --no-audit --no-fund --legacy-peer-deps && npx --yes vite --host"
-
+# 1. Borrar node_modules completo del volumen Docker persistente para evitar ENOTEMPTY
+# 2. Instalar TODAS las dependencias (vite + plugin-react necesitan estar disponibles)
+# 3. Levantar el dev server de Vite
+CMD sh -c "rm -rf /app/node_modules && npm config set registry https://registry.npmjs.org/ && npm install --no-audit --no-fund --legacy-peer-deps --ignore-scripts && npm run dev"
