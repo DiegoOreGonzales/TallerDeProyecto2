@@ -21,8 +21,9 @@ def create_aula(aula: AulaCreate, db: Session = Depends(get_db)):
 
 
 @router.get("/", response_model=List[AulaSchema])
-def get_aulas(db: Session = Depends(get_db)):
-    return db.query(AulaModel).all()
+def get_aulas(skip: int = 0, limit: int = 50, db: Session = Depends(get_db)):
+    # Paginación para minimizar el payload de red (Green Software)
+    return db.query(AulaModel).offset(skip).limit(limit).all()
 
 
 @router.delete("/{aula_id}")

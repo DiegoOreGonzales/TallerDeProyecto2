@@ -217,11 +217,12 @@ Cumple con objetivos de Green Software: SÍ (Ahorro energético > 80%)
         print(report)
         
         # Guardar evidencia localmente
-        docs_sost_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "docs", "sostenibilidad")
+        root_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        docs_sost_dir = os.path.join(root_dir, "docs", "sostenibilidad")
         os.makedirs(docs_sost_dir, exist_ok=True)
         log_path_sost = os.path.join(docs_sost_dir, "sustainability_benchmark.log")
         
-        evidencias_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "docs", "evidencias")
+        evidencias_dir = os.path.join(root_dir, "docs", "evidencias")
         os.makedirs(evidencias_dir, exist_ok=True)
         log_path_evid = os.path.join(evidencias_dir, "sustainability_benchmark.log")
         
@@ -230,7 +231,7 @@ Cumple con objetivos de Green Software: SÍ (Ahorro energético > 80%)
         with open(log_path_evid, "w", encoding="utf-8") as f:
             f.write(report)
             
-        print(f"✅ Reporte de sostenibilidad guardado en:")
+        print(f"[OK] Reporte de sostenibilidad guardado en:")
         print(f"   - {log_path_sost}")
         print(f"   - {log_path_evid}")
         

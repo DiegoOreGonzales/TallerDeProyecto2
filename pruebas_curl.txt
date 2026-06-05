@@ -1,0 +1,388 @@
+###############################################################################
+#  SGOHA — PRUEBAS DE RUTAS API CON cURL
+#  Sistema de Generación Óptima de Horarios Académicos
+#  Universidad Continental
+#
+#  Uso: Reemplazar {ID} con valores reales. Ejecutar en orden secuencial.
+#  Backend requerido: http://localhost:8000
+#  Seed recomendado: python src/backend/seed.py
+###############################################################################
+
+================================================================================
+=== 🏠 SISTEMA ===
+================================================================================
+
+=== HEALTH CHECK ===
+Descripción: Verifica que el servidor backend de SGOHA esté operativo y
+respondiendo correctamente. Este es el primer comando que debe ejecutarse para
+confirmar que la aplicación FastAPI se ha iniciado sin errores y está lista para
+recibir peticiones HTTP. Devuelve un estado "healthy" si todo funciona.
+
+Comando:
+curl -s http://localhost:8000/health
+
+Respuesta Esperada:
+{"status":"healthy"}
+
+================================================================================
+
+=== ROOT — MENSAJE DE BIENVENIDA ===
+Descripción: Obtiene el mensaje de bienvenida de la API de SGOHA. Este endpoint
+sirve como punto de entrada principal y confirma que el enrutador raíz de la
+aplicación FastAPI está configurado correctamente. Es útil como prueba de humo
+para verificar el despliegue básico del servidor.
+
+Comando:
+curl -s http://localhost:8000/
+
+Respuesta Esperada:
+{"message":"Bienvenido al Sistema de Generación Óptima de Horarios"}
+
+================================================================================
+=== 🔐 AUTENTICACIÓN ===
+================================================================================
+
+=== LOGIN ADMIN ===
+Descripción: Inicia sesión con las credenciales de administrador predefinidas
+(username: admin, password: admin). La API valida las credenciales usando bcrypt
+y devuelve un token JWT firmado, junto con el rol, nombre, ciclo y turno del
+usuario. Este token debe ser incluido en el header Authorization de las
+siguientes peticiones para acceder a rutas protegidas.
+
+Comando:
+curl -s -X POST http://localhost:8000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"username":"admin","password":"admin"}'
+
+Respuesta Esperada:
+{"access_token":"eyJ...","token_type":"bearer","user_role":"admin","user_name":"admin","user_cycle":null,"user_shift":"COMPLETO"}
+
+================================================================================
+
+=== REGISTRAR DOCENTE ===
+Descripción: Registra un nuevo usuario con rol de docente en el sistema. Los
+datos requeridos incluyen username único, email válido, contraseña segura, rol
+específico "docente" y turno preferido (MAÑANA/TARDE/COMPLETO). La API hashea
+la contraseña con bcrypt antes de almacenarla y nunca la devuelve en la
+respuesta. Si el username o email ya existen, devuelve error 400.
+
+Comando:
+curl -s -X POST http://localhost:8000/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"username":"docente_curl","email":"docente_curl@test.com","password":"test123","role":"docente","turno_preferido":"MAÑANA"}'
+
+Respuesta Esperada:
+{"id":28,"username":"docente_curl","email":"docente_curl@test.com","role":"docente","turno_preferido":"MAÑANA","ciclo":null,"is_active":true}
+
+================================================================================
+
+=== REGISTRAR ESTUDIANTE ===
+Descripción: Registra un estudiante con todos los campos requeridos: username,
+email, contraseña, rol "estudiante", turno preferido y ciclo académico actual
+(1-10). El sistema valida que el ciclo esté entre 1 y 10; de lo contrario
+devuelve error 400 con el mensaje "Ciclo inválido". Los estudiantes pueden
+visualizar su horario filtrado por ciclo y turno en el dashboard.
+
+Comando:
+curl -s -X POST http://localhost:8000/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"username":"estu_curl","email":"estu_curl@test.com","password":"test123","role":"estudiante","turno_preferido":"TARDE","ciclo_actual":5}'
+
+Respuesta Esperada:
+{"id":29,"username":"estu_curl","email":"estu_curl@test.com","role":"estudiante","turno_preferido":"TARDE","ciclo":5,"is_active":true}
+
+================================================================================
+
+=== LISTAR USUARIOS ===
+Descripción: Obtiene la lista completa de todos los usuarios registrados en el
+sistema, incluyendo administradores, docentes y estudiantes. Cada registro
+contiene id, username, email, rol, turno preferido, ciclo (si aplica) y estado
+activo. La respuesta NO incluye contraseñas ni tokens por seguridad. Es útil
+para la gestión administrativa y verificación del seed de datos.
+
+Comando:
+curl -s http://localhost:8000/api/auth/users
+
+Respuesta Esperada:
+[{"id":1,"username":"admin","email":"admin@ucontinental.edu.pe","role":"admin","turno_preferido":"COMPLETO","ciclo":null,"is_active":true},...]
+
+================================================================================
+
+=== LISTAR DOCENTES ===
+Descripción: Obtiene únicamente los usuarios con rol "docente". Este endpoint
+aplica un filtro en la base de datos para retornar solo los docentes, facilitando
+la asignación de secciones sin necesidad de filtrar manualmente la lista completa
+de usuarios. Cada docente incluye su turno preferido para la asignación de
+horarios.
+
+Comando:
+curl -s http://localhost:8000/api/auth/users/docentes
+
+Respuesta Esperada:
+[{"id":2,"username":"docente_demo","email":"docente@ucontinental.edu.pe","role":"docente","turno_preferido":"COMPLETO","is_active":true},...]
+
+================================================================================
+
+=== ELIMINAR USUARIO ===
+Descripción: Elimina un usuario del sistema por su ID numérico. No se permite
+eliminar al administrador (rol=admin) por seguridad, devolviendo error 403. Si
+el ID no existe, devuelve error 404. Es útil para limpiar usuarios de prueba
+creados durante las pruebas. Requiere ID de usuario creado previamente.
+
+Comando (reemplazar {ID} con el ID del usuario creado):
+curl -s -X DELETE http://localhost:8000/api/auth/users/{ID}
+
+Respuesta Esperada:
+{"message":"Usuario eliminado"}
+
+================================================================================
+=== 📚 CURSOS ===
+================================================================================
+
+=== CREAR CURSO ===
+Descripción: Registra un nuevo curso en el catálogo académico con código único,
+nombre descriptivo, créditos (1-5), tipo (Teoría o Laboratorio) y período
+académico (1-10). Si el código del curso ya existe en la base de datos, la API
+devuelve error 400. Cada curso puede tener múltiples secciones y prerrequisitos.
+
+Comando:
+curl -s -X POST http://localhost:8000/api/cursos/ \
+  -H "Content-Type: application/json" \
+  -d '{"codigo":"ASUC-CURL-TEST","nombre":"Curso de Prueba cURL","creditos":3,"tipo":"Teoría","periodo":5}'
+
+Respuesta Esperada:
+{"id":71,"codigo":"ASUC-CURL-TEST","nombre":"Curso de Prueba cURL","creditos":3,"tipo":"Teoría","periodo":5}
+
+================================================================================
+
+=== LISTAR CURSOS ===
+Descripción: Obtiene el catálogo completo de cursos ordenados por período
+académico y código. Incluye todos los cursos de la malla curricular de
+Ingeniería de Sistemas e Informática, con sus respectivos créditos, tipo y
+período. Es la fuente principal de datos para la gestión de la malla curricular
+y la creación de secciones.
+
+Comando:
+curl -s http://localhost:8000/api/cursos/
+
+Respuesta Esperada:
+[{"id":1,"codigo":"ASUC01113","nombre":"MATEMÁTICA SUPERIOR","creditos":5,"tipo":"Teoría","periodo":1},...]
+
+================================================================================
+
+=== OBTENER CURSO POR ID ===
+Descripción: Obtiene los detalles de un curso específico utilizando su ID
+numérico único. Si el ID proporcionado no corresponde a ningún curso registrado,
+la API devuelve un error 404 con el mensaje "Curso no encontrado". Este endpoint
+es útil para consultar información detallada de un curso particular en la
+interfaz de edición o visualización.
+
+Comando (reemplazar {ID} con el ID del curso):
+curl -s http://localhost:8000/api/cursos/{ID}
+
+Respuesta Esperada:
+{"id":1,"codigo":"ASUC01113","nombre":"MATEMÁTICA SUPERIOR","creditos":5,"tipo":"Teoría","periodo":1}
+
+================================================================================
+
+=== ELIMINAR CURSO ===
+Descripción: Elimina un curso del sistema por su ID. Si el curso tiene secciones
+asociadas, la operación puede fallar debido a restricciones de integridad
+referencial en la base de datos. Es recomendable eliminar primero las secciones
+asociadas o usar este endpoint solo para cursos de prueba sin dependencias.
+
+Comando (reemplazar {ID} con el ID del curso a eliminar):
+curl -s -X DELETE http://localhost:8000/api/cursos/{ID}
+
+Respuesta Esperada:
+{"message":"Curso eliminado"}
+
+================================================================================
+=== 🏫 AULAS ===
+================================================================================
+
+=== CREAR AULA ===
+Descripción: Registra un nuevo espacio físico en el sistema. Los campos
+requeridos son nombre único del aula (ej: A-101, L-101), capacidad máxima de
+alumnos y tipo (Teoría, Laboratorio o Taller). Las aulas de tipo Laboratorio
+solo pueden albergar secciones de cursos tipo Laboratorio, mientras que las de
+Teoría aceptan también cursos de Taller.
+
+Comando:
+curl -s -X POST http://localhost:8000/api/aulas/ \
+  -H "Content-Type: application/json" \
+  -d '{"nombre":"A-CURL-01","capacidad":40,"tipo":"Teoría"}'
+
+Respuesta Esperada:
+{"id":32,"nombre":"A-CURL-01","capacidad":40,"tipo":"Teoría"}
+
+================================================================================
+
+=== LISTAR AULAS ===
+Descripción: Obtiene el listado completo de todas las aulas disponibles en el
+sistema, incluyendo aulas de teoría, laboratorios de cómputo y talleres. Cada
+registro muestra el nombre único del aula, su capacidad máxima de estudiantes
+y el tipo de uso. Información esencial para el motor de optimización de
+horarios.
+
+Comando:
+curl -s http://localhost:8000/api/aulas/
+
+Respuesta Esperada:
+[{"id":1,"nombre":"A-101","capacidad":50,"tipo":"Teoría"},...]
+
+================================================================================
+
+=== ELIMINAR AULA ===
+Descripción: Elimina un aula del sistema por su ID numérico. Si el aula tiene
+horarios asignados en el scheduler, la eliminación será rechazada por
+restricciones de clave foránea en la base de datos. Se recomienda usar este
+endpoint para limpiar aulas de prueba creadas durante las pruebas de API.
+
+Comando (reemplazar {ID} con el ID del aula a eliminar):
+curl -s -X DELETE http://localhost:8000/api/aulas/{ID}
+
+Respuesta Esperada:
+{"message":"Aula eliminada"}
+
+================================================================================
+=== 📋 SECCIONES ===
+================================================================================
+
+=== CREAR SECCIÓN ===
+Descripción: Crea una nueva sección (grupo) asociada a un curso y un docente
+específicos. Los campos requeridos son código único de sección, ID del curso,
+ID del docente, capacidad estimada de alumnos y turno (MAÑANA/TARDE/COMPLETO).
+Las secciones son la unidad básica para la generación de horarios por el motor
+de optimización CP-SAT.
+
+Comando:
+curl -s -X POST http://localhost:8000/api/secciones/ \
+  -H "Content-Type: application/json" \
+  -d '{"codigo":"ASUC-CURL-TEST-M","curso_id":1,"docente_id":2,"capac_estimada":35,"turno":"MAÑANA"}'
+
+Respuesta Esperada:
+{"id":123,"codigo":"ASUC-CURL-TEST-M","curso_id":1,"docente_id":2,"capac_estimada":35,"turno":"MAÑANA","curso":null,"docente":null}
+
+================================================================================
+
+=== LISTAR SECCIONES ===
+Descripción: Obtiene todas las secciones registradas en el sistema, incluyendo
+sus relaciones con el curso y docente asociados. Cada sección muestra código,
+curso (con nombre, créditos, tipo), docente asignado, capacidad estimada y
+turno. Es la fuente de datos principal para el motor de generación de horarios.
+
+Comando:
+curl -s http://localhost:8000/api/secciones/
+
+Respuesta Esperada:
+[{"id":1,"codigo":"ASUC01113-M","curso_id":1,"docente_id":2,"capac_estimada":40,"turno":"MAÑANA","curso":{...},"docente":{...}},...]
+
+================================================================================
+
+=== ELIMINAR SECCIÓN ===
+Descripción: Elimina una sección del sistema por su ID. Si la sección tiene
+horarios asignados después de ejecutar el scheduler, la eliminación puede fallar
+por restricciones de integridad referencial. Se recomienda regenerar horarios
+después de eliminar secciones para mantener la consistencia.
+
+Comando (reemplazar {ID} con el ID de la sección a eliminar):
+curl -s -X DELETE http://localhost:8000/api/secciones/{ID}
+
+Respuesta Esperada:
+{"message":"Sección eliminada"}
+
+================================================================================
+=== ⚡ SCHEDULER (MOTOR DE OPTIMIZACIÓN) ===
+================================================================================
+
+=== GENERAR HORARIO ===
+Descripción: Ejecuta el motor de optimización CP-SAT de Google OR-Tools para
+generar la asignación automática de horarios. Primero limpia todos los horarios
+previos, luego aplica restricciones duras (no colisiones, compatibilidad de
+aulas, turnos) y blandas (preferencias horarias, compactación) para encontrar
+la mejor distribución. Puede tomar varios segundos dependiendo de la cantidad
+de secciones y aulas.
+
+Comando:
+curl -s -X POST http://localhost:8000/api/scheduler/generate
+
+Respuesta Esperada:
+{"message":"Horario generado: 244 bloques asignados","data":[{"seccion_id":1,"seccion_codigo":"ASUC01113-M","aula_id":1,"dia":0,"dia_nombre":"Lunes","slot":0,"hora_inicio":"07:00","hora_fin":"08:30","nombre_curso":"MATEMÁTICA SUPERIOR","nombre_aula":"A-101","tipo_curso":"Teoría","periodo":1,"creditos":5,"turno_seccion":"MAÑANA","docente_nombre":"docente_demo","codigo_curso":"ASUC01113"},...]}
+
+================================================================================
+
+=== OBTENER HORARIOS ===
+Descripción: Obtiene todos los bloques de horario generados por el scheduler.
+Cada bloque incluye información completa: ID de sección, código, aula asignada,
+día (0=Lunes a 5=Sábado), slot horario, horas de inicio y fin, desglose de
+horas pedagógicas, nombre del curso, docente y periodo. Si no hay horarios
+generados, devuelve un arreglo vacío.
+
+Comando:
+curl -s http://localhost:8000/api/scheduler/
+
+Respuesta Esperada:
+{"data":[{"seccion_id":1,"seccion_codigo":"ASUC01113-M","aula_id":1,"dia":0,"dia_nombre":"Lunes","slot":0,"hora_inicio":"07:00","hora_fin":"08:30","horas_pedagogicas":[{"hp":1,"inicio":"07:00","fin":"07:40"},{"hp":2,"inicio":"07:50","fin":"08:30"}],"nombre_curso":"MATEMÁTICA SUPERIOR","nombre_aula":"A-101","tipo_curso":"Teoría","periodo":1,"creditos":5,"turno_seccion":"MAÑANA","docente_nombre":"docente_demo","codigo_curso":"ASUC01113"},...]}
+
+================================================================================
+
+=== OBTENER KPIs ===
+Descripción: Obtiene los indicadores clave de rendimiento del dashboard:
+cantidad de cursos registrados, aulas disponibles, secciones creadas, docentes
+activos y bloques de horario generados. Todos los valores son números enteros
+no negativos. Esencial para monitorear el estado general del sistema y verificar
+el impacto de las operaciones CRUD.
+
+Comando:
+curl -s http://localhost:8000/api/scheduler/stats
+
+Respuesta Esperada:
+{"cursos":70,"aulas":31,"secciones":140,"docentes":26,"horarios_generados":244}
+
+================================================================================
+=== 📤 EXPORTACIÓN ===
+================================================================================
+
+=== EXPORTAR PDF COMPLETO ===
+Descripción: Genera un archivo PDF en formato apaisado (landscape A4) con el
+horario completo de todas las secciones. El PDF incluye una tabla organizada por
+días (Lunes a Sábado) y bloques horarios (07:00-21:50), con encabezados
+institucionales de la Universidad Continental. Cada celda muestra el curso, aula
+y docente asignados. Si no hay horarios, devuelve error 404.
+
+Comando:
+curl -s -o horario_completo.pdf http://localhost:8000/api/export/pdf
+
+Respuesta Esperada: Archivo PDF guardado como horario_completo.pdf
+Headers: Content-Type: application/pdf, Content-Disposition: attachment; filename=horario_sgoha.pdf
+
+================================================================================
+
+=== EXPORTAR PDF POR CICLO ===
+Descripción: Genera un PDF filtrado por ciclo académico específico (1-10).
+Muestra únicamente los cursos y secciones pertenecientes al ciclo indicado,
+organizados en la misma estructura de tabla que el PDF completo. Si no existen
+horarios para el ciclo solicitado, la API devuelve error 404. Útil para
+estudiantes que desean ver solo su ciclo.
+
+Comando:
+curl -s -o horario_ciclo_5.pdf http://localhost:8000/api/export/pdf/ciclo/5
+
+Respuesta Esperada: Archivo PDF guardado como horario_ciclo_5.pdf
+Headers: Content-Type: application/pdf, Content-Disposition: attachment; filename=horario_ciclo_5.pdf
+
+================================================================================
+
+=== EXPORTAR CALENDARIO iCal ===
+Descripción: Genera un archivo .ics (formato iCalendar estándar RFC 5545) con
+los horarios del ciclo académico especificado. Cada bloque de horario se
+convierte en un evento de calendario con fecha de inicio, fin, ubicación (aula),
+descripción (sección, docente, tipo) y recurrencia semanal por 16 semanas.
+Compatible con Google Calendar, Microsoft Outlook y Apple Calendar.
+
+Comando:
+curl -s -o horario_ciclo_5.ics http://localhost:8000/api/export/ical/ciclo/5
+
+Respuesta Esperada: Archivo .ics guardado como horario_ciclo_5.ics
+Contenido: BEGIN:VCALENDAR, VERSION:2.0, PRODID:-//SGOHA//Universidad Continental//ES, VEVENTs, END:VCALENDAR

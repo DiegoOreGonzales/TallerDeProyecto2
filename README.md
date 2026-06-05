@@ -182,7 +182,73 @@ A continuación, se define la estructura ágil de desarrollo planificada para el
 
 ---
 
-## 8. Posibles Mejoras a Futuro (Roadmap)
+## 8. 📁 Índice de Documentación (TOC)
+
+Índice completo de todos los documentos del proyecto organizados por directorio. La columna **Inspección** está pendiente de completar.
+
+### Raíz
+
+| Documento | Descripción | Inspección |
+|:---|:---|---:|
+| [`inspección04.md`](./inspección04.md) | Rúbrica de evaluación — Análisis y validación del problema | 04 |
+| [`inspeccion03.md`](./inspeccion03.md) | Consolidación de artefactos — Inspección 03 | 03 |
+| [`inspeccion02.md`](./inspeccion02.md) | Consolidación de artefactos — Inspección 02 | 02 |
+| [`analisis_requerimientos_mape.md`](./analisis_requerimientos_mape.md) | Análisis de requerimientos y mapeo de stakeholders | |
+| [`parcial.md`](./parcial.md) | Evaluación de planificación, SDD y gestión del repositorio | |
+
+### docs/
+
+| Documento | Descripción | Inspección |
+|:---|:---|---:|
+| [`docs/analisis_validacion_problema.md`](./docs/analisis_validacion_problema.md) | Análisis y validación del problema (Criterios 1–6) | 04 |
+| [`docs/Evaluacion_Nueva_Rubrica.md`](./docs/Evaluacion_Nueva_Rubrica.md) | Evaluación del proyecto frente a la nueva rúbrica | 04 |
+| [`docs/Guia_Exposicion_SGOHA.md`](./docs/Guia_Exposicion_SGOHA.md) | Guía de exposición del proyecto (5 min) | |
+
+### docs/gestion/
+
+| Documento | Descripción | Inspección |
+|:---|:---|---:|
+| [`docs/gestion/Documento_inicial_proyecto.md`](./docs/gestion/Documento_inicial_proyecto.md) | Documentación de inicio del proyecto | |
+| [`docs/gestion/Project_Charter.md`](./docs/gestion/Project_Charter.md) | Project Charter del sistema | |
+| [`docs/gestion/Declaración_de_la_visión_del_proyecto.md`](./docs/gestion/Declaración_de_la_visión_del_proyecto.md) | Declaración de la visión del proyecto | |
+| [`docs/gestion/Declaración_del_equipo_del_proyecto.md`](./docs/gestion/Declaración_del_equipo_del_proyecto.md) | Declaración del equipo del proyecto | |
+| [`docs/gestion/Seleccion_enfoque_proyecto.md`](./docs/gestion/Seleccion_enfoque_proyecto.md) | Selección del enfoque del proyecto | |
+| [`docs/gestion/Lista_Preliminar_de_Requerimientos.md`](./docs/gestion/Lista_Preliminar_de_Requerimientos.md) | Lista preliminar de requerimientos | |
+| [`docs/gestion/Registro_de_supuestos_y_restricciones.md`](./docs/gestion/Registro_de_supuestos_y_restricciones.md) | Registro de supuestos y restricciones | |
+| [`docs/gestion/riesgos_oportunidades.md`](./docs/gestion/riesgos_oportunidades.md) | Gestión de riesgos y oportunidades | |
+| [`docs/gestion/SGOHA_Documentacion_Inicio_Proyecto.md`](./docs/gestion/SGOHA_Documentacion_Inicio_Proyecto.md) | Documentación de inicio del proyecto (alterna) | |
+| [`docs/gestion/Exposicion_Proyecto.md`](./docs/gestion/Exposicion_Proyecto.md) | Exposición del proyecto SGOHA | |
+| [`docs/gestion/Jira_CLI_Guide.md`](./docs/gestion/Jira_CLI_Guide.md) | Guía de uso de Jira CLI | |
+
+### docs/planificacion/
+
+| Documento | Descripción | Inspección |
+|:---|:---|---:|
+| [`docs/planificacion/metricas_agiles.md`](./docs/planificacion/metricas_agiles.md) | Métricas ágiles: Burndown, Burnup, Velocidad | 03 |
+| [`docs/planificacion/presupuesto.md`](./docs/planificacion/presupuesto.md) | Presupuesto completo del proyecto | 03 |
+| [`docs/planificacion/Restricciones_Sistema.md`](./docs/planificacion/Restricciones_Sistema.md) | Restricciones duras y blandas detalladas | 03 |
+| [`docs/planificacion/Backlog-y-Plan-Tecnico.md`](./docs/planificacion/Backlog-y-Plan-Tecnico.md) | Backlog y plan técnico del PMV | 03 |
+| [`docs/planificacion/Credenciales_Sistema.md`](./docs/planificacion/Credenciales_Sistema.md) | Matriz de credenciales del sistema | 03 |
+
+### docs/especificaciones/
+
+| Documento | Descripción | Inspección |
+|:---|:---|---:|
+| [`docs/especificaciones/optimization_model.md`](./docs/especificaciones/optimization_model.md) | Modelo matemático formal de optimización | 03 |
+| [`docs/especificaciones/constitution.md`](./docs/especificaciones/constitution.md) | Principios del sistema y reglas globales | 03 |
+| [`docs/especificaciones/specs.md`](./docs/especificaciones/specs.md) | Especificación formal: I/O, reglas, edge cases | 03 |
+| [`docs/especificaciones/Especificacion_SDD.md`](./docs/especificaciones/Especificacion_SDD.md) | Spec-Driven Development (SDD) | 03 |
+| [`docs/especificaciones/Especificacion_SDD_Antigravity.md`](./docs/especificaciones/Especificacion_SDD_Antigravity.md) | SDD y soporte IA Antigravity | 03 |
+
+### docs/arquitectura/
+
+| Documento | Descripción | Inspección |
+|:---|:---|---:|
+| [`docs/arquitectura/arc42_rnf.md`](./docs/arquitectura/arc42_rnf.md) | Requisitos no funcionales (arc42) | 03 |
+
+---
+
+## 9. Posibles Mejoras a Futuro (Roadmap)
 
 1.  **Generación de Reportes PDF/Excel:** Habilitar la exportación del horario generado para directores de carrera y alumnos para su fácil distribución e impresión.
 2.  **Restricciones Blandas (Soft Constraints):** Modificar OR-Tools para incluir preferencias, como:

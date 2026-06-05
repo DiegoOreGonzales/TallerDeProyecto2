@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 from .database import engine
 from . import models
 from .api import auth, cursos, aulas, scheduler, secciones, export, ical_export
@@ -8,6 +9,9 @@ from .api import auth, cursos, aulas, scheduler, secciones, export, ical_export
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Sistema de Generación de Horarios API")
+
+# Habilitar compresión GZip para reducir la huella de transferencia de red (Green Software)
+app.add_middleware(GZipMiddleware, minimum_size=500)
 
 # Incluir rutas
 app.include_router(auth.router, prefix="/api")
