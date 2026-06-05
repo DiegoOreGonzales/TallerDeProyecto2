@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, ConfigDict, EmailStr
 from typing import List, Optional
 from ..database import get_db
 from ..models import User
@@ -8,11 +8,9 @@ from ..auth import get_password_hash, verify_password, create_access_token
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
-
 class UserLogin(BaseModel):
     username: str
     password: str
-
 
 class Token(BaseModel):
     access_token: str
@@ -22,7 +20,6 @@ class Token(BaseModel):
     user_cycle: Optional[int] = None
     user_shift: str
 
-
 class UserOut(BaseModel):
     id: int
     username: str
@@ -31,9 +28,7 @@ class UserOut(BaseModel):
     turno_preferido: str
     is_active: bool
 
-    class Config:
-        from_attributes = True
-
+    model_config = ConfigDict(from_attributes=True)
 
 class UserCreateReq(BaseModel):
     username: str
@@ -42,7 +37,6 @@ class UserCreateReq(BaseModel):
     role: str = "docente"
     turno_preferido: str = "COMPLETO"
     ciclo_actual: Optional[int] = None
-
 
 @router.post("/login", response_model=Token)
 def login(user: UserLogin, db: Session = Depends(get_db)):
@@ -62,7 +56,6 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
         "user_shift": db_user.turno_preferido,
     }
 
-
 @router.post("/register", response_model=UserOut)
 def register(user: UserCreateReq, db: Session = Depends(get_db)):
     existing = db.query(User).filter(User.username == user.username).first()
@@ -73,7 +66,7 @@ def register(user: UserCreateReq, db: Session = Depends(get_db)):
             raise HTTPException(status_code=400, detail="Ciclo inválido. Debe ser entre 1 y 10.")
         if user.turno_preferido not in ["MAÑANA", "TARDE", "COMPLETO"]:
             raise HTTPException(status_code=400, detail="Turno inválido.")
-
+            
     new_user = User(
         username=user.username,
         email=user.email,
@@ -87,16 +80,13 @@ def register(user: UserCreateReq, db: Session = Depends(get_db)):
     db.refresh(new_user)
     return new_user
 
-
 @router.get("/users", response_model=List[UserOut])
 def get_users(db: Session = Depends(get_db)):
     return db.query(User).all()
 
-
 @router.get("/users/docentes", response_model=List[UserOut])
 def get_docentes(db: Session = Depends(get_db)):
     return db.query(User).filter(User.role == "docente").all()
-
 
 @router.delete("/users/{user_id}")
 def delete_user(user_id: int, db: Session = Depends(get_db)):

@@ -3,6 +3,7 @@ from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 from io import BytesIO
 from fpdf import FPDF
+from fpdf.enums import XPos, YPos
 from ..database import get_db
 from ..models import Horario, Seccion, Curso, User
 from ..core.scheduler import SLOT_TIME_MAP
@@ -19,7 +20,7 @@ class HorarioPDF(FPDF):
         self.rect(0, 0, 297, 20, 'F')  # Landscape A4 = 297mm width
         self.set_font('Helvetica', 'B', 14)
         self.set_text_color(255, 255, 255)
-        self.cell(0, 15, 'SGOHA - Horario Académico | Universidad Continental', 0, 1, 'C')
+        self.cell(0, 15, 'SGOHA - Horario Académico | Universidad Continental', new_x=XPos.LMARGIN, new_y=YPos.NEXT, align='C')
         self.set_text_color(0, 0, 0)
         self.ln(5)
 
@@ -31,7 +32,7 @@ class HorarioPDF(FPDF):
             f"Página {self.page_no()} | "
             "Generado por SGOHA - Sistema de Generación Óptima de Horarios Académicos"
         )
-        self.cell(0, 10, footer_text, 0, 0, 'C')
+        self.cell(0, 10, footer_text, new_x=XPos.RIGHT, new_y=YPos.TOP, align='C')
 
 
 def build_schedule_grid(horarios_data):
@@ -73,7 +74,7 @@ def export_pdf_all(db: Session = Depends(get_db)):
 
     # Subtítulo
     pdf.set_font('Helvetica', '', 10)
-    pdf.cell(0, 6, f'Total de bloques asignados: {len(data)}', 0, 1, 'L')
+    pdf.cell(0, 6, f'Total de bloques asignados: {len(data)}', new_x=XPos.LMARGIN, new_y=YPos.NEXT, align='L')
     pdf.ln(3)
 
     # Tabla de horarios
@@ -85,9 +86,9 @@ def export_pdf_all(db: Session = Depends(get_db)):
     pdf.set_font('Helvetica', 'B', 8)
     pdf.set_fill_color(0, 51, 102)
     pdf.set_text_color(255, 255, 255)
-    pdf.cell(col_time_w, row_h, 'Hora', 1, 0, 'C', True)
+    pdf.cell(col_time_w, row_h, 'Hora', border=1, new_x=XPos.RIGHT, new_y=YPos.TOP, align='C', fill=True)
     for day in DAY_HEADERS:
-        pdf.cell(col_day_w, row_h, day, 1, 0, 'C', True)
+        pdf.cell(col_day_w, row_h, day, border=1, new_x=XPos.RIGHT, new_y=YPos.TOP, align='C', fill=True)
     pdf.ln()
 
     # Data rows (9 slots)
@@ -102,7 +103,7 @@ def export_pdf_all(db: Session = Depends(get_db)):
 
         # Time column
         pdf.set_font('Helvetica', 'B', 7)
-        pdf.cell(col_time_w, row_h, f"{slot_info.get('inicio', '')}-{slot_info.get('fin', '')}", 1, 0, 'C', True)
+        pdf.cell(col_time_w, row_h, f"{slot_info.get('inicio', '')}-{slot_info.get('fin', '')}", border=1, new_x=XPos.RIGHT, new_y=YPos.TOP, align='C', fill=True)
 
         for d in range(6):
             entry = grid.get((d, sl))
@@ -114,9 +115,9 @@ def export_pdf_all(db: Session = Depends(get_db)):
                 pdf.rect(x, y, col_day_w, row_h, 'DF')
                 pdf.set_xy(x + 1, y + 1)
                 pdf.set_font('Helvetica', 'B', 5.5)
-                pdf.cell(col_day_w - 2, 5, entry['curso'], 0, 2, 'C')
+                pdf.cell(col_day_w - 2, 5, entry['curso'], new_x=XPos.LEFT, new_y=YPos.NEXT, align='C')
                 pdf.set_font('Helvetica', '', 5)
-                pdf.cell(col_day_w - 2, 4, f"{entry['aula']} | {entry['docente']}", 0, 0, 'C')
+                pdf.cell(col_day_w - 2, 4, f"{entry['aula']} | {entry['docente']}", new_x=XPos.RIGHT, new_y=YPos.TOP, align='C')
                 pdf.set_xy(x + col_day_w, y)
             else:
                 # Empty cell
@@ -124,7 +125,7 @@ def export_pdf_all(db: Session = Depends(get_db)):
                     pdf.set_fill_color(240, 245, 250)
                 else:
                     pdf.set_fill_color(255, 255, 255)
-                pdf.cell(col_day_w, row_h, '', 1, 0, 'C', True)
+                pdf.cell(col_day_w, row_h, '', border=1, new_x=XPos.RIGHT, new_y=YPos.TOP, align='C', fill=True)
 
         pdf.ln()
 
@@ -171,9 +172,9 @@ def export_pdf_by_ciclo(ciclo: int, db: Session = Depends(get_db)):
     pdf.add_page()
 
     pdf.set_font('Helvetica', 'B', 11)
-    pdf.cell(0, 8, f'Horario del Ciclo {ciclo}', 0, 1, 'L')
+    pdf.cell(0, 8, f'Horario del Ciclo {ciclo}', new_x=XPos.LMARGIN, new_y=YPos.NEXT, align='L')
     pdf.set_font('Helvetica', '', 9)
-    pdf.cell(0, 5, f'Bloques asignados: {len(data)}', 0, 1, 'L')
+    pdf.cell(0, 5, f'Bloques asignados: {len(data)}', new_x=XPos.LMARGIN, new_y=YPos.NEXT, align='L')
     pdf.ln(3)
 
     col_time_w = 30
@@ -183,9 +184,9 @@ def export_pdf_by_ciclo(ciclo: int, db: Session = Depends(get_db)):
     pdf.set_font('Helvetica', 'B', 8)
     pdf.set_fill_color(0, 51, 102)
     pdf.set_text_color(255, 255, 255)
-    pdf.cell(col_time_w, row_h, 'Hora', 1, 0, 'C', True)
+    pdf.cell(col_time_w, row_h, 'Hora', border=1, new_x=XPos.RIGHT, new_y=YPos.TOP, align='C', fill=True)
     for day in DAY_HEADERS:
-        pdf.cell(col_day_w, row_h, day, 1, 0, 'C', True)
+        pdf.cell(col_day_w, row_h, day, border=1, new_x=XPos.RIGHT, new_y=YPos.TOP, align='C', fill=True)
     pdf.ln()
 
     pdf.set_text_color(0, 0, 0)
@@ -197,7 +198,7 @@ def export_pdf_by_ciclo(ciclo: int, db: Session = Depends(get_db)):
             pdf.set_fill_color(255, 255, 255)
 
         pdf.set_font('Helvetica', 'B', 7)
-        pdf.cell(col_time_w, row_h, f"{slot_info.get('inicio', '')}-{slot_info.get('fin', '')}", 1, 0, 'C', True)
+        pdf.cell(col_time_w, row_h, f"{slot_info.get('inicio', '')}-{slot_info.get('fin', '')}", border=1, new_x=XPos.RIGHT, new_y=YPos.TOP, align='C', fill=True)
 
         for d in range(6):
             entry = grid.get((d, sl))
@@ -208,16 +209,16 @@ def export_pdf_by_ciclo(ciclo: int, db: Session = Depends(get_db)):
                 pdf.rect(x, y, col_day_w, row_h, 'DF')
                 pdf.set_xy(x + 1, y + 1)
                 pdf.set_font('Helvetica', 'B', 5.5)
-                pdf.cell(col_day_w - 2, 5, entry['curso'], 0, 2, 'C')
+                pdf.cell(col_day_w - 2, 5, entry['curso'], new_x=XPos.LEFT, new_y=YPos.NEXT, align='C')
                 pdf.set_font('Helvetica', '', 5)
-                pdf.cell(col_day_w - 2, 4, f"{entry['aula']} | {entry['docente']}", 0, 0, 'C')
+                pdf.cell(col_day_w - 2, 4, f"{entry['aula']} | {entry['docente']}", new_x=XPos.RIGHT, new_y=YPos.TOP, align='C')
                 pdf.set_xy(x + col_day_w, y)
             else:
                 if sl % 2 == 0:
                     pdf.set_fill_color(240, 245, 250)
                 else:
                     pdf.set_fill_color(255, 255, 255)
-                pdf.cell(col_day_w, row_h, '', 1, 0, 'C', True)
+                pdf.cell(col_day_w, row_h, '', border=1, new_x=XPos.RIGHT, new_y=YPos.TOP, align='C', fill=True)
         pdf.ln()
 
     buffer = BytesIO()
