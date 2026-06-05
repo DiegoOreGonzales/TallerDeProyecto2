@@ -52,6 +52,7 @@ const Dashboard: React.FC<DashboardProps> = ({ role, cycle, shift }) => {
 
   useEffect(() => {
     fetchInitialData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchInitialData = async () => {
