@@ -1,0 +1,119 @@
+###############################################################################
+#  SGOHA — RUTAS DE ARCHIVOS: IMPLEMENTACIÓN DE PRUEBAS API
+#  Sistema de Generación Óptima de Horarios Académicos
+#  Universidad Continental
+#
+#  Este archivo documenta la ubicación exacta de cada entregable
+#  relacionado con las pruebas de rutas API del proyecto.
+###############################################################################
+
+================================================================================
+1. MOCK API — JSON SERVER
+================================================================================
+
+Archivo de datos mock:
+  mock/db.json
+
+Descripción:
+  Archivo con datos de prueba para simular la API REST usando JSON Server.
+  Contiene 5 entidades relacionadas: usuarios, cursos, aulas, secciones y
+  horarios. Compatible con la estructura de la API real de SGOHA.
+
+Documentación:
+  docs/pruebas/GUIA_MOCK_JSON_SERVER.md
+
+================================================================================
+2. PRUEBAS UNITARIAS — pytest + TestClient
+================================================================================
+
+Archivos de test implementados:
+
+  a) Tests CRUD expandidos (endpoints principales):
+     src/backend/tests/test_api.py
+
+  b) Tests de validaciones y casos borde:
+     src/backend/tests/test_crud.py
+
+  c) Tests de exportación PDF e iCal:
+     src/backend/tests/test_export.py
+
+Archivos de test preexistentes (no modificados):
+  - src/backend/tests/test_auth.py       → Tests de autenticación
+  - src/backend/tests/test_scheduler.py   → Tests del motor CP-SAT
+  - src/backend/tests/test_optimization_model.py → Tests del modelo matemático
+
+Configuración de pytest:
+  - src/backend/tests/conftest.py         → Fixtures de BD y cliente de prueba
+  - src/backend/requirements-dev.txt      → Dependencias de desarrollo (pytest)
+
+Documentación:
+  docs/pruebas/GUIA_TEST_UNITARIOS.md
+
+================================================================================
+3. PRUEBAS CON POSTMAN
+================================================================================
+
+Archivo de colección exportada:
+  coleccion_postman.json
+
+Descripción:
+  Archivo JSON exportado desde Postman (Collection v2.1) que contiene
+  todos los requests organizados en 7 carpetas lógicas con scripts de
+  test automatizados para cada endpoint.
+
+Documentación:
+  docs/pruebas/GUIA_POSTMAN.md
+
+Generación (pendiente — manual):
+  1. Abrir Postman
+  2. Importar la configuración de la colección descrita en GUIA_POSTMAN.md
+  3. Configurar cada request con su método, URL, headers y body
+  4. Pegar los scripts de test en la pestaña "Tests"
+  5. Exportar como coleccion_postman.json
+
+================================================================================
+4. PRUEBAS CON cURL
+================================================================================
+
+Archivo de comandos cURL:
+  pruebas_curl.txt
+
+Descripción:
+  Archivo de texto plano con 24 comandos cURL funcionales, cada uno
+  incluyendo título descriptivo, descripción detallada (40-50 palabras),
+  comando listo para copiar/pegar y ejemplo de respuesta esperada.
+
+Documentación:
+  docs/pruebas/GUIA_CURL.md
+
+================================================================================
+5. DOCUMENTACIÓN COMPLETA
+================================================================================
+
+Los siguientes documentos se encuentran en docs/pruebas/:
+
+  - PLAN_PRUEBAS_API.md           → Plan general de implementación
+  - GUIA_MOCK_JSON_SERVER.md      → Guía de configuración del Mock API
+  - GUIA_CURL.md                   → Guía de pruebas con cURL
+  - GUIA_TEST_UNITARIOS.md        → Guía de pruebas unitarias pytest
+  - GUIA_POSTMAN.md               → Guía de configuración de Postman
+  - GUIA_ENTREGABLES.md           → Guía de estructura de entregables
+
+================================================================================
+RESUMEN DE CAMBIOS REALIZADOS
+================================================================================
+
+Archivos creados:
+  - mock/db.json                          (6 entidades, 33 registros total)
+  - pruebas_curl.txt                      (24 comandos documentados)
+  - rutas_archivos.txt                    (Este archivo)
+  - src/backend/tests/test_crud.py        (12 tests de validaciones)
+  - src/backend/tests/test_export.py      (6 tests de exportación)
+  - docs/pruebas/GUIA_MOCK_JSON_SERVER.md
+  - docs/pruebas/GUIA_CURL.md
+  - docs/pruebas/GUIA_TEST_UNITARIOS.md
+  - docs/pruebas/GUIA_POSTMAN.md
+  - docs/pruebas/GUIA_ENTREGABLES.md
+
+Archivos expandidos:
+  - src/backend/tests/test_api.py         (de 3 a 15 tests)
