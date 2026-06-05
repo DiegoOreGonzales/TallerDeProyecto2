@@ -6,6 +6,7 @@ from ..models import Horario, Seccion, Aula, Curso, User
 
 router = APIRouter(prefix="/scheduler", tags=["Scheduler"])
 
+
 @router.get("/")
 def get_schedules(db: Session = Depends(get_db)):
     horarios = db.query(Horario).all()
@@ -34,6 +35,7 @@ def get_schedules(db: Session = Depends(get_db)):
         })
     return {"data": result}
 
+
 @router.get("/stats")
 def get_stats(db: Session = Depends(get_db)):
     """KPIs dinámicos para el Dashboard."""
@@ -45,6 +47,7 @@ def get_stats(db: Session = Depends(get_db)):
         "horarios_generados": db.query(Horario).count(),
     }
 
+
 @router.post("/generate")
 def generate_schedule(db: Session = Depends(get_db)):
     # Limpiar horarios previos
@@ -53,10 +56,10 @@ def generate_schedule(db: Session = Depends(get_db)):
 
     engine = SchedulerEngine(db)
     result = engine.generate()
-    
+
     if isinstance(result, dict) and "error" in result:
         raise HTTPException(status_code=400, detail=result["error"])
-    
+
     # Persistir cada bloque asignado
     for h in result:
         new_horario = Horario(
@@ -66,6 +69,6 @@ def generate_schedule(db: Session = Depends(get_db)):
             bloque=h["slot"],
         )
         db.add(new_horario)
-    
+
     db.commit()
     return {"message": f"Horario generado: {len(result)} bloques asignados", "data": result}

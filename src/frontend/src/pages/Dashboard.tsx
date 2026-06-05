@@ -112,6 +112,22 @@ const Dashboard: React.FC<DashboardProps> = ({ role, cycle, shift }) => {
     }
   };
 
+  const handleExportPDF = () => {
+    if (role === 'estudiante' && cycle) {
+      window.open(`http://localhost:8000/api/export/pdf/ciclo/${cycle}`, '_blank');
+    } else {
+      window.open('http://localhost:8000/api/export/pdf', '_blank');
+    }
+  };
+
+  const handleExportICal = () => {
+    if (cycle) {
+      window.open(`http://localhost:8000/api/export/ical/ciclo/${cycle}`, '_blank');
+    } else {
+      window.open('http://localhost:8000/api/export/ical/ciclo/1', '_blank');
+    }
+  };
+
   // Filtrar horarios según rol del usuario
   const filteredHorarios = (() => {
     if (role !== 'estudiante' || !cycle) return horarios;
@@ -320,6 +336,31 @@ const Dashboard: React.FC<DashboardProps> = ({ role, cycle, shift }) => {
               </span>
               <span className="text-sm tracking-widest uppercase">{loading ? 'Optimizando con CP-SAT...' : 'Generar Nuevo Horario'}</span>
             </button>
+            <div className="h-8 w-px bg-white/10 mx-2"></div>
+          </>
+        )}
+
+        {filteredHorarios.length > 0 && (
+          <>
+            <button
+              onClick={handleExportPDF}
+              className="px-4 py-2 rounded-lg bg-red-500/15 hover:bg-red-500/25 border border-red-500/35 text-red-200 text-xs font-black uppercase tracking-widest flex items-center gap-2 transition-all hover:scale-[1.02]"
+              title={role === 'admin' ? "Descargar PDF de todos los ciclos" : `Descargar PDF del Ciclo ${cycle}`}
+            >
+              <span className="material-symbols-outlined text-sm">picture_as_pdf</span>
+              <span>{role === 'admin' ? 'PDF Completo' : 'Descargar PDF'}</span>
+            </button>
+
+            {role === 'estudiante' && cycle && (
+              <button
+                onClick={handleExportICal}
+                className="px-4 py-2 rounded-lg bg-blue-500/15 hover:bg-blue-500/25 border border-blue-500/35 text-blue-200 text-xs font-black uppercase tracking-widest flex items-center gap-2 transition-all hover:scale-[1.02]"
+                title={`Exportar a Google Calendar / Outlook (Ciclo ${cycle})`}
+              >
+                <span className="material-symbols-outlined text-sm">calendar_today</span>
+                <span>Exportar Calendario</span>
+              </button>
+            )}
             <div className="h-8 w-px bg-white/10 mx-2"></div>
           </>
         )}

@@ -1,6 +1,6 @@
 from ortools.sat.python import cp_model
 from sqlalchemy.orm import Session
-from ..models import Seccion, Aula, User, Horario
+from ..models import Seccion, Aula, User
 
 # ═══════════════════════════════════════════════════════════════
 # CONFIGURACIÓN DE GRILLA TEMPORAL
@@ -96,7 +96,190 @@ class SchedulerEngine:
             if not valid_aulas[s.id]:
                 return {
                     "error": f"INFACTIBILIDAD: Sección '{s.codigo}' (tipo: {s.curso.tipo}, "
-                             f"aforo: {s.capac_estimada}) no tiene aula compatible."
+                    f"aforo: {s.capac_estimada}) no tiene aula compatible."
+                }
+
+        # --- FALLBACK SOLVER EN PYTHON PURO PARA COMPATIBILIDAD CON PYTHON 3.14+ (CRASH CP-SAT WINDOWS) ---
+        import sys
+        if sys.version_info >= (3, 14):
+            import itertools
+            assignment = {}  # s.id -> (aula_id, list of (d, sl))
+            aula_occupied = set()  # (aula_id, d, sl)
+            docente_occupied = set()  # (docente_id, d, sl)
+            periodo_turno_occupied = set()  # (periodo, turno, d, sl)
+            docente_total_blocks = {}  # docente_id -> count
+
+            sorted_secs = sorted(secciones, key=lambda s: (len(valid_aulas[s.id]), len(valid_slots[s.id]), -s.curso.creditos))
+            self.backtrack_nodes = 0
+
+            def backtrack(idx):
+                self.backtrack_nodes += 1
+                if self.backtrack_nodes > 1500:
+                    return False
+                if idx == len(sorted_secs):
+                    return True
+
+                s = sorted_secs[idx]
+                doc_id = s.docente_id
+                periodo = s.curso.periodo
+                turno = s.turno
+                creditos = s.curso.creditos
+
+                for a_id in valid_aulas[s.id]:
+                    candidates = []
+                    for d in range(NUM_DAYS):
+                        for sl in valid_slots[s.id]:
+                            if (a_id, d, sl) in aula_occupied:
+                                continue
+                            if (doc_id, d, sl) in docente_occupied:
+                                continue
+                            if turno in ('MAÑANA', 'TARDE'):
+                                if (periodo, turno, d, sl) in periodo_turno_occupied:
+                                    continue
+                            candidates.append((d, sl))
+
+                    if len(candidates) < creditos:
+                        continue
+
+                    by_day = {}
+                    for d, sl in candidates:
+                        by_day.setdefault(d, []).append(sl)
+
+                    def choose_slots(rem_creditos, day_idx, chosen):
+                        if rem_creditos == 0:
+                            current_doc_blocks = docente_total_blocks.get(doc_id, 0)
+                            if current_doc_blocks + len(chosen) > 30:
+                                return False
+
+                            assignment[s.id] = (a_id, chosen)
+                            for d_c, sl_c in chosen:
+                                aula_occupied.add((a_id, d_c, sl_c))
+                                docente_occupied.add((doc_id, d_c, sl_c))
+                                if turno in ('MAÑANA', 'TARDE'):
+                                    periodo_turno_occupied.add((periodo, turno, d_c, sl_c))
+                            docente_total_blocks[doc_id] = current_doc_blocks + len(chosen)
+
+                            if backtrack(idx + 1):
+                                return True
+
+                            docente_total_blocks[doc_id] = current_doc_blocks
+                            for d_c, sl_c in chosen:
+                                aula_occupied.remove((a_id, d_c, sl_c))
+                                docente_occupied.remove((doc_id, d_c, sl_c))
+                                if turno in ('MAÑANA', 'TARDE'):
+                                    periodo_turno_occupied.remove((periodo, turno, d_c, sl_c))
+                            del assignment[s.id]
+                            return False
+
+                        if day_idx >= NUM_DAYS:
+                            return False
+
+                        max_blocks_today = min(rem_creditos, 3)
+                        day_slots = by_day.get(day_idx, [])
+
+                        for num_today in range(max_blocks_today, -1, -1):
+                            if num_today == 0:
+                                if choose_slots(rem_creditos, day_idx + 1, chosen):
+                                    return True
+                            elif len(day_slots) >= num_today:
+                                day_slots_sorted = sorted(day_slots)
+                                for comb in itertools.combinations(day_slots_sorted, num_today):
+                                    new_chosen = chosen + [(day_idx, sl) for sl in comb]
+                                    if choose_slots(rem_creditos - num_today, day_idx + 1, new_chosen):
+                                        return True
+                        return False
+
+                    if choose_slots(creditos, 0, []):
+                        return True
+                return False
+
+            success = backtrack(0)
+            if not success:
+                assignment.clear()
+                aula_occupied.clear()
+                docente_occupied.clear()
+                periodo_turno_occupied.clear()
+                docente_total_blocks.clear()
+
+                success = True
+                for s in sorted_secs:
+                    doc_id = s.docente_id
+                    periodo = s.curso.periodo
+                    turno = s.turno
+                    creditos = s.curso.creditos
+                    assigned = False
+
+                    for a_id in valid_aulas[s.id]:
+                        chosen = []
+                        for d in range(NUM_DAYS):
+                            if len(chosen) == creditos:
+                                break
+                            day_slots = []
+                            for sl in valid_slots[s.id]:
+                                if (a_id, d, sl) in aula_occupied:
+                                    continue
+                                if (doc_id, d, sl) in docente_occupied:
+                                    continue
+                                if turno in ('MAÑANA', 'TARDE'):
+                                    if (periodo, turno, d, sl) in periodo_turno_occupied:
+                                        continue
+                                day_slots.append(sl)
+
+                            slots_to_pick = min(creditos - len(chosen), 3, len(day_slots))
+                            if slots_to_pick > 0:
+                                chosen.extend([(d, sl) for sl in sorted(day_slots)[:slots_to_pick]])
+
+                        if len(chosen) == creditos:
+                            current_doc_blocks = docente_total_blocks.get(doc_id, 0)
+                            if current_doc_blocks + creditos <= 30:
+                                assignment[s.id] = (a_id, chosen)
+                                for d_c, sl_c in chosen:
+                                    aula_occupied.add((a_id, d_c, sl_c))
+                                    docente_occupied.add((doc_id, d_c, sl_c))
+                                    if turno in ('MAÑANA', 'TARDE'):
+                                        periodo_turno_occupied.add((periodo, turno, d_c, sl_c))
+                                docente_total_blocks[doc_id] = current_doc_blocks + creditos
+                                assigned = True
+                                break
+                    if not assigned:
+                        success = False
+                        break
+
+            if success:
+                resultados = []
+                for s in secciones:
+                    docente = docentes_cache.get(s.docente_id)
+                    docente_nombre = docente.username if docente else "Sin asignar"
+                    a_id, chosen_slots = assignment[s.id]
+                    for d, sl in chosen_slots:
+                        aula_obj = next((a for a in aulas if a.id == a_id), None)
+                        slot_info = SLOT_TIME_MAP[sl]
+                        resultados.append({
+                            "seccion_id": s.id,
+                            "seccion_codigo": s.codigo,
+                            "aula_id": a_id,
+                            "dia": d,
+                            "dia_nombre": DAY_LABELS[d],
+                            "slot": sl,
+                            "hora_inicio": slot_info["inicio"],
+                            "hora_fin": slot_info["fin"],
+                            "horas_pedagogicas": slot_info["hp"],
+                            "nombre_curso": s.curso.nombre,
+                            "nombre_aula": aula_obj.nombre if aula_obj else f"Aula {a_id}",
+                            "tipo_curso": s.curso.tipo,
+                            "periodo": s.curso.periodo,
+                            "creditos": s.curso.creditos,
+                            "turno_seccion": s.turno,
+                            "docente_nombre": docente_nombre,
+                            "codigo_curso": s.curso.codigo,
+                        })
+                return resultados
+            else:
+                return {
+                    "error": (
+                        "INFACTIBILIDAD: El motor de búsqueda Python no pudo encontrar una asignación factible. "
+                        f"Secciones: {len(secciones)}, Aulas: {len(aulas)}."
+                    )
                 }
 
         # ═══════════════════════════════════════════════════════
@@ -224,7 +407,6 @@ class SchedulerEngine:
                                     vars_pt.append(x[(s.id, a_id, d, sl)])
                         if len(vars_pt) > 1:
                             self.model.Add(sum(vars_pt) <= 1)
-
 
         # ═══════════════════════════════════════════════════════
         # FUNCIÓN OBJETIVO (todo lo "suave" va aquí)

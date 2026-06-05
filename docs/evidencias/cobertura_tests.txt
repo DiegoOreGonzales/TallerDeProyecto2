@@ -1,0 +1,66 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.5, pytest-9.0.3, pluggy-1.6.0
+rootdir: C:\Bacilio\sistema_generacion_horarios_academicos
+plugins: anyio-4.13.0, cov-7.1.0
+collected 47 items
+
+src\backend\tests\test_api.py ...                                        [  6%]
+src\backend\tests\test_auth.py ....                                      [ 14%]
+src\backend\tests\test_optimization_model.py .................           [ 51%]
+src\backend\tests\test_scheduler.py .......................              [100%]
+
+============================== warnings summary ===============================
+..\..\Users\bacil.BACSYSTEM\AppData\Local\Programs\Python\Python314\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\bacil.BACSYSTEM\AppData\Local\Programs\Python\Python314\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+src\backend\app\database.py:11
+  C:\Bacilio\sistema_generacion_horarios_academicos\src\backend\app\database.py:11: MovedIn20Warning: The ``declarative_base()`` function is now available as sqlalchemy.orm.declarative_base(). (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+    Base = declarative_base()
+
+src\backend\app\api\auth.py:26
+  C:\Bacilio\sistema_generacion_horarios_academicos\src\backend\app\api\auth.py:26: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class UserOut(BaseModel):
+
+src\backend\app\schemas.py:19
+  C:\Bacilio\sistema_generacion_horarios_academicos\src\backend\app\schemas.py:19: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class User(UserBase):
+
+src\backend\app\schemas.py:39
+  C:\Bacilio\sistema_generacion_horarios_academicos\src\backend\app\schemas.py:39: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class Aula(AulaBase):
+
+src\backend\app\schemas.py:60
+  C:\Bacilio\sistema_generacion_horarios_academicos\src\backend\app\schemas.py:60: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class Curso(CursoBase):
+
+src\backend\app\schemas.py:81
+  C:\Bacilio\sistema_generacion_horarios_academicos\src\backend\app\schemas.py:81: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class Seccion(SeccionBase):
+
+src\backend\app\schemas.py:103
+  C:\Bacilio\sistema_generacion_horarios_academicos\src\backend\app\schemas.py:103: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class Horario(HorarioBase):
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=============================== tests coverage ================================
+_______________ coverage: platform win32, python 3.14.5-final-0 _______________
+
+Name                                 Stmts   Miss  Cover   Missing
+------------------------------------------------------------------
+src\backend\app\api\aulas.py            28     14    50%   13-20, 30-35
+src\backend\app\api\auth.py             56     15    73%   49-56, 70, 75, 103-110
+src\backend\app\api\cursos.py           34     19    44%   13-20, 25, 30-33, 38-43
+src\backend\app\api\export.py          147    129    12%   18-24, 27-34, 39-43, 49-136, 146-227
+src\backend\app\api\ical_export.py      36     25    31%   14, 20-74
+src\backend\app\api\scheduler.py        31     19    39%   12-36, 42, 54-74
+src\backend\app\api\secciones.py        24     12    50%   12, 17-21, 26-31
+src\backend\app\auth.py                 17      6    65%   13, 21-25
+src\backend\app\core\scheduler.py      318    201    37%   118, 135, 138, 142, 152, 165-172, 175, 182-183, 190, 194, 198-246, 278-509
+src\backend\app\database.py             13      4    69%   15-19
+src\backend\app\main.py                 21      2    90%   33, 38
+src\backend\app\models.py               52      0   100%
+src\backend\app\schemas.py              40      0   100%
+------------------------------------------------------------------
+TOTAL                                  817    446    45%
+======================= 47 passed, 8 warnings in 1.38s ========================

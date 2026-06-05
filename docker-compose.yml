@@ -43,6 +43,9 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
 
   frontend:
     build:
@@ -56,6 +59,9 @@ services:
       - "5173:5173"
     depends_on:
       - backend
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
 
 volumes:
   postgres_data:

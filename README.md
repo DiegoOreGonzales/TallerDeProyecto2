@@ -57,15 +57,40 @@ El núcleo del sistema utiliza el solucionador **CP-SAT de Google OR-Tools**, ap
 
 ---
 
-## 4.1. Documentación Técnica Completa
+## 📁 Índice de Documentación del Proyecto (TOC)
 
-| Documento | Descripción |
-| :--- | :--- |
-| [optimization_model.md](./docs/especificaciones/optimization_model.md) | Modelo matemático formal: variables, FO, restricciones, KPIs |
-| [constitution.md](./docs/especificaciones/constitution.md) | Principios del sistema, reglas globales, contratos |
-| [specs.md](./docs/especificaciones/specs.md) | Especificación formal: I/O, reglas, edge cases, trazabilidad |
-| [arc42_rnf.md](./docs/arquitectura/arc42_rnf.md) | Requisitos no funcionales (arc42) |
-| [Restricciones_Sistema.md](./docs/planificacion/Restricciones_Sistema.md) | Restricciones duras y blandas detalladas |
+A continuación se presenta el índice unificado de la documentación del proyecto, clasificado por categorías y alineado con las entregas e inspecciones:
+
+| Categoría | Documento | Descripción | Inspección / Hito |
+| :--- | :--- | :--- | :---: |
+| **Entregable Principal** | [analisis_validacion_problema.md](./docs/analisis_validacion_problema.md) | **Informe de Respuesta Oficial para la Inspección 04 (Validación de RF/RNF, KPIs, GUI y CP-SAT)** | 04 |
+| **Especificación** | [optimization_model.md](./docs/especificaciones/optimization_model.md) | Modelo matemático formal: variables, función objetivo, restricciones CSP | 03 / 04 |
+| **Especificación** | [Especificacion_SDD_Antigravity.md](./docs/especificaciones/Especificacion_SDD_Antigravity.md) | Documento de Especificación de Diseño de Software (SDD) optimizado | 04 |
+| **Especificación** | [Especificacion_SDD.md](./docs/especificaciones/Especificacion_SDD.md) | Especificación de Diseño de Software (SDD) preliminar | 03 |
+| **Especificación** | [constitution.md](./docs/especificaciones/constitution.md) | Principios generales del sistema, contratos y reglas de desarrollo | 03 |
+| **Especificación** | [specs.md](./docs/especificaciones/specs.md) | Especificación funcional formal: Entradas, salidas, reglas y casos borde | 03 |
+| **Arquitectura** | [arc42_rnf.md](./docs/arquitectura/arc42_rnf.md) | Especificación de Requisitos No Funcionales utilizando el estándar arc42 | 03 |
+| **Planificación** | [Backlog-y-Plan-Tecnico.md](./docs/planificacion/Backlog-y-Plan-Tecnico.md) | Backlog maestro con Historias de Usuario, Story Points y Roadmap | 04 |
+| **Planificación** | [metricas_agiles.md](./docs/planificacion/metricas_agiles.md) | Reporte y gráficos de control ágil (Burnup, Burndown y Velocity) | 03 / 04 |
+| **Planificación** | [presupuesto.md](./docs/planificacion/presupuesto.md) | Estructura de presupuesto y análisis de costos del proyecto | 03 |
+| **Planificación** | [Restricciones_Sistema.md](./docs/planificacion/Restricciones_Sistema.md) | Catálogo de restricciones duras (HC) y blandas (SC) del solver CP-SAT | 04 |
+| **Gestión** | [Declaración_del_equipo_del_proyecto.md](./docs/gestion/Declaración_del_equipo_del_proyecto.md) | Registro de firmas, roles y responsabilidades de los colaboradores | 03 |
+| **Gestión** | [Project_Charter.md](./docs/gestion/Project_Charter.md) | Acta de constitución del proyecto y definición de alcances | 03 |
+| **Gestión** | [Seleccion_enfoque_proyecto.md](./docs/gestion/Seleccion_enfoque_proyecto.md) | Justificación de la selección del stack tecnológico (FastAPI + React ↔ MERN) | 04 |
+| **Gestión** | [SGOHA_Documentacion_Inicio_Proyecto.md](./docs/gestion/SGOHA_Documentacion_Inicio_Proyecto.md) | Plan preliminar y bases de inicio de la orquestación del proyecto | 03 |
+| **Gestión** | [Declaración_de_la_visión_del_proyecto.md](./docs/gestion/Declaración_de_la_visión_del_proyecto.md) | Declaración de la visión del producto y objetivos estratégicos | 03 |
+| **Gestión** | [Documento_inicial_proyecto.md](./docs/gestion/Documento_inicial_proyecto.md) | Alcance inicial y contextualización del problema académico | 03 |
+| **Gestión** | [Registro_de_supuestos_y_restricciones.md](./docs/gestion/Registro_de_supuestos_y_restricciones.md) | Supuestos de partida, hipótesis de negocio y límites del sistema | 03 |
+| **Gestión** | [riesgos_oportunidades.md](./docs/gestion/riesgos_oportunidades.md) | Matriz de riesgos del proyecto y planes de mitigación correspondientes | 03 |
+| **Gestión** | [Jira_CLI_Guide.md](./docs/gestion/Jira_CLI_Guide.md) | Guía técnica para el uso y sincronización de Jira CLI en el proyecto | 04 |
+| **Sostenibilidad** | [reporte_sostenibilidad.md](./docs/sostenibilidad/reporte_sostenibilidad.md) | **Informe de Sostenibilidad, Huella de Carbono y Eficiencia Energética (Green Software)** | 05 / 06_B |
+| **Calidad / Testing** | [estrategia_testing.md](./docs/testing/estrategia_testing.md) | **Estrategia Integral de Testing y QA (Unitario, Componentes, Integración, Cypress, Playwright, Cobertura)** | 06_A |
+| **Guías** | [Guia_Exposicion_SGOHA.md](./docs/Guia_Exposicion_SGOHA.md) | Guía detallada para la defensa del proyecto ante el jurado | 04 |
+| **Guías** | [Exposicion_Proyecto.md](./docs/gestion/Exposicion_Proyecto.md) | Presentación y material de soporte de la defensa del proyecto | 04 |
+| **Histórico** | [Evaluacion_Nueva_Rubrica.md](./docs/Evaluacion_Nueva_Rubrica.md) | Documento de análisis de la nueva rúbrica y criterios de evaluación | 04 |
+| **Histórico** | [inspección04.md](./inspección04.md) | Rúbrica oficial del docente para la Inspección 04 | 04 |
+| **Histórico** | [inspeccion03.md](./inspeccion03.md) | Rúbrica y entregas de la Inspección 03 | 03 |
+| **Histórico** | [inspeccion02.md](./inspeccion02.md) | Rúbrica y entregas de la Inspección 02 | 02 |
 
 ---
 
