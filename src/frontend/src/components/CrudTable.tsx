@@ -138,7 +138,7 @@ const CrudTable: React.FC<CrudTableProps> = ({
             )}
           </tbody>
         </table>
-      </div>
+        </div>
 
       {/* Paginación UI */}
       {totalPages > 1 && (

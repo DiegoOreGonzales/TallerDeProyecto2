@@ -494,3 +494,75 @@ Para una ejecución fluida de la colección completa:
 - Los requests GET/DELETE usan `{{curso_id}}` y `{{aula_id}}` para referenciar recursos creados
 - El token JWT se almacena automáticamente en la variable `{{token}}`
 - Puedes ejecutar la colección completa con **Runner** (Run Collection)
+
+## Verificación con Docker + Newman (Tests Automatizados)
+
+### 1. Levantar el backend con Docker
+
+```bash
+docker-compose up -d
+```
+
+Esto inicia:
+- **PostgreSQL** (puerto 5432)
+- **Backend FastAPI** (puerto 8000) con auto-reload
+- **pgAdmin** (puerto 5050)
+- **Frontend** (puerto 5173)
+
+### 2. Sembrar datos de prueba
+
+```bash
+docker-compose exec backend python seed.py
+```
+
+### 3. Exportar la colección desde Postman Web
+
+1. Ir a la colección → **...** → **Export**
+2. Seleccionar **Collection v2.1**
+3. Guardar como `coleccion_postman.json` (en la raíz del proyecto)
+
+O alternativamente, descargar via API de Postman.
+
+### 4. Ejecutar Newman (CLI)
+
+Con la colección exportada y el backend corriendo, ejecutar:
+
+```bash
+# Primer paso: instalar el reporter HTML extra
+npm install --save-dev newman-reporter-htmlextra
+
+# Segundo paso: ejecutar Newman con el reporter
+npx newman run coleccion_postman.json \
+  --reporters cli,htmlextra \
+  --reporter-htmlextra-export newman/report.html
+```
+
+> **Nota:** El flag correcto es `--reporter-htmlextra-export` (con `reporter-` no `report-`).
+
+Si solo se desea ver el resultado en terminal (sin reporte HTML):
+
+```bash
+npx newman run coleccion_postman.json
+```
+
+Esto ejecuta los **23 endpoints** con sus **tests automatizados** y genera:
+- **Terminal:** Resumen de tests pasados/fallados
+- **`newman/report.html`:** Reporte visual HTML con detalle de cada request
+
+### 5. Evidencias para presentación
+
+| Archivo | Propósito |
+|---------|-----------|
+| `coleccion_postman.json` | Entregable de la colección (punto 2.4 de la rúbrica) |
+| `newman/report.html` | Reporte de pruebas automatizadas |
+| Captura de pantalla del Runner | Muestra todos los tests en verde |
+
+### 6. Orden completo de verificación
+
+```
+ 1. docker-compose up -d                    ← Levantar servicios
+ 2. docker-compose exec backend python seed.py  ← Sembrar datos
+ 3. Exportar colección desde Postman Web    ← Obtener JSON
+ 4. npx newman run coleccion_postman.json   ← Ejecutar tests
+ 5. Revisar newman/report.html              ← Verificar resultados
+```

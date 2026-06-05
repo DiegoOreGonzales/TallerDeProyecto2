@@ -26,6 +26,7 @@ class UserOut(BaseModel):
     email: str
     role: str
     turno_preferido: str
+    ciclo: Optional[int] = None
     is_active: bool
 
     model_config = ConfigDict(from_attributes=True)
