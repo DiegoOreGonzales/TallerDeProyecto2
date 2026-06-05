@@ -1,13 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense, lazy } from 'react';
 import Layout from './components/Layout';
-import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
-import Courses from './pages/Courses';
-import Classrooms from './pages/Classrooms';
-import Sections from './pages/Sections';
-import Teachers from './pages/Teachers';
-import Faculties from './pages/Faculties';
 import './index.css';
+
+// Lazy-loaded page components (code splitting)
+const Login = lazy(() => import('./pages/Login'));
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+const Courses = lazy(() => import('./pages/Courses'));
+const Classrooms = lazy(() => import('./pages/Classrooms'));
+const Sections = lazy(() => import('./pages/Sections'));
+const Teachers = lazy(() => import('./pages/Teachers'));
+const Faculties = lazy(() => import('./pages/Faculties'));
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -70,7 +72,11 @@ function App() {
   };
 
   if (!isLoggedIn) {
-    return <Login onLogin={handleLogin} />;
+    return (
+      <Suspense fallback={<LoadingFallback />}>
+        <Login onLogin={handleLogin} />
+      </Suspense>
+    );
   }
 
   const renderContent = () => {
@@ -94,6 +100,7 @@ function App() {
   };
 
   return (
+    <Suspense fallback={<LoadingFallback />}>
     <Layout 
       currentView={currentView} 
       setCurrentView={handleSetView} 
@@ -103,6 +110,19 @@ function App() {
     >
       {renderContent()}
     </Layout>
+    </Suspense>
+  );
+}
+
+/** Minimal loading state shown while a lazy page chunk loads */
+function LoadingFallback() {
+  return (
+    <div className="min-h-screen bg-[#131313] flex items-center justify-center">
+      <div className="flex flex-col items-center gap-4">
+        <span className="material-symbols-outlined animate-spin text-4xl text-orange-500">sync</span>
+        <p className="text-neutral-500 font-bold uppercase tracking-widest text-xs">Cargando...</p>
+      </div>
+    </div>
   );
 }
 
