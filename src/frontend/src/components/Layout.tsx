@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 
 interface LayoutProps {
@@ -11,6 +11,7 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ children, currentView, setCurrentView, onLogout, userRole, userName }) => {
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
   return (
     <div className="min-h-screen bg-neutral-900 border-x border-white/5">
       {/* Sidebar - Fixed on the left */}
@@ -22,7 +23,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentView, setCurrentView, 
         <header className="sticky top-0 z-40 w-full px-8 py-4 flex justify-between items-center glass-panel shadow-2xl shadow-orange-900/5">
           <div className="flex items-center gap-8">
             <h2 className="text-3xl font-bold font-headline tracking-tight text-white uppercase italic">
-              {currentView === 'dashboard' ? 'Ciclo 2024-II' : currentView}
+              {currentView === 'dashboard' ? 'Ciclo 2026-I' : currentView}
             </h2>
             {userRole === 'admin' && (
               <div className="flex items-center gap-6">
@@ -61,17 +62,67 @@ const Layout: React.FC<LayoutProps> = ({ children, currentView, setCurrentView, 
             </div>
             
             {/* User Info - NEW: Showing the username */}
-            <div className="flex flex-col items-end px-2">
-              <span className="text-sm font-black text-white tracking-widest uppercase">{userName}</span>
-              <span className="text-[10px] font-bold text-orange-500 uppercase tracking-tighter">{userRole}</span>
-            </div>
+            <div 
+              className="relative flex items-center cursor-pointer select-none group/profile"
+              onClick={() => setIsProfileOpen(!isProfileOpen)}
+            >
+              <div className="flex flex-col items-end px-2">
+                <span className="text-sm font-black text-white tracking-widest uppercase group-hover/profile:text-orange-500 transition-colors">{userName}</span>
+                <span className="text-[10px] font-bold text-orange-500 uppercase tracking-tighter flex items-center gap-1">
+                  {userRole}
+                  <span className="material-symbols-outlined text-[12px] text-neutral-400 group-hover/profile:text-orange-500 transition-colors">keyboard_arrow_down</span>
+                </span>
+              </div>
 
-            <div className="h-10 w-10 rounded-full overflow-hidden border-2 border-orange-500/20 ml-2 cursor-pointer hover:border-orange-500 transition-all">
-              <img 
-                className="w-full h-full object-cover" 
-                alt="Profile"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZK_r32kKnQ32V4LO9qUMeIG8Sx5y1b5075rSYkyQH0hcDHSYxbuyXZwWUA2moj9cniEFfhaa0r02ls8JNESmj7n_8Th-rwr9jQupozzD411W4Kl3xyLtGZHqVgJzIsM8p6QrJ27iJk-v8jbTRmGfIblP-3kBNWUpIZQwVo4KjQh5y0-4VJKZm1-kQXAJLo96XSV8_yUvZu5exOl661_b7hANeI-Wa6Xvh0MaQToxi329p3o6dt5PnmeI_8qssjjajZbaCx9ATdTQ"
-              />
+              <div className="h-10 w-10 rounded-full overflow-hidden border-2 border-orange-500/20 ml-2 hover:border-orange-500 transition-all">
+                <img 
+                  className="w-full h-full object-cover" 
+                  alt="Profile"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZK_r32kKnQ32V4LO9qUMeIG8Sx5y1b5075rSYkyQH0hcDHSYxbuyXZwWUA2moj9cniEFfhaa0r02ls8JNESmj7n_8Th-rwr9jQupozzD411W4Kl3xyLtGZHqVgJzIsM8p6QrJ27iJk-v8jbTRmGfIblP-3kBNWUpIZQwVo4KjQh5y0-4VJKZm1-kQXAJLo96XSV8_yUvZu5exOl661_b7hANeI-Wa6Xvh0MaQToxi329p3o6dt5PnmeI_8qssjjajZbaCx9ATdTQ"
+                />
+              </div>
+
+              {/* Profile Dropdown Menu */}
+              {isProfileOpen && (
+                <div className="absolute right-0 top-full mt-2 w-64 bg-neutral-800/95 backdrop-blur-md border border-white/10 rounded-2xl shadow-2xl p-4 z-50 flex flex-col gap-3">
+                  <div className="flex items-center gap-3 pb-3 border-b border-white/5">
+                    <div className="h-12 w-12 rounded-full overflow-hidden border border-orange-500/30">
+                      <img 
+                        className="w-full h-full object-cover" 
+                        alt="Profile"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZK_r32kKnQ32V4LO9qUMeIG8Sx5y1b5075rSYkyQH0hcDHSYxbuyXZwWUA2moj9cniEFfhaa0r02ls8JNESmj7n_8Th-rwr9jQupozzD411W4Kl3xyLtGZHqVgJzIsM8p6QrJ27iJk-v8jbTRmGfIblP-3kBNWUpIZQwVo4KjQh5y0-4VJKZm1-kQXAJLo96XSV8_yUvZu5exOl661_b7hANeI-Wa6Xvh0MaQToxi329p3o6dt5PnmeI_8qssjjajZbaCx9ATdTQ"
+                      />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-xs font-bold text-white uppercase">{userName}</span>
+                      <span className="text-[10px] text-neutral-400 mt-0.5">ucontinental.edu.pe</span>
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <div className="flex items-center gap-3 px-3 py-2 text-xs text-neutral-400">
+                      <span className="material-symbols-outlined text-sm">badge</span>
+                      Rol: {userRole}
+                    </div>
+                    <div className="flex items-center gap-3 px-3 py-2 text-xs text-neutral-400">
+                      <span className="material-symbols-outlined text-sm">schedule</span>
+                      Turno: COMPLETO
+                    </div>
+                  </div>
+                  <div className="pt-2 border-t border-white/5">
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsProfileOpen(false);
+                        onLogout();
+                      }}
+                      className="w-full flex items-center gap-3 px-3 py-2 text-xs text-red-400 hover:bg-red-500/10 rounded-xl transition-all"
+                    >
+                      <span className="material-symbols-outlined text-sm">logout</span>
+                      Cerrar Sesión
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </header>
