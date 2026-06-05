@@ -14,10 +14,12 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView, userRole
     { id: 'aulas', label: 'Aulas', icon: 'domain' },
     { id: 'secciones', label: 'Secciones', icon: 'groups' },
     { id: 'docentes', label: 'Docentes', icon: 'school' },
+    { id: 'facultades', label: 'Facultades', icon: 'account_balance' },
   ];
 
   const studentMenuItems = [
     { id: 'dashboard', label: 'Mi Horario', icon: 'calendar_month' },
+    { id: 'facultades', label: 'Facultades', icon: 'account_balance' },
   ];
 
   const menuItems = userRole === 'admin' ? adminMenuItems : studentMenuItems;
@@ -28,7 +30,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView, userRole
       <div className="px-6 mb-8">
         <div className="flex items-center gap-3 mb-3">
           <img 
-            src="/logo-uc.png" 
+            src="/logo-uc.webp" 
             alt="UC" 
             className="h-8 object-contain brightness-0 invert opacity-70"
           />

@@ -25,6 +25,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem('access_token', data.access_token);
+        localStorage.setItem('user_career', data.user_career || "Ingeniería de Sistemas e Informática");
         onLogin(data.user_role, data.user_name, data.user_cycle, data.user_shift);
       } else {
         const err = await response.json();
@@ -51,7 +52,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         <div className="text-center mb-10">
           <div className="flex justify-center mb-6">
             <img 
-              src="/logo-uc.png" 
+              src="/logo-uc.webp" 
               alt="Universidad Continental" 
               className="h-16 object-contain brightness-0 invert"
             />
