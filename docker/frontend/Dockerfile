@@ -12,5 +12,6 @@ COPY . .
 # Exponer el puerto de Vite
 EXPOSE 5173
 
-# Ejecutar instalación y levantar en tiempo de ejecución para usar DNS de Docker Compose
-CMD sh -c "npm config set registry http://registry.npmjs.org/ && npm install --no-audit --no-fund --legacy-peer-deps && npm run dev -- --host"
+# Instalar solo dependencias de producción (excluir Cypress, Playwright, Sharp, etc.)
+# Las devDependencies de testing no son necesarias para levantar Vite
+CMD sh -c "npm config set registry https://registry.npmjs.org/ && npm install --omit=dev --no-audit --no-fund --legacy-peer-deps && npx --yes vite --host"
