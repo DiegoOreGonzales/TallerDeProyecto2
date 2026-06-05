@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, ConfigDict, EmailStr
 from typing import List, Optional
 from ..database import get_db
 from ..models import User
@@ -27,8 +27,8 @@ class UserOut(BaseModel):
     role: str
     turno_preferido: str
     is_active: bool
-    class Config:
-        from_attributes = True
+
+    model_config = ConfigDict(from_attributes=True)
 
 class UserCreateReq(BaseModel):
     username: str
