@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, ConfigDict, EmailStr
 from typing import Optional
 
 # --- User Schemas ---
@@ -15,8 +15,8 @@ class UserCreate(UserBase):
 class User(UserBase):
     id: int
     is_active: bool
-    class Config:
-        from_attributes = True
+
+    model_config = ConfigDict(from_attributes=True)
 
 # --- Aula Schemas ---
 class AulaBase(BaseModel):
@@ -29,8 +29,8 @@ class AulaCreate(AulaBase):
 
 class Aula(AulaBase):
     id: int
-    class Config:
-        from_attributes = True
+
+    model_config = ConfigDict(from_attributes=True)
 
 # --- Curso Schemas ---
 class CursoBase(BaseModel):
@@ -45,8 +45,8 @@ class CursoCreate(CursoBase):
 
 class Curso(CursoBase):
     id: int
-    class Config:
-        from_attributes = True
+
+    model_config = ConfigDict(from_attributes=True)
 
 # --- Seccion Schemas ---
 class SeccionBase(BaseModel):
@@ -63,8 +63,8 @@ class Seccion(SeccionBase):
     id: int
     curso: Optional[Curso] = None
     docente: Optional[User] = None
-    class Config:
-        from_attributes = True
+
+    model_config = ConfigDict(from_attributes=True)
 
 # --- Horario Schemas ---
 class HorarioBase(BaseModel):
@@ -80,5 +80,5 @@ class Horario(HorarioBase):
     id: int
     seccion: Optional[Seccion] = None
     aula: Optional[Aula] = None
-    class Config:
-        from_attributes = True
+
+    model_config = ConfigDict(from_attributes=True)
