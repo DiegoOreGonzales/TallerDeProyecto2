@@ -83,6 +83,8 @@ A continuación se presenta el índice unificado de la documentación del proyec
 | **Gestión** | [Registro_de_supuestos_y_restricciones.md](./docs/gestion/Registro_de_supuestos_y_restricciones.md) | Supuestos de partida, hipótesis de negocio y límites del sistema | 03 |
 | **Gestión** | [riesgos_oportunidades.md](./docs/gestion/riesgos_oportunidades.md) | Matriz de riesgos del proyecto y planes de mitigación correspondientes | 03 |
 | **Gestión** | [Jira_CLI_Guide.md](./docs/gestion/Jira_CLI_Guide.md) | Guía técnica para el uso y sincronización de Jira CLI en el proyecto | 04 |
+| **Sostenibilidad** | [reporte_sostenibilidad.md](./docs/sostenibilidad/reporte_sostenibilidad.md) | **Informe de Sostenibilidad, Huella de Carbono y Eficiencia Energética (Green Software)** | 05 / 06_B |
+| **Calidad / Testing** | [estrategia_testing.md](./docs/testing/estrategia_testing.md) | **Estrategia Integral de Testing y QA (Unitario, Componentes, Integración, Cypress, Playwright, Cobertura)** | 06_A |
 | **Guías** | [Guia_Exposicion_SGOHA.md](./docs/Guia_Exposicion_SGOHA.md) | Guía detallada para la defensa del proyecto ante el jurado | 04 |
 | **Guías** | [Exposicion_Proyecto.md](./docs/gestion/Exposicion_Proyecto.md) | Presentación y material de soporte de la defensa del proyecto | 04 |
 | **Histórico** | [Evaluacion_Nueva_Rubrica.md](./docs/Evaluacion_Nueva_Rubrica.md) | Documento de análisis de la nueva rúbrica y criterios de evaluación | 04 |

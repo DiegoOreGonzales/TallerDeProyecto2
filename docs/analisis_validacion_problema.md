@@ -344,11 +344,15 @@ TallerDeProyecto2/
 │   │   ├── riesgos_oportunidades.md
 │   │   ├── Declaración_del_equipo_del_proyecto.md
 │   │   └── Seleccion_enfoque_proyecto.md
-│   └── planificacion/
-│       ├── presupuesto.md
-│       ├── metricas_agiles.md
-│       ├── Backlog-y-Plan-Tecnico.md
-│       └── Restricciones_Sistema.md
+│   ├── planificacion/
+│   │   ├── presupuesto.md
+│   │   ├── metricas_agiles.md
+│   │   ├── Backlog-y-Plan-Tecnico.md
+│   │   └── Restricciones_Sistema.md
+│   ├── sostenibilidad/
+│   │   └── reporte_sostenibilidad.md  ← Inspecciones 05 / 06_B
+│   └── testing/
+│       └── estrategia_testing.md      ← Inspección 06_A
 ├── src/
 │   ├── backend/
 │   │   ├── app/
@@ -370,7 +374,8 @@ TallerDeProyecto2/
 │   │   │   ├── test_optimization_model.py ← 17 tests del modelo
 │   │   │   ├── test_auth.py        ← 3 tests de autenticación
 │   │   │   └── test_api.py         ← 2 tests de endpoints
-│   │   └── benchmark.py            ← Benchmark de rendimiento
+│   │   ├── benchmark.py            ← Benchmark de rendimiento
+│   │   └── sustainability_benchmark.py ← Benchmark de sostenibilidad y CO2eq
 │   └── frontend/
 │       └── src/
 │           ├── pages/
