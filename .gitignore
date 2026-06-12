@@ -13,3 +13,21 @@ env/
 .DS_Store
 *.log
 docker/*.db
+
+# Databases & local configs
+*.db
+src/backend/*.db
+local_scheduler.db
+test.db
+
+# Generated PDFs
+*.pdf
+src/backend/*.pdf
+src/backend/horario_ciclo_*.pdf
+
+# Pytest coverage files
+.coverage
+coverage.xml
+src/backend/coverage.xml
+
+

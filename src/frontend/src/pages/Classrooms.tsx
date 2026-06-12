@@ -114,6 +114,15 @@ const Classrooms: React.FC = () => {
         data={aulas}
         onAdd={() => setIsAdding(true)}
         onDelete={handleDelete}
+        extraActions={(aula: Aula) => (
+          <button
+            onClick={() => window.open(`http://localhost:8000/api/export/pdf/aula/${aula.id}`, '_blank')}
+            className="p-1.5 text-neutral-400 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-all"
+            title="Descargar PDF Horario"
+          >
+            <span className="material-symbols-outlined text-lg">picture_as_pdf</span>
+          </button>
+        )}
         renderRow={(aula: Aula) => (
           <>
             <td className="px-8 py-5">

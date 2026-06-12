@@ -76,3 +76,69 @@ def export_ical(ciclo: int, db: Session = Depends(get_db)):
         media_type="text/calendar",
         headers={"Content-Disposition": f"attachment; filename=horario_ciclo_{ciclo}.ics"}
     )
+
+
+@router.get("/ical/docente/{docente_id}")
+def export_ical_docente(docente_id: int, db: Session = Depends(get_db)):
+    """Exportar horario del docente como archivo .ics para Google Calendar / Outlook."""
+    docente = db.query(User).filter(User.id == docente_id).first()
+    if not docente:
+        raise HTTPException(status_code=404, detail=f"No se encontró el docente con ID {docente_id}.")
+
+    horarios = db.query(Horario).join(Seccion).filter(
+        Seccion.docente_id == docente_id
+    ).all()
+
+    if not horarios:
+        raise HTTPException(status_code=404, detail=f"No hay horarios asignados para el docente {docente.username}.")
+
+    # Fecha base: próximo lunes
+    today = datetime.now()
+    days_until_monday = (7 - today.weekday()) % 7
+    if days_until_monday == 0:
+        days_until_monday = 7
+    base_monday = today + timedelta(days=days_until_monday)
+    base_monday = base_monday.replace(hour=0, minute=0, second=0, microsecond=0)
+
+    lines = [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//SGOHA//Universidad Continental//ES",
+        "CALSCALE:GREGORIAN",
+        "METHOD:PUBLISH",
+        f"X-WR-CALNAME:Horario Docente {docente.username} - SGOHA",
+    ]
+
+    for h in horarios:
+        slot_info = SLOT_TIME_MAP.get(h.bloque, {})
+        # Calcular fecha/hora del evento
+        event_date = base_monday + timedelta(days=h.dia_semana)
+        inicio_parts = slot_info.get("inicio", "07:00").split(":")
+        fin_parts = slot_info.get("fin", "08:30").split(":")
+
+        dt_start = event_date.replace(hour=int(inicio_parts[0]), minute=int(inicio_parts[1]))
+        dt_end = event_date.replace(hour=int(fin_parts[0]), minute=int(fin_parts[1]))
+
+        uid = f"sgoha-{h.seccion.curso.codigo}-d{h.dia_semana}-s{h.bloque}@continental.edu.pe"
+
+        lines.extend([
+            "BEGIN:VEVENT",
+            f"UID:{uid}",
+            f"DTSTART:{dt_start.strftime('%Y%m%dT%H%M%S')}",
+            f"DTEND:{dt_end.strftime('%Y%m%dT%H%M%S')}",
+            f"SUMMARY:{escape_ical(h.seccion.curso.nombre)}",
+            f"LOCATION:{escape_ical(h.aula.nombre)}",
+            f"DESCRIPTION:Sección: {h.seccion.codigo}\\nDocente: {docente.username}\\nTipo: {h.seccion.curso.tipo}",
+            "RRULE:FREQ=WEEKLY;COUNT=16",
+            "END:VEVENT",
+        ])
+
+    lines.append("END:VCALENDAR")
+    ical_content = "\r\n".join(lines)
+
+    return Response(
+        content=ical_content,
+        media_type="text/calendar",
+        headers={"Content-Disposition": f"attachment; filename=horario_docente_{docente_id}.ics"}
+    )
+

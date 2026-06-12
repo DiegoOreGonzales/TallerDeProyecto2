@@ -57,6 +57,24 @@ class SchedulerEngine:
         if not secciones or not aulas:
             return {"error": "No hay secciones o aulas registradas para generar horarios."}
 
+        # Cargar configuración de restricciones
+        from ..models import ConfigRestriccion
+        try:
+            configs_db = self.db.query(ConfigRestriccion).all()
+            # If the database returns None or a mock that doesn't have attributes, handle it gracefully
+            configs = {c.key: c.activa for c in configs_db if hasattr(c, "key")}
+        except Exception:
+            configs = {
+                "evitar_superposicion_docente": True,
+                "evitar_superposicion_aula": True,
+                "evitar_colision_ciclo_turno": True,
+                "carga_maxima_docente": True,
+                "minimizar_huecos_estudiantes": True,
+                "evitar_bloques_sueltos": True,
+                "respetar_turno_preferido": True,
+            }
+
+
         # Pre-computar docentes
         docentes_cache = {}
         for s in secciones:
@@ -129,11 +147,11 @@ class SchedulerEngine:
                     candidates = []
                     for d in range(NUM_DAYS):
                         for sl in valid_slots[s.id]:
-                            if (a_id, d, sl) in aula_occupied:
+                            if configs.get("evitar_superposicion_aula", True) and (a_id, d, sl) in aula_occupied:
                                 continue
-                            if (doc_id, d, sl) in docente_occupied:
+                            if configs.get("evitar_superposicion_docente", True) and (doc_id, d, sl) in docente_occupied:
                                 continue
-                            if turno in ('MAÑANA', 'TARDE'):
+                            if configs.get("evitar_colision_ciclo_turno", True) and turno in ('MAÑANA', 'TARDE'):
                                 if (periodo, turno, d, sl) in periodo_turno_occupied:
                                     continue
                             candidates.append((d, sl))
@@ -148,7 +166,7 @@ class SchedulerEngine:
                     def choose_slots(rem_creditos, day_idx, chosen):
                         if rem_creditos == 0:
                             current_doc_blocks = docente_total_blocks.get(doc_id, 0)
-                            if current_doc_blocks + len(chosen) > 30:
+                            if configs.get("carga_maxima_docente", True) and current_doc_blocks + len(chosen) > 30:
                                 return False
 
                             assignment[s.id] = (a_id, chosen)
@@ -216,11 +234,11 @@ class SchedulerEngine:
                                 break
                             day_slots = []
                             for sl in valid_slots[s.id]:
-                                if (a_id, d, sl) in aula_occupied:
+                                if configs.get("evitar_superposicion_aula", True) and (a_id, d, sl) in aula_occupied:
                                     continue
-                                if (doc_id, d, sl) in docente_occupied:
+                                if configs.get("evitar_superposicion_docente", True) and (doc_id, d, sl) in docente_occupied:
                                     continue
-                                if turno in ('MAÑANA', 'TARDE'):
+                                if configs.get("evitar_colision_ciclo_turno", True) and turno in ('MAÑANA', 'TARDE'):
                                     if (periodo, turno, d, sl) in periodo_turno_occupied:
                                         continue
                                 day_slots.append(sl)
@@ -231,7 +249,7 @@ class SchedulerEngine:
 
                         if len(chosen) == creditos:
                             current_doc_blocks = docente_total_blocks.get(doc_id, 0)
-                            if current_doc_blocks + creditos <= 30:
+                            if not configs.get("carga_maxima_docente", True) or current_doc_blocks + creditos <= 30:
                                 assignment[s.id] = (a_id, chosen)
                                 for d_c, sl_c in chosen:
                                     aula_occupied.add((a_id, d_c, sl_c))
@@ -340,73 +358,76 @@ class SchedulerEngine:
                 self.model.Add(bloques_dia_var[(s.id, d)] == day_sum)
 
         # (5) No-superposición de aulas
-        aula_ids_all = set()
-        for s in secciones:
-            aula_ids_all.update(valid_aulas[s.id])
+        if configs.get("evitar_superposicion_aula", True):
+            aula_ids_all = set()
+            for s in secciones:
+                aula_ids_all.update(valid_aulas[s.id])
 
-        for a_id in aula_ids_all:
-            for d in range(NUM_DAYS):
-                for sl in range(NUM_SLOTS):
-                    vars_list = []
-                    for s in secciones:
-                        if a_id in valid_aulas[s.id] and sl in valid_slots[s.id]:
-                            vars_list.append(x[(s.id, a_id, d, sl)])
-                    if len(vars_list) > 1:
-                        self.model.Add(sum(vars_list) <= 1)
-
-        # (6) No-superposición de docentes
-        docente_ids = set(s.docente_id for s in secciones)
-        for doc_id in docente_ids:
-            doc_secs = [s for s in secciones if s.docente_id == doc_id]
-            if len(doc_secs) <= 1:
-                continue
-            for d in range(NUM_DAYS):
-                for sl in range(NUM_SLOTS):
-                    vars_list = []
-                    for s in doc_secs:
-                        if sl in valid_slots[s.id]:
-                            for a_id in valid_aulas[s.id]:
-                                vars_list.append(x[(s.id, a_id, d, sl)])
-                    if len(vars_list) > 1:
-                        self.model.Add(sum(vars_list) <= 1)
-
-        # (7) Carga máxima docente: ≤ 30 bloques semanales
-        for doc_id in docente_ids:
-            doc_secs = [s for s in secciones if s.docente_id == doc_id]
-            all_vars = []
-            for s in doc_secs:
-                for a_id in valid_aulas[s.id]:
-                    for d in range(NUM_DAYS):
-                        for sl in valid_slots[s.id]:
-                            all_vars.append(x[(s.id, a_id, d, sl)])
-            if all_vars:
-                self.model.Add(sum(all_vars) <= 30)
-
-        # (8) No-colisión por periodo académico y turno
-        # Dos secciones del MISMO periodo y MISMO turno no pueden compartir slot/día.
-        # Esto garantiza que un estudiante nunca ve dos cursos de su ciclo al mismo tiempo.
-        periodos_set = set(s.curso.periodo for s in secciones)
-        turnos_set = ['MAÑANA', 'TARDE']  # Solo verificar turnos fijos (no COMPLETO)
-
-        for periodo in periodos_set:
-            for turno in turnos_set:
-                # Secciones de este periodo y turno
-                secs_pt = [s for s in secciones
-                           if s.curso.periodo == periodo and s.turno == turno]
-                if len(secs_pt) <= 1:
-                    continue
-                # Para cada dia/slot, máximo 1 sección de este periodo+turno activa
+            for a_id in aula_ids_all:
                 for d in range(NUM_DAYS):
                     for sl in range(NUM_SLOTS):
-                        if sl not in (SLOTS_MAÑANA if turno == 'MAÑANA' else SLOTS_TARDE):
-                            continue
-                        vars_pt = []
-                        for s in secs_pt:
+                        vars_list = []
+                        for s in secciones:
+                            if a_id in valid_aulas[s.id] and sl in valid_slots[s.id]:
+                                vars_list.append(x[(s.id, a_id, d, sl)])
+                        if len(vars_list) > 1:
+                            self.model.Add(sum(vars_list) <= 1)
+
+        # (6) No-superposición de docentes
+        if configs.get("evitar_superposicion_docente", True):
+            docente_ids = set(s.docente_id for s in secciones)
+            for doc_id in docente_ids:
+                doc_secs = [s for s in secciones if s.docente_id == doc_id]
+                if len(doc_secs) <= 1:
+                    continue
+                for d in range(NUM_DAYS):
+                    for sl in range(NUM_SLOTS):
+                        vars_list = []
+                        for s in doc_secs:
                             if sl in valid_slots[s.id]:
                                 for a_id in valid_aulas[s.id]:
-                                    vars_pt.append(x[(s.id, a_id, d, sl)])
-                        if len(vars_pt) > 1:
-                            self.model.Add(sum(vars_pt) <= 1)
+                                    vars_list.append(x[(s.id, a_id, d, sl)])
+                        if len(vars_list) > 1:
+                            self.model.Add(sum(vars_list) <= 1)
+
+        # (7) Carga máxima docente: ≤ 30 bloques semanales
+        if configs.get("carga_maxima_docente", True):
+            docente_ids = set(s.docente_id for s in secciones)
+            for doc_id in docente_ids:
+                doc_secs = [s for s in secciones if s.docente_id == doc_id]
+                all_vars = []
+                for s in doc_secs:
+                    for a_id in valid_aulas[s.id]:
+                        for d in range(NUM_DAYS):
+                            for sl in valid_slots[s.id]:
+                                all_vars.append(x[(s.id, a_id, d, sl)])
+                if all_vars:
+                    self.model.Add(sum(all_vars) <= 30)
+
+        # (8) No-colisión por periodo académico y turno
+        if configs.get("evitar_colision_ciclo_turno", True):
+            periodos_set = set(s.curso.periodo for s in secciones)
+            turnos_set = ['MAÑANA', 'TARDE']  # Solo verificar turnos fijos (no COMPLETO)
+
+            for periodo in periodos_set:
+                for turno in turnos_set:
+                    # Secciones de este periodo y turno
+                    secs_pt = [s for s in secciones
+                               if s.curso.periodo == periodo and s.turno == turno]
+                    if len(secs_pt) <= 1:
+                        continue
+                    # Para cada dia/slot, máximo 1 sección de este periodo+turno activa
+                    for d in range(NUM_DAYS):
+                        for sl in range(NUM_SLOTS):
+                            if sl not in (SLOTS_MAÑANA if turno == 'MAÑANA' else SLOTS_TARDE):
+                                continue
+                            vars_pt = []
+                            for s in secs_pt:
+                                if sl in valid_slots[s.id]:
+                                    for a_id in valid_aulas[s.id]:
+                                        vars_pt.append(x[(s.id, a_id, d, sl)])
+                            if len(vars_pt) > 1:
+                                self.model.Add(sum(vars_pt) <= 1)
 
         # ═══════════════════════════════════════════════════════
         # FUNCIÓN OBJETIVO (todo lo "suave" va aquí)
@@ -423,45 +444,47 @@ class SchedulerEngine:
                 for d in range(NUM_DAYS):
                     for sl in vs:
                         cost = 0
-                        if turno == "MAÑANA":
-                            cost = sl * 3
-                        elif turno == "TARDE":
-                            cost = max(0, sl - 6) * 10
-                        else:
-                            cost = max(0, sl - 7) * 8
-                        # Sábado
-                        if d == 5:
-                            cost += 25
+                        if configs.get("respetar_turno_preferido", True):
+                            if turno == "MAÑANA":
+                                cost = sl * 3
+                            elif turno == "TARDE":
+                                cost = max(0, sl - 6) * 10
+                            else:
+                                cost = max(0, sl - 7) * 8
+                            # Sábado
+                            if d == 5:
+                                cost += 25
                         obj.append(x[(s.id, a_id, d, sl)] * cost)
 
             # --- Soft 2: Penalizar dispersión (muchos días con pocos bloques) ---
-            # Preferir sesiones de 2 bloques → penalizar días con exactamente 1 bloque
-            for d in range(NUM_DAYS):
-                # is_single[s,d] = 1 si la sección tiene exactamente 1 bloque ese día
-                is_single = self.model.NewBoolVar(f'single_{s.id}_{d}')
-                self.model.Add(bloques_dia_var[(s.id, d)] == 1).OnlyEnforceIf(is_single)
-                self.model.Add(bloques_dia_var[(s.id, d)] != 1).OnlyEnforceIf(is_single.Not())
-                # Penalizar bloques sueltos con 15 puntos
-                obj.append(is_single * 15)
+            if configs.get("evitar_bloques_sueltos", True):
+                for d in range(NUM_DAYS):
+                    # is_single[s,d] = 1 si la sección tiene exactamente 1 bloque ese día
+                    is_single = self.model.NewBoolVar(f'single_{s.id}_{d}')
+                    self.model.Add(bloques_dia_var[(s.id, d)] == 1).OnlyEnforceIf(is_single)
+                    self.model.Add(bloques_dia_var[(s.id, d)] != 1).OnlyEnforceIf(is_single.Not())
+                    # Penalizar bloques sueltos con 15 puntos
+                    obj.append(is_single * 15)
 
             # --- Soft 3: Penalizar huecos (slots no contiguos en el mismo día) ---
-            for d in range(NUM_DAYS):
-                vs_sorted = sorted(vs)
-                for i in range(len(vs_sorted) - 2):
-                    sl_a = vs_sorted[i]
-                    sl_c = vs_sorted[i + 2]
-                    sl_b = vs_sorted[i + 1]
-                    # Si slot_a y slot_c activos pero slot_b no → hueco
-                    has_a = sum(x[(s.id, a_id, d, sl_a)] for a_id in va)
-                    has_c = sum(x[(s.id, a_id, d, sl_c)] for a_id in va)
-                    has_b = sum(x[(s.id, a_id, d, sl_b)] for a_id in va)
-                    gap = self.model.NewBoolVar(f'gap_{s.id}_{d}_{i}')
-                    # gap = 1 if has_a + has_c >= 2 and has_b == 0
-                    # Approximate: gap >= has_a + has_c - has_b - 1
-                    self.model.Add(has_a + has_c - has_b - 1 <= gap)
-                    self.model.Add(gap <= has_a)
-                    self.model.Add(gap <= has_c)
-                    obj.append(gap * 50)  # Fuerte penalización por huecos
+            if configs.get("minimizar_huecos_estudiantes", True):
+                for d in range(NUM_DAYS):
+                    vs_sorted = sorted(vs)
+                    for i in range(len(vs_sorted) - 2):
+                        sl_a = vs_sorted[i]
+                        sl_c = vs_sorted[i + 2]
+                        sl_b = vs_sorted[i + 1]
+                        # Si slot_a y slot_c activos pero slot_b no → hueco
+                        has_a = sum(x[(s.id, a_id, d, sl_a)] for a_id in va)
+                        has_c = sum(x[(s.id, a_id, d, sl_c)] for a_id in va)
+                        has_b = sum(x[(s.id, a_id, d, sl_b)] for a_id in va)
+                        gap = self.model.NewBoolVar(f'gap_{s.id}_{d}_{i}')
+                        # gap = 1 if has_a + has_c >= 2 and has_b == 0
+                        # Approximate: gap >= has_a + has_c - has_b - 1
+                        self.model.Add(has_a + has_c - has_b - 1 <= gap)
+                        self.model.Add(gap <= has_a)
+                        self.model.Add(gap <= has_c)
+                        obj.append(gap * 50)  # Fuerte penalización por huecos
 
         self.model.Minimize(sum(obj))
 

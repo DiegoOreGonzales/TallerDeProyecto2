@@ -52,7 +52,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         <div className="text-center mb-10">
           <div className="flex justify-center mb-6">
             <img 
-              src="/logo-uc.png" 
+              src="/logo-uc.webp" 
               alt="Universidad Continental" 
               className="h-16 object-contain brightness-0 invert"
             />

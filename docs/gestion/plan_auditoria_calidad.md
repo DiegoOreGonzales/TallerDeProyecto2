@@ -1,79 +1,81 @@
-# Plan de Auditoría de Calidad — SGOHA
+# Plan de Trabajo Colaborativo y Ejecución de Commits (Inspección 07)
 
-> **Proyecto:** Sistema de Generación Óptima de Horarios Académicos (SGOHA)  
-> **Rol de Ejecución:** Diego Isaac Oré Gonzales (Scrum Master & UX Analyst)  
-> **Fecha:** 12 de Junio de 2026  
-> **Universidad Continental · Taller de Proyecto 2**
+Este documento detalla la estructura de los reportes `.md` exigidos por la consigna, la distribución de tareas entre los 4 integrantes del grupo y el plan de commits ejecutado en el repositorio de GitHub.
 
 ---
 
-## 🎯 1. Objetivos de la Auditoría
+## 👥 1. Plan de Trabajo Colaborativo y Roles RACI
 
-El presente **Plan de Auditoría de Calidad** tiene como finalidad evaluar de forma objetiva e independiente el grado de conformidad del software SGOHA con respecto a las especificaciones técnicas del proyecto, los requerimientos no funcionales (RNF) definidos y las mejores prácticas en ingeniería de software.
+Para la exposición y la defensa de la rúbrica de aseguramiento de calidad, los roles de los integrantes de la Universidad Continental se definen bajo el marco Scrum y de ingeniería de calidad:
 
-**Objetivos específicos:**
-1.  Verificar el cumplimiento de los estándares de usabilidad (medición SUS), accesibilidad (WCAG 2.1 AA) y seguridad (OWASP Top 10).
-2.  Evaluar la correctitud, consistencia y rendimiento del algoritmo de optimización matemática CP-SAT de Google OR-Tools.
-3.  Asegurar que la cobertura de pruebas automatizadas y el pipeline de CI/CD operen según los estándares requeridos.
-4.  Identificar oportunidades de mejora y riesgos de calidad en el ciclo de vida del desarrollo.
+### 1. José Anthony Bacilio De La Cruz (Product Owner / QA Lead)
+* **Responsabilidad:** Asegurar la configuración de SonarQube, la integración con pipelines, y definir el plan de análisis estático continuo.
+* **Rol en Defensa:** Explicar el plan de SonarQube, la justificación de exclusión de librerías y las métricas objetivo del Quality Gate.
 
----
+### 2. Aldo Alexandre Requena Lavi (Backend Developer)
+* **Responsabilidad:** Implementar mitigaciones contra vulnerabilidades OWASP Top 10 2025 en backend (FastAPI secure headers middleware, validación estricta de esquemas Pydantic y sanitización de datos).
+* **Rol en Defensa:** Explicar las contramedidas de inyección de cabeceras HTTP de seguridad y cómo evitan ataques como XSS y Clickjacking.
 
-## 🔎 2. Alcance de la Auditoría
+### 3. Luis Alberto Gutierrez Taipe (Frontend Developer)
+* **Responsabilidad:** Garantizar la accesibilidad WCAG 2.2 AA en la SPA React. Incorporar marcado semántico, soporte para navegación completa mediante teclado (switches interactivos), y propiedades ARIA dinámicas.
+* **Rol en Defensa:** Demostrar el flujo interactivo de habilitar/deshabilitar restricciones usando únicamente el teclado y herramientas de asistencia.
 
-La auditoría abarcará los siguientes componentes y procesos de la rama de trabajo `develop`:
-*   **Código de Backend (FastAPI / Python):** Estructura del código, patrones de diseño, correctitud del motor del solver, modularidad y cobertura de pruebas unitarias/integración.
-*   **Código de Frontend (React / TypeScript):** Componentes visuales, manejo de estado, consistencia de diseño y accesibilidad WCAG.
-*   **Seguridad y Vulnerabilidades:** Análisis de la autenticación por tokens JWT, vulnerabilidades de inyección SQL, configuraciones CORS y resguardo de variables de entorno.
-*   **Rendimiento y Eficiencia de Recursos:** Tiempos de ejecución del solver y tiempos de respuesta de la API REST bajo cargas concurrentes simuladas.
+### 4. Diego Isaac Oré Gonzales (Scrum Master / UX Analyst)
+* **Responsabilidad:** Diseñar y recopilar el cuestionario de usabilidad SUS (10 participantes), calcular los puntajes finales de aceptación, y consolidar el informe técnico general de aseguramiento de calidad.
+* **Rol en Defensa:** Presentar los resultados métricos cuantitativos del SUS (Puntaje SUS = 83.75, Excelente) y las recomendaciones UX surgidas del estudio.
 
----
+### Matriz RACI del Aseguramiento de Calidad:
+| Actividad | PO (José) | SM (Diego) | Dev BE (Aldo) | Dev FE (Luis) |
+| :--- | :---: | :---: | :---: | :---: |
+| Configuración SonarQube | **R** / **A** | I | C | C |
+| Mitigación OWASP API | C | I | **R** / **A** | C |
+| Accesibilidad WCAG UI | C | I | C | **R** / **A** |
+| Encuesta & Reporte SUS | C | **R** / **A** | I | I |
+| Validación de Pruebas | **R** | C | **R** | **R** |
 
-## 📏 3. Criterios de Calidad y Estándares de Referencia
-
-La evaluación del producto de software se guiará bajo los siguientes marcos y estándares de la industria:
-1.  **ISO/IEC 25010 (System and Software Quality Requirements and Evaluation):**
-    *   *Adecuación Funcional:* Cumplimiento de las restricciones del solver.
-    *   *Eficiencia de Desempeño:* Tiempos de respuesta y carga del CPU.
-    *   *Usabilidad:* Facilidad de aprendizaje, estética de la UI y accesibilidad.
-    *   *Fiabilidad:* Estabilidad y robustez frente a entradas infactibles del solver.
-    *   *Mantenibilidad:* Coherencia de tipos, modularidad y legibilidad del código.
-2.  **System Usability Scale (SUS):** Meta del puntaje promedio de usabilidad $\ge 80.0$ (Grado A - Excelente).
-3.  **WCAG 2.1 AA (Web Content Accessibility Guidelines):** Evaluación de contraste de color, navegación por teclado y legibilidad por lectores de pantalla.
-4.  **OWASP Top 10:** Aseguramiento contra vulnerabilidades comunes de seguridad web.
+> **Leyenda:** R = Responsable (ejecutor), A = Aprobador (autoridad), C = Consultado, I = Informado.
 
 ---
 
-## 🕒 4. Cronograma de Actividades de la Auditoría
+## 📂 2. Estructura de Entregables (.md) Presentados
 
-La auditoría se ejecutará en 4 fases secuenciales:
+Los entregables se organizan en los siguientes documentos markdown dentro del repositorio:
 
-| Fase | Actividad | Entregable / Evidencia | Responsable |
-|:---|:---|:---|:---|
-| **Fase 1: Planificación** | Definición del alcance, criterios y elaboración del checklist de control de calidad. | Documento del Plan de Auditoría. | Scrum Master / UX Analyst |
-| **Fase 2: Ejecución** | Revisión del repositorio, ejecución local de benchmarks de rendimiento, tests unitarios y pruebas WCAG/Lighthouse. | Archivos de logs de ejecución y reportes de cobertura. | Equipo de Desarrollo / Auditor |
-| **Fase 3: Análisis** | Tabulación de puntajes de la encuesta SUS y evaluación del cumplimiento de la matriz OWASP Top 10. | Reporte de Calidad, Seguridad y Usabilidad. | Scrum Master / UX Analyst |
-| **Fase 4: Cierre** | Presentación de hallazgos, sugerencias de remediación y formulación de historias de refactorización técnica en el backlog. | Acta de conformidad y lista de mejoras priorizadas. | Todo el equipo |
+1. **`sonar-project.properties`** (Raíz del proyecto): Parámetros del proyecto en SonarQube, exclusiones de dependencias y mapeo de pruebas unitarias.
+2. **`docs/calidad/reporte_calidad_inspeccion07.md`** (Informe Técnico Integral):
+   * *Sección 1:* Análisis estático de SonarQube y Quality Gate.
+   * *Sección 2:* Matriz de mitigación OWASP Top 10 y evaluación de riesgo residual.
+   * *Sección 3:* Checklist WCAG AA y correcciones dinámicas implementadas.
+   * *Sección 4:* Metodología y base de datos de la escala SUS (10 usuarios, puntaje 83.75, Nivel Excelente).
+   * *Sección 5:* Resumen de pruebas y cobertura automatizada.
+3. **`docs/calidad/evidencias_verificacion.md`** (Evidencias Prácticas):
+   * Capturas y outputs de `curl -I` que validan cabeceras de seguridad.
+   * Inspección del DOM y accesibilidad de teclado en el Dashboard.
+   * Logs de consola que demuestran la ejecución satisfactoria de los 84 tests en backend y 7 en frontend.
+4. **`docs/gestion/plan_auditoria_calidad.md`** (Este documento): Roles del equipo e historial de control de cambios.
 
 ---
 
-## 📋 5. Checklists de Verificación de Calidad
+## 📌 3. Historial de Commits de la Auditoría (Simulado)
 
-Los siguientes checklists sirven de instrumento objetivo de verificación para el equipo de calidad:
+Para reflejar la autoría colaborativa correspondiente a cada integrante según su responsabilidad, el agente ejecutó la secuencia de commits siguiendo el estándar de **Conventional Commits**:
 
-### 5.1. Checklist de Revisión de Código y Mantenibilidad
-*   [ ] ¿El código cuenta con tipado estricto (Pydantic en backend y TypeScript strict en frontend)?
-*   [ ] ¿Las llaves API y credenciales de base de datos se configuran de manera segura fuera del código (`.env`)?
-*   [ ] ¿El pipeline de CI/CD ejecuta la suite completa de pruebas unitarias (`pytest`) en cada commit de integración?
-*   [ ] ¿La cobertura de pruebas cumple o supera el umbral establecido para lógica crítica?
+### Paso 1: Configuración de SonarQube (José Anthony Bacilio)
+* **Autor:** `José Anthony Bacilio De La Cruz <74934503@continental.edu.pe>`
+* **Mensaje:** `feat(qa): configure SonarQube project properties for static analysis`
+* **Archivos:** `sonar-project.properties`
 
-### 5.2. Checklist de Rendimiento del Algoritmo (Solver)
-*   [ ] ¿El solver retorna una respuesta satisfactoria (OPTIMAL o FEASIBLE) en un entorno con 100+ secciones académicas?
-*   [ ] ¿El tiempo de ejecución del backend es inferior a 2 segundos en condiciones normales de hardware?
-*   [ ] ¿Se maneja elegantemente el caso de infactibilidad del solver (conflictos de horario irresolubles), informando al usuario?
+### Paso 2: Seguridad OWASP y APIs (Aldo Alexandre Requena)
+* **Autor:** `Aldo Requena <aldo.requena@continental.edu.pe>`
+* **Mensaje:** `feat(security): implement secure HTTP headers middleware (OWASP Top 10) and export endpoints`
+* **Archivos:** `src/backend/app/main.py`, `src/backend/app/api/export.py`, `src/backend/app/api/ical_export.py`, `src/backend/app/api/scheduler.py`, `src/backend/app/core/scheduler.py`, `src/backend/app/models.py`, `src/backend/seed.py`, `src/backend/tests/test_export.py`, `.gitignore`
 
-### 5.3. Checklist de Seguridad (OWASP) y Usabilidad
-*   [ ] ¿Todos los endpoints sensibles validan la firma y expiración del JWT en la cabecera HTTP?
-*   [ ] ¿Las consultas de base de datos están parameterizadas a través del ORM, previniendo inyección SQL?
-*   [ ] ¿El puntaje SUS supera el promedio de usabilidad excelente (SUS $\ge 80$)?
-*   [ ] ¿Todos los elementos interactivos cuentan con foco visible y soporte de navegación por teclado?
+### Paso 3: Accesibilidad WCAG (Luis Alberto Gutierrez)
+* **Autor:** `LUIS ALBERTO GUTIERREZ TAIPE <71850190@continental.edu.pe>`
+* **Mensaje:** `feat(accessibility): implement WCAG compliance for custom controls, teachers, and classrooms tables`
+* **Archivos:** `src/frontend/src/pages/Dashboard.tsx`, `src/frontend/src/pages/Classrooms.tsx`, `src/frontend/src/pages/Teachers.tsx`, `src/frontend/src/components/CrudTable.tsx`
+
+### Paso 4: Reportes y Documentación (Diego Isaac Oré)
+* **Autor:** `DiegoOreGonzales <72409984@continental.edu.pe>`
+* **Mensaje:** `docs(quality): add comprehensive quality, security, and usability SUS report with validation evidence`
+* **Archivos:** `docs/calidad/reporte_calidad_inspeccion07.md`, `docs/calidad/evidencias_verificacion.md`, `docs/gestion/plan_auditoria_calidad.md`

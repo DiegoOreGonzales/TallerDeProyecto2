@@ -1,0 +1,1209 @@
+{
+  "info": {
+    "_postman_id": "ac570685-2908-4aa2-af03-8630ff452bab",
+    "name": "SGOHA - API Tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T19:04:05.000Z",
+    "updatedAt": "2026-06-05T20:24:49.000Z",
+    "lastUpdatedBy": "44131385",
+    "uid": "44131385-ac570685-2908-4aa2-af03-8630ff452bab"
+  },
+  "item": [
+    {
+      "name": "Sistema",
+      "item": [
+        {
+          "name": "GET Health Check",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200 — Servidor operativo\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Respuesta healthy\", () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json).to.have.property(\"status\", \"healthy\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "a2dbb09f-010f-4985-aaf9-f0c466808d1a",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "health"
+              ]
+            }
+          },
+          "response": [],
+          "createdAt": "2026-06-05T20:24:49.000Z",
+          "updatedAt": "2026-06-05T20:24:49.000Z",
+          "uid": "44131385-a2dbb09f-010f-4985-aaf9-f0c466808d1a"
+        },
+        {
+          "name": "GET Root",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Mensaje de bienvenida\", () => {",
+                  "    pm.expect(pm.response.json()).to.have.property(\"message\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "accd07dd-8a7f-4382-bd29-93d80f2c9c47",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                ""
+              ]
+            }
+          },
+          "response": [],
+          "createdAt": "2026-06-05T20:24:49.000Z",
+          "updatedAt": "2026-06-05T20:24:49.000Z",
+          "uid": "44131385-accd07dd-8a7f-4382-bd29-93d80f2c9c47"
+        }
+      ],
+      "id": "8806920e-4fec-4d21-a09a-1b990fab5d18",
+      "createdAt": "2026-06-05T20:24:49.000Z",
+      "updatedAt": "2026-06-05T20:24:49.000Z",
+      "uid": "44131385-8806920e-4fec-4d21-a09a-1b990fab5d18"
+    },
+    {
+      "name": "Autenticacion",
+      "item": [
+        {
+          "name": "POST Login (admin/admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200 — Login exitoso\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const json = pm.response.json();",
+                  "pm.test(\"Token JWT recibido\", () => {",
+                  "    pm.expect(json).to.have.property(\"access_token\");",
+                  "    pm.expect(json.token_type).to.eql(\"bearer\");",
+                  "});",
+                  "pm.test(\"Rol y nombre presentes\", () => {",
+                  "    pm.expect(json).to.have.property(\"user_role\");",
+                  "    pm.expect(json).to.have.property(\"user_name\");",
+                  "});",
+                  "// Guardar token para otros requests",
+                  "pm.collectionVariables.set(\"token\", json.access_token);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "92cbd477-c74b-427f-aabb-97ee522bcc38",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": [],
+          "createdAt": "2026-06-05T20:24:49.000Z",
+          "updatedAt": "2026-06-05T20:24:49.000Z",
+          "uid": "44131385-92cbd477-c74b-427f-aabb-97ee522bcc38"
+        },
+        {
+          "name": "POST Registrar Docente",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200 — Docente registrado\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const json = pm.response.json();",
+                  "pm.test(\"Datos correctos\", () => {",
+                  "    pm.expect(json).to.have.property(\"username\");",
+                  "    pm.expect(json.role).to.eql(\"docente\");",
+                  "    pm.expect(json.is_active).to.eql(true);",
+                  "});",
+                  "pm.test(\"No expone contraseña\", () => {",
+                  "    pm.expect(json).to.not.have.property(\"password\");",
+                  "    pm.expect(json).to.not.have.property(\"hashed_password\");",
+                  "});",
+                  "pm.collectionVariables.set(\"user_id\", json.id);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "8f68b5ab-4474-42e5-b2e5-9e1c40fcac27",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"docente_postman\",\n    \"email\": \"docente_postman@test.com\",\n    \"password\": \"test123\",\n    \"role\": \"docente\",\n    \"turno_preferido\": \"MAÑANA\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": [],
+          "createdAt": "2026-06-05T20:24:49.000Z",
+          "updatedAt": "2026-06-05T20:24:49.000Z",
+          "uid": "44131385-8f68b5ab-4474-42e5-b2e5-9e1c40fcac27"
+        },
+        {
+          "name": "POST Registrar Estudiante",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200 — Estudiante registrado\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const json = pm.response.json();",
+                  "pm.test(\"Datos del estudiante\", () => {",
+                  "    pm.expect(json.role).to.eql(\"estudiante\");",
+                  "    pm.expect(json).to.have.property(\"ciclo\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "40ba2e80-1470-46d9-8398-cbc2d04b6942",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"estudiante_postman\",\n    \"email\": \"estu_postman@test.com\",\n    \"password\": \"test123\",\n    \"role\": \"estudiante\",\n    \"turno_preferido\": \"TARDE\",\n    \"ciclo_actual\": 6\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": [],
+          "createdAt": "2026-06-05T20:24:49.000Z",
+          "updatedAt": "2026-06-05T20:24:49.000Z",
+          "uid": "44131385-40ba2e80-1470-46d9-8398-cbc2d04b6942"
+        },
+        {
+          "name": "GET Listar Usuarios",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Es un arreglo de usuarios\", () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json).to.be.an(\"array\");",
+                  "    if (json.length > 0) {",
+                  "        pm.expect(json[0]).to.have.property(\"username\");",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "94e4e55f-89f7-45c4-b89f-038e5cf4936a",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/auth/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "users"
+              ]
+            }
+          },
+          "response": [],
+          "createdAt": "2026-06-05T20:24:49.000Z",
+          "updatedAt": "2026-06-05T20:24:49.000Z",
+          "uid": "44131385-94e4e55f-89f7-45c4-b89f-038e5cf4936a"
+        },
+        {
+          "name": "GET Listar Docentes",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Todos son docentes\", () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json).to.be.an(\"array\");",
+                  "    json.forEach(u => pm.expect(u.role).to.eql(\"docente\"));",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "6a407196-eb4a-4d19-bf8d-1b6151ba1095",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/auth/users/docentes",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "users",
+                "docentes"
+              ]
+            }
+          },
+          "response": [],
+          "createdAt": "2026-06-05T20:24:49.000Z",
+          "updatedAt": "2026-06-05T20:24:49.000Z",
+          "uid": "44131385-6a407196-eb4a-4d19-bf8d-1b6151ba1095"
+        },
+        {
+          "name": "DELETE Eliminar Usuario",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Usuario eliminado\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Mensaje de confirmación\", () => {",
+                  "    pm.expect(pm.response.json()).to.have.property(\"message\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "9bd73502-87cc-4e1f-8a50-8fb131f83360",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/auth/users/{{user_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "users",
+                "{{user_id}}"
+              ]
+            }
+          },
+          "response": [],
+          "createdAt": "2026-06-05T20:24:49.000Z",
+          "updatedAt": "2026-06-05T20:24:49.000Z",
+          "uid": "44131385-9bd73502-87cc-4e1f-8a50-8fb131f83360"
+        }
+      ],
+      "id": "4dd181e8-c75c-4289-a8b6-3745e15c9a6d",
+      "createdAt": "2026-06-05T20:24:49.000Z",
+      "updatedAt": "2026-06-05T20:24:49.000Z",
+      "uid": "44131385-4dd181e8-c75c-4289-a8b6-3745e15c9a6d"
+    },
+    {
+      "name": "Cursos",
+      "item": [
+        {
+          "name": "POST Crear Curso",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200 — Curso creado\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const json = pm.response.json();",
+                  "pm.test(\"Estructura válida\", () => {",
+                  "    pm.expect(json).to.have.property(\"id\");",
+                  "    pm.expect(json).to.have.property(\"codigo\");",
+                  "    pm.expect(json).to.have.property(\"nombre\");",
+                  "    pm.expect(json).to.have.property(\"creditos\");",
+                  "    pm.expect(json).to.have.property(\"tipo\");",
+                  "    pm.expect(json).to.have.property(\"periodo\");",
+                  "});",
+                  "pm.collectionVariables.set(\"curso_id\", json.id);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "24391dfd-3bfc-4df1-b730-46ad467cbd0c",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"codigo\": \"ASUC-TEST-01\",\n    \"nombre\": \"Curso Test Postman\",\n    \"creditos\": 4,\n    \"tipo\": \"Teoría\",\n    \"periodo\": 5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/cursos/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "cursos",
+                ""
+              ]
+            }
+          },
+          "response": [],
+          "createdAt": "2026-06-05T20:24:49.000Z",
+          "updatedAt": "2026-06-05T20:24:49.000Z",
+          "uid": "44131385-24391dfd-3bfc-4df1-b730-46ad467cbd0c"
+        },
+        {
+          "name": "GET Listar Cursos",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Es un arreglo\", () => {",
+                  "    pm.expect(pm.response.json()).to.be.an(\"array\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "6ecc14d1-8501-4aaa-8142-6be33eaac071",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/cursos/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "cursos",
+                ""
+              ]
+            }
+          },
+          "response": [],
+          "createdAt": "2026-06-05T20:24:49.000Z",
+          "updatedAt": "2026-06-05T20:24:49.000Z",
+          "uid": "44131385-6ecc14d1-8501-4aaa-8142-6be33eaac071"
+        },
+        {
+          "name": "GET Obtener Curso por ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200 — Curso encontrado\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"ID coincide\", () => {",
+                  "    pm.expect(pm.response.json()).to.have.property(\"id\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "d919f45c-474e-4279-8f73-6feaee45e1c5",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/cursos/{{curso_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "cursos",
+                "{{curso_id}}"
+              ]
+            }
+          },
+          "response": [],
+          "createdAt": "2026-06-05T20:24:49.000Z",
+          "updatedAt": "2026-06-05T20:24:49.000Z",
+          "uid": "44131385-d919f45c-474e-4279-8f73-6feaee45e1c5"
+        },
+        {
+          "name": "DELETE Eliminar Curso",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Curso eliminado\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Mensaje de confirmación\", () => {",
+                  "    pm.expect(pm.response.json()).to.have.property(\"message\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "3200a24d-68a8-4e9a-af9a-df9be3f96868",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/cursos/{{curso_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "cursos",
+                "{{curso_id}}"
+              ]
+            }
+          },
+          "response": [],
+          "createdAt": "2026-06-05T20:24:49.000Z",
+          "updatedAt": "2026-06-05T20:24:49.000Z",
+          "uid": "44131385-3200a24d-68a8-4e9a-af9a-df9be3f96868"
+        }
+      ],
+      "id": "4ad35c1d-660c-48d8-877c-7fc21900020e",
+      "createdAt": "2026-06-05T20:24:49.000Z",
+      "updatedAt": "2026-06-05T20:24:49.000Z",
+      "uid": "44131385-4ad35c1d-660c-48d8-877c-7fc21900020e"
+    },
+    {
+      "name": "Aulas",
+      "item": [
+        {
+          "name": "POST Crear Aula",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200 — Aula creada\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const json = pm.response.json();",
+                  "pm.test(\"Estructura válida\", () => {",
+                  "    pm.expect(json).to.have.property(\"id\");",
+                  "    pm.expect(json).to.have.property(\"nombre\");",
+                  "    pm.expect(json).to.have.property(\"capacidad\");",
+                  "    pm.expect(json).to.have.property(\"tipo\");",
+                  "});",
+                  "pm.collectionVariables.set(\"aula_id\", json.id);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "200daf41-7698-44cb-bcc4-28e522499b02",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nombre\": \"A-POSTMAN-01\",\n    \"capacidad\": 45,\n    \"tipo\": \"Teoría\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/aulas/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "aulas",
+                ""
+              ]
+            }
+          },
+          "response": [],
+          "createdAt": "2026-06-05T20:24:49.000Z",
+          "updatedAt": "2026-06-05T20:24:49.000Z",
+          "uid": "44131385-200daf41-7698-44cb-bcc4-28e522499b02"
+        },
+        {
+          "name": "GET Listar Aulas",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Es un arreglo\", () => {",
+                  "    pm.expect(pm.response.json()).to.be.an(\"array\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "203bcfb2-9b57-4a99-be08-0bbfaa78d4ee",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/aulas/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "aulas",
+                ""
+              ]
+            }
+          },
+          "response": [],
+          "createdAt": "2026-06-05T20:24:49.000Z",
+          "updatedAt": "2026-06-05T20:24:49.000Z",
+          "uid": "44131385-203bcfb2-9b57-4a99-be08-0bbfaa78d4ee"
+        },
+        {
+          "name": "DELETE Eliminar Aula",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Aula eliminada\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.expect(pm.response.json()).to.have.property(\"message\");"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "ff31912c-c693-402b-b0c5-142c3230eeda",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/aulas/{{aula_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "aulas",
+                "{{aula_id}}"
+              ]
+            }
+          },
+          "response": [],
+          "createdAt": "2026-06-05T20:24:49.000Z",
+          "updatedAt": "2026-06-05T20:24:49.000Z",
+          "uid": "44131385-ff31912c-c693-402b-b0c5-142c3230eeda"
+        }
+      ],
+      "id": "97815351-c99e-44a4-b5bd-13f33872a1da",
+      "createdAt": "2026-06-05T20:24:49.000Z",
+      "updatedAt": "2026-06-05T20:24:49.000Z",
+      "uid": "44131385-97815351-c99e-44a4-b5bd-13f33872a1da"
+    },
+    {
+      "name": "Secciones",
+      "item": [
+        {
+          "name": "POST Crear Seccion",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const json = pm.response.json();",
+                  "pm.test(\"Estructura válida\", () => {",
+                  "    pm.expect(json).to.have.property(\"id\");",
+                  "    pm.expect(json).to.have.property(\"codigo\");",
+                  "    pm.expect(json).to.have.property(\"curso_id\");",
+                  "    pm.expect(json).to.have.property(\"docente_id\");",
+                  "});",
+                  "pm.collectionVariables.set(\"seccion_id\", json.id);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "626f0957-ce24-4631-8b15-32069277b0e2",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"codigo\": \"ASUC-TEST-01-M\",\n    \"curso_id\": 1,\n    \"docente_id\": 2,\n    \"capac_estimada\": 35,\n    \"turno\": \"MAÑANA\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/secciones/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "secciones",
+                ""
+              ]
+            }
+          },
+          "response": [],
+          "createdAt": "2026-06-05T20:24:49.000Z",
+          "updatedAt": "2026-06-05T20:24:49.000Z",
+          "uid": "44131385-626f0957-ce24-4631-8b15-32069277b0e2"
+        },
+        {
+          "name": "GET Listar Secciones",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Es un arreglo\", () => {",
+                  "    pm.expect(pm.response.json()).to.be.an(\"array\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "331e885c-48de-447d-bfe9-a0b0ad6afabb",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/secciones/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "secciones",
+                ""
+              ]
+            }
+          },
+          "response": [],
+          "createdAt": "2026-06-05T20:24:49.000Z",
+          "updatedAt": "2026-06-05T20:24:49.000Z",
+          "uid": "44131385-331e885c-48de-447d-bfe9-a0b0ad6afabb"
+        },
+        {
+          "name": "DELETE Eliminar Seccion",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Sección eliminada\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.expect(pm.response.json()).to.have.property(\"message\");"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "5606d56a-a724-4aa8-aa9b-67fbb2af87ee",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/secciones/{{seccion_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "secciones",
+                "{{seccion_id}}"
+              ]
+            }
+          },
+          "response": [],
+          "createdAt": "2026-06-05T20:24:49.000Z",
+          "updatedAt": "2026-06-05T20:24:49.000Z",
+          "uid": "44131385-5606d56a-a724-4aa8-aa9b-67fbb2af87ee"
+        }
+      ],
+      "id": "0dde982f-7516-4589-b687-85b4344bfd73",
+      "createdAt": "2026-06-05T20:24:49.000Z",
+      "updatedAt": "2026-06-05T20:24:49.000Z",
+      "uid": "44131385-0dde982f-7516-4589-b687-85b4344bfd73"
+    },
+    {
+      "name": "Scheduler",
+      "item": [
+        {
+          "name": "POST Generar Horario",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200 — Horario generado\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const json = pm.response.json();",
+                  "pm.test(\"Mensaje con bloques asignados\", () => {",
+                  "    pm.expect(json).to.have.property(\"message\");",
+                  "    pm.expect(json.message).to.include(\"bloques\");",
+                  "});",
+                  "pm.test(\"Data con arreglo de horarios\", () => {",
+                  "    pm.expect(json).to.have.property(\"data\");",
+                  "    pm.expect(json.data).to.be.an(\"array\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "d837f32b-abd4-4b1d-bd46-4cbbf69ff889",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/scheduler/generate",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "scheduler",
+                "generate"
+              ]
+            }
+          },
+          "response": [],
+          "createdAt": "2026-06-05T20:24:49.000Z",
+          "updatedAt": "2026-06-05T20:24:49.000Z",
+          "uid": "44131385-d837f32b-abd4-4b1d-bd46-4cbbf69ff889"
+        },
+        {
+          "name": "GET Obtener Horarios",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Estructura { data: [...] }\", () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json).to.have.property(\"data\");",
+                  "    pm.expect(json.data).to.be.an(\"array\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "543df924-35a4-4730-bd4c-dfdaf688368c",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/scheduler/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "scheduler",
+                ""
+              ]
+            }
+          },
+          "response": [],
+          "createdAt": "2026-06-05T20:24:49.000Z",
+          "updatedAt": "2026-06-05T20:24:49.000Z",
+          "uid": "44131385-543df924-35a4-4730-bd4c-dfdaf688368c"
+        },
+        {
+          "name": "GET Obtener KPIs",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const json = pm.response.json();",
+                  "pm.test(\"Todos los KPIs presentes\", () => {",
+                  "    pm.expect(json).to.have.property(\"cursos\");",
+                  "    pm.expect(json).to.have.property(\"aulas\");",
+                  "    pm.expect(json).to.have.property(\"secciones\");",
+                  "    pm.expect(json).to.have.property(\"docentes\");",
+                  "    pm.expect(json).to.have.property(\"horarios_generados\");",
+                  "});",
+                  "pm.test(\"Valores numéricos no negativos\", () => {",
+                  "    Object.values(json).forEach(v => {",
+                  "        pm.expect(v).to.be.a(\"number\").and.to.be.at.least(0);",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "b3e21303-d589-4a1e-a27d-3eb67a00ef54",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/scheduler/stats",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "scheduler",
+                "stats"
+              ]
+            }
+          },
+          "response": [],
+          "createdAt": "2026-06-05T20:24:49.000Z",
+          "updatedAt": "2026-06-05T20:24:49.000Z",
+          "uid": "44131385-b3e21303-d589-4a1e-a27d-3eb67a00ef54"
+        }
+      ],
+      "id": "7fffa8f4-99d7-437e-92f6-2ccc7fd94e41",
+      "createdAt": "2026-06-05T20:24:49.000Z",
+      "updatedAt": "2026-06-05T20:24:49.000Z",
+      "uid": "44131385-7fffa8f4-99d7-437e-92f6-2ccc7fd94e41"
+    },
+    {
+      "name": "Exportacion",
+      "item": [
+        {
+          "name": "GET Exportar PDF Completo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200 — PDF generado\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Content-Type es PDF\", () => {",
+                  "    pm.expect(pm.response.headers.get(\"Content-Type\"))",
+                  "      .to.include(\"application/pdf\");",
+                  "});",
+                  "pm.test(\"Content-Disposition tiene filename\", () => {",
+                  "    const cd = pm.response.headers.get(\"Content-Disposition\");",
+                  "    pm.expect(cd).to.include(\"attachment; filename=\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "f1eb1256-4aee-4f29-bcbd-d0de8299d782",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/export/pdf",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "export",
+                "pdf"
+              ]
+            }
+          },
+          "response": [],
+          "createdAt": "2026-06-05T20:24:49.000Z",
+          "updatedAt": "2026-06-05T20:24:49.000Z",
+          "uid": "44131385-f1eb1256-4aee-4f29-bcbd-d0de8299d782"
+        },
+        {
+          "name": "GET Exportar PDF por Ciclo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Content-Type PDF\", () => {",
+                  "    pm.expect(pm.response.headers.get(\"Content-Type\"))",
+                  "      .to.include(\"application/pdf\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "3e972dfa-ea5f-4e17-bac0-6f210a1b6487",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/export/pdf/ciclo/{{ciclo}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "export",
+                "pdf",
+                "ciclo",
+                "{{ciclo}}"
+              ]
+            }
+          },
+          "response": [],
+          "createdAt": "2026-06-05T20:24:49.000Z",
+          "updatedAt": "2026-06-05T20:24:49.000Z",
+          "uid": "44131385-3e972dfa-ea5f-4e17-bac0-6f210a1b6487"
+        },
+        {
+          "name": "GET Exportar Calendario iCal",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200 — iCal exportado\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Content-Type text/calendar\", () => {",
+                  "    pm.expect(pm.response.headers.get(\"Content-Type\"))",
+                  "      .to.include(\"text/calendar\");",
+                  "});",
+                  "pm.test(\"Estructura iCal válida\", () => {",
+                  "    const body = pm.response.text();",
+                  "    pm.expect(body).to.include(\"BEGIN:VCALENDAR\");",
+                  "    pm.expect(body).to.include(\"END:VCALENDAR\");",
+                  "    pm.expect(body).to.include(\"VERSION:2.0\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "ba5644c6-08bb-4f91-a489-4b86d0c424d3",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/export/ical/ciclo/{{ciclo}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "export",
+                "ical",
+                "ciclo",
+                "{{ciclo}}"
+              ]
+            }
+          },
+          "response": [],
+          "createdAt": "2026-06-05T20:24:49.000Z",
+          "updatedAt": "2026-06-05T20:24:49.000Z",
+          "uid": "44131385-ba5644c6-08bb-4f91-a489-4b86d0c424d3"
+        }
+      ],
+      "id": "96dd830d-f819-4469-9269-e87f8f101408",
+      "createdAt": "2026-06-05T20:24:49.000Z",
+      "updatedAt": "2026-06-05T20:24:49.000Z",
+      "uid": "44131385-96dd830d-f819-4469-9269-e87f8f101408"
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "curso_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "aula_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "seccion_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "user_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "ciclo",
+      "value": "5",
+      "type": "string"
+    }
+  ]
+}

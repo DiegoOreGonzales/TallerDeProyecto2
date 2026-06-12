@@ -8,7 +8,9 @@ interface CrudTableProps {
   onAdd: () => void;
   onDelete: (id: number) => void;
   renderRow: (item: any) => React.ReactNode;
+  extraActions?: (item: any) => React.ReactNode;
 }
+
 
 const CrudTable: React.FC<CrudTableProps> = ({ 
   title, 
@@ -17,9 +19,13 @@ const CrudTable: React.FC<CrudTableProps> = ({
   data, 
   onAdd, 
   onDelete, 
-  renderRow 
+  renderRow,
+  extraActions
 }) => {
+
   const [searchTerm, setSearchTerm] = React.useState('');
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const ITEMS_PER_PAGE = 10;
 
   // Lógica de filtrado local (RF-05)
   const filteredData = React.useMemo(() => {
@@ -31,6 +37,39 @@ const CrudTable: React.FC<CrudTableProps> = ({
       )
     );
   }, [data, searchTerm]);
+
+  // Paginación
+  const totalPages = React.useMemo(() => 
+    Math.max(1, Math.ceil(filteredData.length / ITEMS_PER_PAGE)), 
+    [filteredData.length]
+  );
+
+  const paginatedData = React.useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredData.slice(start, start + ITEMS_PER_PAGE);
+  }, [filteredData, currentPage]);
+
+  // Reiniciar página si el filtrado reduce los resultados
+  React.useEffect(() => {
+    setCurrentPage(prev => Math.min(prev, totalPages));
+  }, [totalPages]);
+
+  // Generar números de página con elipsis cuando hay muchas páginas
+  const getPageNumbers = (): (number | '...')[] => {
+    const pages: (number | '...')[] = [];
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+      return pages;
+    }
+    pages.push(1);
+    if (currentPage > 3) pages.push('...');
+    const startPage = Math.max(2, currentPage - 1);
+    const endPage = Math.min(totalPages - 1, currentPage + 1);
+    for (let i = startPage; i <= endPage; i++) pages.push(i);
+    if (currentPage < totalPages - 2) pages.push('...');
+    pages.push(totalPages);
+    return pages;
+  };
 
   return (
     <div className="card-premium shadow-2xl animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -47,7 +86,7 @@ const CrudTable: React.FC<CrudTableProps> = ({
             type="text"
             placeholder="Filtrar registros..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
             className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white focus:ring-1 focus:ring-orange-500 transition-all placeholder:text-neutral-600"
           />
         </div>
@@ -76,11 +115,12 @@ const CrudTable: React.FC<CrudTableProps> = ({
             </tr>
           </thead>
           <tbody className="divide-y divide-white/5">
-            {filteredData.length > 0 ? (
-              filteredData.map((item, index) => (
+            {paginatedData.length > 0 ? (
+              paginatedData.map((item, index) => (
                 <tr key={index} className="group hover:bg-white/5 transition-colors">
                   {renderRow(item)}
-                  <td className="px-8 py-5 text-right">
+                  <td className="px-8 py-5 text-right flex items-center justify-end gap-2">
+                    {extraActions && extraActions(item)}
                     <button 
                       onClick={() => onDelete(item.id)}
                       className="p-2 text-neutral-600 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-all"
@@ -103,7 +143,53 @@ const CrudTable: React.FC<CrudTableProps> = ({
             )}
           </tbody>
         </table>
-      </div>
+        </div>
+
+      {/* Paginación UI */}
+      {totalPages > 1 && (
+        <div className="px-8 py-4 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4 bg-white/[0.01]">
+          <p className="text-xs text-neutral-500 font-medium">
+            Mostrando {(currentPage - 1) * ITEMS_PER_PAGE + 1}–{Math.min(currentPage * ITEMS_PER_PAGE, filteredData.length)} de {filteredData.length} registro(s)
+          </p>
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+              className="p-2 rounded-lg text-neutral-400 hover:text-white hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              title="Página anterior"
+            >
+              <span className="material-symbols-outlined text-lg">chevron_left</span>
+            </button>
+
+            {getPageNumbers().map((pageNum, idx) =>
+              pageNum === '...' ? (
+                <span key={`ellipsis-${idx}`} className="px-2 text-neutral-600 text-xs">...</span>
+              ) : (
+                <button
+                  key={pageNum}
+                  onClick={() => setCurrentPage(pageNum)}
+                  className={`min-w-[36px] h-9 rounded-lg text-xs font-bold transition-all ${
+                    currentPage === pageNum
+                      ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30'
+                      : 'text-neutral-500 hover:text-white hover:bg-white/5'
+                  }`}
+                >
+                  {pageNum}
+                </button>
+              )
+            )}
+
+            <button
+              onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+              className="p-2 rounded-lg text-neutral-400 hover:text-white hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              title="Página siguiente"
+            >
+              <span className="material-symbols-outlined text-lg">chevron_right</span>
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

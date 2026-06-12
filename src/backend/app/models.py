@@ -83,3 +83,13 @@ class Horario(Base):
 
     seccion = relationship("Seccion", back_populates="horarios")
     aula = relationship("Aula", back_populates="horarios")
+
+
+class ConfigRestriccion(Base):
+    __tablename__ = "config_restricciones"
+    key = Column(String, primary_key=True, index=True)
+    nombre = Column(String, nullable=False)
+    descripcion = Column(String, nullable=True)
+    activa = Column(Boolean, default=True)
+    es_dura = Column(Boolean, default=True)
+

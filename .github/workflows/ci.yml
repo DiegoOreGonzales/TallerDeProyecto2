@@ -2,9 +2,9 @@ name: CI / TDD Pipeline
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "develop" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "develop" ]
 
 jobs:
   test-backend:
@@ -52,3 +52,30 @@ jobs:
       with:
         file: ./src/backend/coverage.xml
         fail_ci_if_error: false
+
+  test-frontend:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: "20"
+        cache: "npm"
+        cache-dependency-path: "src/frontend/package-lock.json"
+        
+    - name: Install dependencies
+      run: |
+        cd src/frontend
+        npm install --legacy-peer-deps
+        
+    - name: Run ESLint
+      run: |
+        cd src/frontend
+        npm run lint
+        
+    - name: Run Vitest (Frontend Unit & Component Tests)
+      run: |
+        cd src/frontend
+        npx vitest run

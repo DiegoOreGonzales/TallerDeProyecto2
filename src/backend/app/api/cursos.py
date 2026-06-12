@@ -21,8 +21,9 @@ def create_curso(curso: CursoCreate, db: Session = Depends(get_db)):
 
 
 @router.get("/", response_model=List[CursoSchema])
-def get_cursos(db: Session = Depends(get_db)):
-    return db.query(CursoModel).order_by(CursoModel.periodo, CursoModel.codigo).all()
+def get_cursos(skip: int = 0, limit: int = 50, db: Session = Depends(get_db)):
+    # Paginación para evitar payloads innecesarios (Green Software)
+    return db.query(CursoModel).order_by(CursoModel.periodo, CursoModel.codigo).offset(skip).limit(limit).all()
 
 
 @router.get("/{curso_id}", response_model=CursoSchema)
