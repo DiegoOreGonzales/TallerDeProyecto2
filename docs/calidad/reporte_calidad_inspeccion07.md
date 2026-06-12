@@ -172,10 +172,17 @@ La verificabilidad técnica del sistema se sustenta mediante múltiples capas de
             ![Ejecución de Pytest - Parte 1](../evidencias/capturas_inspeccion07/OWASP4_test1.png)
         *   **Parte 2: Continuación de la Suite de Pruebas (CRUD, Modelos y Scheduler)**
             ![Ejecución de Pytest - Parte 2](../evidencias/capturas_inspeccion07/OWASP4_test2.png)
-        *   **Parte 3: Cobertura de Código Finalizada (81% Cobertura y 84 Pasados)**
+        *   **Parte 3: Cobertura de Código Finalizada (84 Pasados)**
             ![Reporte de Cobertura de Pytest - Parte 3](../evidencias/capturas_inspeccion07/OWASP4_test3.png)
 *   **Unit & Components (React/Vitest):** 7 pruebas que validan el correcto renderizado y comportamiento de formularios en [Login.test.tsx](../../src/frontend/src/pages/__tests__/Login.test.tsx) y componentes de tablas.
-*   **Cobertura:** Cobertura de backend superior al **96.7%**, garantizando la cobertura de los algoritmos de asignación matemática.
+*   **Métricas de Cobertura Obtenidas:**
+    *   **Cobertura en Integración Continua (CI/GitHub Actions):** Alcanza el **92.4%** global en el backend y superior al **96%** en `app/core/scheduler.py`, ya que en el pipeline de GitHub Actions se ejecuta sobre **Python 3.11 en Linux**, donde la suite de OR-Tools corre sin restricciones de compatibilidad.
+    *   **Cobertura Local (Windows + Python 3.14+):** Reporta **72%** de cobertura global en el backend, con un **37%** en `app/core/scheduler.py`.
+    
+    > [!IMPORTANT]
+    > **Justificación Técnica de la Cobertura Local:**
+    > Google OR-Tools CP-SAT presenta una falla crítica de violación de acceso (`access violation 0xC0000005`) en sistemas Windows corriendo Python 3.14. Para mitigar esta restricción y asegurar que el sistema no colapse durante la demostración en vivo en clase, implementamos un **motor de backtracking en Python nativo como mecanismo de fallback**. 
+    > Durante la ejecución local del test en Windows con Python 3.14.5, la lógica del solver CP-SAT (que abarca desde la línea 303 a la 532 de `scheduler.py`) es evitada de forma segura. Al no ejecutarse el motor CP-SAT, pytest marca esas líneas como no cubiertas, reduciendo la cobertura local al **72%**. Sin embargo, esto garantiza la resiliencia y el levantamiento seguro del sistema en entornos modernos.
 *   **Validaciones de Linter y Compilación (Frontend):**
     *   Para certificar la sanidad del código frontend antes de su distribución:
         *   **Linter (`npm run lint`):** ESLint finaliza limpio de advertencias y errores.
