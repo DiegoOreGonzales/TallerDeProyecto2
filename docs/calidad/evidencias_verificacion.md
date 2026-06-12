@@ -197,19 +197,19 @@ Las pruebas automatizadas del Backend y Frontend garantizan el correcto funciona
 ### Ejecución de `pytest` (84 Tests):
 ```text
 ============================= test session starts =============================
-platform win32 -- Python 3.12.10, pytest-9.0.3, pluggy-1.6.0
-rootdir: D:\jose\sistema_taller_proyectos\TallerDeProyecto2
+platform win32 -- Python 3.14.5, pytest-9.0.3, pluggy-1.6.0
+rootdir: D:\Estudios\Taller de Proyectos 2\App\TallerDeProyecto2\src\backend
 plugins: anyio-4.13.0, cov-7.1.0, mock-3.15.1
 collected 84 items
 
-src\backend\tests\test_api.py ...............                            [ 17%]
-src\backend\tests\test_auth.py ....                                      [ 22%]
-src\backend\tests\test_crud.py ............                              [ 36%]
-src\backend\tests\test_export.py .............                           [ 52%]
-src\backend\tests\test_optimization_model.py .................           [ 72%]
-src\backend\tests\test_scheduler.py .......................              [100%]
+tests/test_api.py ...............                                        [ 17%]
+tests/test_auth.py ....                                                  [ 22%]
+tests/test_crud.py ............                                          [ 36%]
+tests/test_export.py .............                                       [ 52%]
+tests/test_optimization_model.py .................                       [ 72%]
+tests/test_scheduler.py .......................                          [100%]
 
-================== 84 passed, 1 warning in 100.63s (0:01:40) ==================
+================== 84 passed, 1 warning in 95.67s (0:01:35) ==================
 ```
 
 * **Evidencia Visual (Ejecución de Pytest):**
@@ -217,13 +217,13 @@ src\backend\tests\test_scheduler.py .......................              [100%]
 
 ### Ejecución de Vitest en Frontend (7 Tests):
 ```text
-✓ src/frontend/src/pages/__tests__/Login.test.tsx (3 tests)
-✓ src/frontend/src/components/__tests__/CrudTable.test.tsx (4 tests)
+✓ src/pages/__tests__/Courses.test.tsx (3 tests)
+✓ src/pages/__tests__/Login.test.tsx (4 tests)
 
 Test Files  2 passed (2)
      Tests  7 passed (7)
-  Start at  00:37:05
-  Duration  4.12s
+  Start at  16:05:39
+  Duration  1.65s
 ```
 
 ---
