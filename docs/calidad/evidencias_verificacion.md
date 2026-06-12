@@ -223,8 +223,15 @@ tests/test_scheduler.py .......................                          [100%]
 ================== 84 passed, 1 warning in 95.67s (0:01:35) ==================
 ```
 
-* **Evidencia Visual (Ejecución de Pytest):**
-  ![Pruebas Unitarias Pytest](../evidencias/capturas_inspeccion07/Evidencia_Pytest_Unitarios_Local.png)
+* **Evidencia Visual (Ejecución y Cobertura de Pytest - Secuencia Real de Consola):**
+
+````carousel
+![Ejecución de Pytest - Parte 1 (test_api y test_auth)](../evidencias/capturas_inspeccion07/OWASP4_test1.png)
+<!-- slide -->
+![Ejecución de Pytest - Parte 2 (test_crud, test_export, test_optimization_model y test_scheduler)](../evidencias/capturas_inspeccion07/OWASP4_test2.png)
+<!-- slide -->
+![Reporte de Cobertura de Pytest - Parte 3 (Resumen del 81% de Cobertura Global y 84 Pasados)](../evidencias/capturas_inspeccion07/OWASP4_test3.png)
+````
 
 ### Ejecución de Vitest en Frontend (7 Tests):
 ```text
