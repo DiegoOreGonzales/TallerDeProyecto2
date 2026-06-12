@@ -72,3 +72,49 @@ Durante la exposición, deberás sustentar los siguientes puntos:
    * *Respuesta:* El Quality Gate bloquea la integración si el código nuevo tiene bugs, si la duplicación de código supera el 3% (evitando redundancias y mala mantenibilidad) o si la cobertura de pruebas de código nuevo baja del 80%.
 3. **¿Cómo se mide la cobertura?**
    * *Respuesta:* Mediante las directivas de cobertura de Pytest (`coverage.xml` en backend) y Vitest (`lcov.info` en frontend), las cuales SonarQube parsea para mapear qué líneas de código fueron efectivamente cubiertas por los tests unitarios.
+
+---
+
+## 🔑 4. Credenciales de Acceso a SonarQube
+
+Para ingresar al panel local de control de calidad:
+*   **URL Local:** [http://localhost:9000](http://localhost:9000)
+*   **Usuario por defecto:** `admin`
+*   **Contraseña por defecto:** `admin`
+
+> [!IMPORTANT]
+> En el primer inicio de sesión web, SonarQube te solicitará obligatoriamente cambiar la contraseña. Te sugerimos cambiarla a algo recordable (ej. `admin1234` o `admin123`) para mantener el control.
+
+---
+
+## 📸 5. Guía para Tomar Capturas de Pantalla (Evidencias)
+
+Para demostrar tu trabajo individual en el informe `.docx` o `.pdf` final, abre tu navegador e ingresa a `http://localhost:9000`. Toma las siguientes **4 capturas esenciales**:
+
+### Captura 1: Dashboard Principal del Proyecto (SGOHA)
+*   **Pantalla:** Dirígete a la pestaña **Projects** y haz clic en el proyecto **SGOHA**.
+*   **Qué capturar:** El bloque grande del centro donde se ve:
+    *   El Quality Gate en estado **PASSED** (en verde).
+    *   **Bugs:** `0` (Rating A).
+    *   **Vulnerabilities:** `0` (Rating A).
+    *   **Security Hotspots:** `0` (Reviewed).
+    *   **Debt:** `11h` (Deuda técnica).
+    *   **Code Smells:** `6` (Rating A).
+    *   **Duplications:** `2.1%` (Rating A).
+*   *Nota:* Esta es la evidencia principal que exige el evaluador.
+
+### Captura 2: Detalle de Code Smells y Deuda Técnica
+*   **Pantalla:** Haz clic sobre la métrica de **Code Smells** (el número `6`).
+*   **Qué capturar:** La vista detallada de las incidencias (Issues), mostrando las líneas de código donde el analizador detectó los smells y su nivel de severidad (Info / Minor).
+
+### Captura 3: Detalle de Duplicación de Código
+*   **Pantalla:** Regresa al dashboard y haz clic sobre la métrica de duplicación (**2.1%**).
+*   **Qué capturar:** La grilla de archivos que muestra que el porcentaje es menor al 3.0%, certificando la mantenibilidad del código sin redundancia.
+
+### Captura 4: Consola de docker-compose levantando el servicio
+*   **Pantalla:** Abre tu terminal de PowerShell y ejecuta:
+    ```bash
+    docker ps
+    ```
+*   **Qué capturar:** La salida de la terminal donde se visualice el contenedor `local_sonarqube` corriendo de forma activa en el puerto `9000` junto con los demás contenedores del sistema.
+

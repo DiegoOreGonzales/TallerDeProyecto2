@@ -25,3 +25,9 @@ test.db
 src/backend/*.pdf
 src/backend/horario_ciclo_*.pdf
 
+# Pytest coverage files
+.coverage
+coverage.xml
+src/backend/coverage.xml
+
+
