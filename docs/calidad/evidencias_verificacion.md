@@ -224,14 +224,12 @@ tests/test_scheduler.py .......................                          [100%]
 ```
 
 * **Evidencia Visual (Ejecución y Cobertura de Pytest - Secuencia Real de Consola):**
-
-````carousel
-![Ejecución de Pytest - Parte 1 (test_api y test_auth)](../evidencias/capturas_inspeccion07/OWASP4_test1.png)
-<!-- slide -->
-![Ejecución de Pytest - Parte 2 (test_crud, test_export, test_optimization_model y test_scheduler)](../evidencias/capturas_inspeccion07/OWASP4_test2.png)
-<!-- slide -->
-![Reporte de Cobertura de Pytest - Parte 3 (Resumen del 81% de Cobertura Global y 84 Pasados)](../evidencias/capturas_inspeccion07/OWASP4_test3.png)
-````
+  * **Parte 1: Ejecución Inicial (API y Autenticación)**
+    ![Ejecución de Pytest - Parte 1](../evidencias/capturas_inspeccion07/OWASP4_test1.png)
+  * **Parte 2: Continuación de la Suite de Pruebas (CRUD, Modelos y Scheduler)**
+    ![Ejecución de Pytest - Parte 2](../evidencias/capturas_inspeccion07/OWASP4_test2.png)
+  * **Parte 3: Cobertura de Código Finalizada (81% Cobertura y 84 Pasados)**
+    ![Reporte de Cobertura de Pytest - Parte 3](../evidencias/capturas_inspeccion07/OWASP4_test3.png)
 
 ### Ejecución de Vitest en Frontend (7 Tests):
 ```text
