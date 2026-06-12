@@ -1,7 +1,4 @@
 # Evidencias de Implementación — Accesibilidad WCAG 2.2 AA
-
-**Rol:** Desarrollador Frontend  
-**Responsable:** Luis Alberto Gutierrez Taipe  
 **Rama:** `feature/HU-7.3-wcag-accessibility`  
 **Fecha:** 12/06/2026
 
@@ -11,15 +8,6 @@
 
 ![lint-ok](./capturas_inspeccion07/link-ok.png)
 
-### Explicación Técnica
-
-ESLint es una herramienta de análisis estático que revisa el código JavaScript/TypeScript en busca de:
-
-- **Errores de sintaxis** que podrían romper la aplicación
-- **Malas prácticas** como variables no utilizadas, imports sin resolver, etc.
-- **Violaciones de reglas de estilo** definidas en el archivo `eslint.config.js`
-
-El comando `npm run lint` ejecuta `eslint .` en todo el directorio `src/frontend`.
 
 **Resultado:** La terminal no muestra ningún mensaje de error ni advertencia. Esto significa que el código pasa **el 100% de las reglas de linting** sin ninguna incidencia, lo que garantiza que el código es limpio, consistente y sigue las mejores prácticas del proyecto.
 
@@ -29,11 +17,6 @@ cd src/frontend
 npm run lint
 ```
 
-**Archivos de configuración involucrados:**
-- `eslint.config.js` — Reglas de ESLint del proyecto
-- `.eslintrc` — Configuración adicional si existe
-
----
 
 ## 2. `npm run build` — Compilación de TypeScript y Empaquetado
 
