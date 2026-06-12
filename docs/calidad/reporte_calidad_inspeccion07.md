@@ -9,7 +9,7 @@ Este informe técnico documenta los hallazgos, mitigaciones, análisis métricos
 Para garantizar la mantenibilidad y confiabilidad del software, se configuró e integró un plan de análisis estático continuo.
 
 ### A. Archivo de Configuración
-Se ha creado el archivo [sonar-project.properties](file:///d:/jose/sistema_taller_proyectos/TallerDeProyecto2/sonar-project.properties) en la raíz con directivas profesionales para excluir dependencias y capturar la cobertura del backend (FastAPI/Pytest) y frontend (React/Vitest).
+Se ha creado el archivo [sonar-project.properties](../../sonar-project.properties) en la raíz con directivas profesionales para excluir dependencias y capturar la cobertura del backend (FastAPI/Pytest) y frontend (React/Vitest).
 
 ### B. Mapeo de Métricas y Quality Gate
 Establecemos el siguiente umbral para el pase del Quality Gate en Integración Continua (CI):
@@ -166,10 +166,10 @@ $$\text{Puntaje SUS Global} = \frac{97.5 + 77.5 + 90.0 + 75.0 + 97.5 + 80.0 + 80
 
 La verificabilidad técnica del sistema se sustenta mediante múltiples capas de pruebas automáticas y herramientas de validación de empaquetado:
 
-*   **Unit & Integration (FastAPI/Pytest):** 84 pruebas unitarias que validan el flujo completo de autenticación, CRUD y optimización del motor en [test_api.py](file:///d:/jose/sistema_taller_proyectos/TallerDeProyecto2/src/backend/tests/test_api.py).
+*   **Unit & Integration (FastAPI/Pytest):** 84 pruebas unitarias que validan el flujo completo de autenticación, CRUD y optimización del motor en [test_api.py](../../src/backend/tests/test_api.py).
     *   **Evidencia:**
         ![Ejecución de Pytest local](../evidencias/capturas_inspeccion07/Evidencia_Pytest_Unitarios_Local.png)
-*   **Unit & Components (React/Vitest):** 7 pruebas que validan el correcto renderizado y comportamiento de formularios en [Login.test.tsx](file:///d:/jose/sistema_taller_proyectos/TallerDeProyecto2/src/frontend/src/pages/__tests__/Login.test.tsx) y componentes de tablas.
+*   **Unit & Components (React/Vitest):** 7 pruebas que validan el correcto renderizado y comportamiento de formularios en [Login.test.tsx](../../src/frontend/src/pages/__tests__/Login.test.tsx) y componentes de tablas.
 *   **Cobertura:** Cobertura de backend superior al **96.7%**, garantizando la cobertura de los algoritmos de asignación matemática.
 *   **Validaciones de Linter y Compilación (Frontend):**
     *   Para certificar la sanidad del código frontend antes de su distribución:

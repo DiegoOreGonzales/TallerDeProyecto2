@@ -8,7 +8,7 @@ Esta guía detalla los pasos exactos, comandos de consola y archivos modificados
 * **Rol:** Product Owner / QA Lead
 * **Responsabilidad principal:** Configuración del análisis estático de código en SonarQube, gobernanza de calidad e integración continua.
 * **Nombre de la Rama Gitflow:** `feature/HU-7.1-sonarqube-qa`
-* **Entregable:** [sonar-project.properties](file:///d:/jose/sistema_taller_proyectos/TallerDeProyecto2/sonar-project.properties)
+* **Entregable:** [sonar-project.properties](../../sonar-project.properties)
 
 ---
 
@@ -23,7 +23,7 @@ git checkout -b feature/HU-7.1-sonarqube-qa
 ```
 
 ### Paso 2: Configuración del archivo de propiedades de SonarQube
-Crea el archivo [sonar-project.properties](file:///d:/jose/sistema_taller_proyectos/TallerDeProyecto2/sonar-project.properties) en la raíz del proyecto con el siguiente contenido:
+Crea el archivo [sonar-project.properties](../../sonar-project.properties) en la raíz del proyecto con el siguiente contenido:
 ```ini
 sonar.projectKey=sgoha-taller2
 sonar.projectName=SGOHA

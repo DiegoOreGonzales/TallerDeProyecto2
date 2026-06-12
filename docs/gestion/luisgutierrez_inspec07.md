@@ -8,7 +8,7 @@ Esta guía detalla los pasos exactos, comandos de consola y archivos modificados
 * **Rol:** Desarrollador Frontend
 * **Responsabilidad principal:** Implementación de la accesibilidad en la interfaz de usuario bajo la pauta de cumplimiento WCAG 2.2 AA.
 * **Nombre de la Rama Gitflow:** `feature/HU-7.3-wcag-accessibility`
-* **Archivos Modificados:** [Dashboard.tsx](file:///d:/jose/sistema_taller_proyectos/TallerDeProyecto2/src/frontend/src/pages/Dashboard.tsx), [Classrooms.tsx](file:///d:/jose/sistema_taller_proyectos/TallerDeProyecto2/src/frontend/src/pages/Classrooms.tsx), [Teachers.tsx](file:///d:/jose/sistema_taller_proyectos/TallerDeProyecto2/src/frontend/src/pages/Teachers.tsx), [CrudTable.tsx](file:///d:/jose/sistema_taller_proyectos/TallerDeProyecto2/src/frontend/src/components/CrudTable.tsx)
+* **Archivos Modificados:** [Dashboard.tsx](../../src/frontend/src/pages/Dashboard.tsx), [Classrooms.tsx](../../src/frontend/src/pages/Classrooms.tsx), [Teachers.tsx](../../src/frontend/src/pages/Teachers.tsx), [CrudTable.tsx](../../src/frontend/src/components/CrudTable.tsx)
 
 ---
 
@@ -23,7 +23,7 @@ git checkout -b feature/HU-7.3-wcag-accessibility
 ```
 
 ### Paso 2: Agregar Propiedades de Accesibilidad en React
-En [Dashboard.tsx](file:///d:/jose/sistema_taller_proyectos/TallerDeProyecto2/src/frontend/src/pages/Dashboard.tsx), el panel interactivo de restricciones se programó con elementos enfocables y semántica ARIA. Inspecciona y valida que tu marcado incluya:
+En [Dashboard.tsx](../../src/frontend/src/pages/Dashboard.tsx), el panel interactivo de restricciones se programó con elementos enfocables y semántica ARIA. Inspecciona y valida que tu marcado incluya:
 * **Iconos Decorativos:**
   ```tsx
   <span className="material-symbols-outlined text-orange-500" aria-hidden="true">settings_suggest</span>

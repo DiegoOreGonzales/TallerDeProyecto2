@@ -16,15 +16,15 @@ graph TD
     D --> E["5. Guías Individuales (aldorequena_inspec07.md, etc.)"]
 ```
 
-1.  **[README.md](file:///d:/jose/sistema_taller_proyectos/TallerDeProyecto2/README.md) (Instrucciones de Instalación y Pruebas):**
+1.  **[README.md](../../README.md) (Instrucciones de Instalación y Pruebas):**
     *   *Propósito:* Demuestra que el proyecto es 100% reproducible y autónomo (requisito del indicador 1 de la rúbrica).
-2.  **[plan_auditoria_calidad.md](file:///d:/jose/sistema_taller_proyectos/TallerDeProyecto2/docs/gestion/plan_auditoria_calidad.md) (Plan de Trabajo Colaborativo):**
+2.  **[plan_auditoria_calidad.md](plan_auditoria_calidad.md) (Plan de Trabajo Colaborativo):**
     *   *Propósito:* Demuestra la organización del equipo mediante roles Scrum, la matriz RACI y el historial de Gitflow (ramas y autoría de commits).
-3.  **[reporte_calidad_inspeccion07.md](file:///d:/jose/sistema_taller_proyectos/TallerDeProyecto2/docs/calidad/reporte_calidad_inspeccion07.md) (Informe Técnico Integral):**
+3.  **[reporte_calidad_inspeccion07.md](../calidad/reporte_calidad_inspeccion07.md) (Informe Técnico Integral):**
     *   *Propósito:* El cuerpo de la entrega. Explica los análisis de SonarQube, la matriz de seguridad OWASP, el checklist de accesibilidad WCAG y la escala métrica de usabilidad SUS.
-4.  **[evidencias_verificacion.md](file:///d:/jose/sistema_taller_proyectos/TallerDeProyecto2/docs/calidad/evidencias_verificacion.md) (Evidencias Técnicas):**
+4.  **[evidencias_verificacion.md](../calidad/evidencias_verificacion.md) (Evidencias Técnicas):**
     *   *Propósito:* Trazas de consola, respuestas de cabeceras HTTP, código ARIA e inspecciones que prueban que los cambios están realmente implementados y funcionando en producción.
-5.  **Guías de Ejecución Individuales (en [docs/gestion/](file:///d:/jose/sistema_taller_proyectos/TallerDeProyecto2/docs/gestion/)):**
+5.  **Guías de Ejecución Individuales (en [docs/gestion/](./)):**
     *   *Propósito:* Desglosa las tareas individuales como sustento de la nota de participación de cada alumno.
 
 ---

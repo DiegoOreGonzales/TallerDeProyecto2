@@ -8,7 +8,7 @@ Esta guía detalla los pasos exactos, comandos de consola y archivos modificados
 * **Rol:** Desarrollador Backend
 * **Responsabilidad principal:** Mitigación de vulnerabilidades de seguridad según OWASP Top 10 2025 en la API FastAPI.
 * **Nombre de la Rama Gitflow:** `feature/HU-7.2-owasp-security`
-* **Archivos Modificados:** [main.py](file:///d:/jose/sistema_taller_proyectos/TallerDeProyecto2/src/backend/app/main.py) y [.gitignore](file:///d:/jose/sistema_taller_proyectos/TallerDeProyecto2/.gitignore)
+* **Archivos Modificados:** [main.py](../../src/backend/app/main.py) y [.gitignore]../../.gitignore
 
 ---
 
@@ -23,7 +23,7 @@ git checkout -b feature/HU-7.2-owasp-security
 ```
 
 ### Paso 2: Implementación de Cabeceras de Seguridad en la API FastAPI
-En tu archivo [main.py](file:///d:/jose/sistema_taller_proyectos/TallerDeProyecto2/src/backend/app/main.py), inyecta el middleware HTTP `add_security_headers` de la siguiente manera:
+En tu archivo [main.py](../../src/backend/app/main.py), inyecta el middleware HTTP `add_security_headers` de la siguiente manera:
 ```python
 from fastapi import FastAPI, Request
 # ... otras importaciones ...

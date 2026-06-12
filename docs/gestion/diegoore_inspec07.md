@@ -8,7 +8,7 @@ Esta guía detalla los pasos exactos, comandos de consola y archivos modificados
 * **Rol:** Scrum Master / UX Analyst
 * **Responsabilidad principal:** Evaluación cuantitativa de usabilidad del sistema usando el instrumento System Usability Scale (SUS), redacción del informe técnico final de aseguramiento de calidad y compilación de evidencias.
 * **Nombre de la Rama Gitflow:** `feature/HU-7.4-sus-usability-docs`
-* **Archivos Modificados:** [reporte_calidad_inspeccion07.md](file:///d:/jose/sistema_taller_proyectos/TallerDeProyecto2/docs/calidad/reporte_calidad_inspeccion07.md), [evidencias_verificacion.md](file:///d:/jose/sistema_taller_proyectos/TallerDeProyecto2/docs/calidad/evidencias_verificacion.md), [plan_auditoria_calidad.md](file:///d:/jose/sistema_taller_proyectos/TallerDeProyecto2/docs/gestion/plan_auditoria_calidad.md)
+* **Archivos Modificados:** [reporte_calidad_inspeccion07.md](../calidad/reporte_calidad_inspeccion07.md), [evidencias_verificacion.md](../calidad/evidencias_verificacion.md), [plan_auditoria_calidad.md](plan_auditoria_calidad.md)
 
 ---
 
