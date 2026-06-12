@@ -63,3 +63,24 @@ Durante la exposición, deberás sustentar los siguientes puntos:
    * *Respuesta:*
      1. Proporcionar feedback en tiempo real mediante transiciones visuales al pulsar los switches.
      2. Mostrar advertencias descriptivas de infactibilidad en caso de que una configuración invalide la optimización en el backend, en lugar de lanzar errores de servidor genéricos.
+
+---
+
+## 📸 4. Evidencias de Gestión Ágil y Usabilidad (Jira & SUS)
+
+Como Scrum Master y analista UX, debes capturar e incluir las siguientes evidencias en tu documentación y sustentación:
+
+### 4.1. Gobernanza de Tareas en Jira
+Demuestra el avance y velocidad del equipo durante el Sprint de la Inspección 07 utilizando las métricas de Jira:
+*   **Métricas del Sprint:**
+    *   **Burndown Chart:** Avance y consumo de horas/puntos en el sprint.
+        ![Jira Burndown](../evidencias/jira_burndown.png)
+    *   **Burnup Chart:** Alcance del trabajo completado del sprint.
+        ![Jira Burnup](../evidencias/jira_burnup.png)
+    *   **Velocity Chart:** Velocidad de entrega y cumplimiento del equipo.
+        ![Jira Velocity](../evidencias/jira_velocity.png)
+
+### 4.2. Matriz Likert de Usabilidad SUS
+*   **Qué capturar:** Captura de pantalla de la tabla donde se desglosan las calificaciones Likert recopiladas para los 10 usuarios y el cálculo final de los 83.75 puntos (Grade A, Excelente).
+*   **Marcador de Posición en Documentación:**
+    *(Inserta aquí tu captura de la matriz de datos SUS en tu hoja de cálculo o documento del reporte)*

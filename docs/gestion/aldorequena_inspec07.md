@@ -74,3 +74,24 @@ Durante la exposición, deberás sustentar los siguientes puntos:
    * *Respuesta:* Protege contra el **MIME Sniffing** (OWASP A05: Security Misconfiguration). Fuerza a los navegadores a respetar estrictamente las cabeceras `Content-Type` enviadas por la API, previniendo que archivos estáticos subidos de forma maliciosa sean interpretados como código JavaScript ejecutable.
 3. **¿Cómo configuraste la CSP (Content-Security-Policy)?**
    * *Respuesta:* Se configuró una directiva CSP restrictiva que solo permite la carga de scripts, estilos y conexiones que provengan del mismo servidor (`'self'`) y de dominios autorizados de confianza (ej. la generación de QR en `https://api.qrserver.com`), mitigando ataques de **Cross-Site Scripting (XSS)**.
+
+---
+
+## 📸 4. Evidencias de Ejecución (Cabeceras de Seguridad & Pytest)
+
+Como desarrollador backend, debes capturar e incluir las siguientes evidencias visuales en tu documentación y sustentación:
+
+### 4.1. Verificación de Cabeceras HTTP (`curl -I`)
+*   **Qué capturar:** Ejecuta la API localmente y corre el comando `curl -I http://localhost:8000/api/scheduler/config` en tu terminal. Captura de pantalla donde se muestre la salida HTTP 200 con las siguientes cabeceras resaltadas:
+    *   `X-Frame-Options: DENY`
+    *   `X-Content-Type-Options: nosniff`
+    *   `Content-Security-Policy: default-src 'self'...`
+    *   `Strict-Transport-Security: max-age=31536000...`
+*   **Marcador de Posición en Documentación:**
+    *(Inserta aquí tu captura de pantalla de consola)*
+
+### 4.2. Ejecución y Reporte de Pytest (`pytest`)
+*   **Qué capturar:** Ejecución de la suite de pruebas locales (`pytest --cov=src/backend`) mostrando el paso de los **84 tests unitarios** y el reporte de cobertura de código.
+*   **Evidencia:**
+    ![Consola de Pytest exitoso](../evidencias/capturas_inspeccion07/Evidencia_Pytest_Unitarios_Local.png)
+
