@@ -6,6 +6,10 @@ WORKDIR /app
 # Copiar archivos de configuración
 COPY package*.json ./
 
+# Instalar dependencias durante el BUILD (no en cada arranque)
+RUN npm config set registry https://registry.npmjs.org/ && \
+    npm install --no-audit --no-fund --legacy-peer-deps
+
 # Copiar el resto del código
 COPY . .
 
