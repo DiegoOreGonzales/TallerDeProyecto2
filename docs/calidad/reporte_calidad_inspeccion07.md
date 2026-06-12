@@ -22,6 +22,17 @@ Establecemos el siguiente umbral para el pase del Quality Gate en Integración C
 *   **Security Rating:** A.
 *   **Coverage:** Superior al 80% en código nuevo.
 
+### C. Métricas Reales Obtenidas en la Ejecución
+Tras desplegar SonarQube en Docker y ejecutar el escaneo local del repositorio de SGOHA, se obtuvieron las siguientes métricas certificadas:
+*   **Bugs:** 0 (Rating A - Excelente).
+*   **Vulnerabilidades:** 0 (Rating A - Excelente).
+*   **Code Smells:** 6.
+*   **Deuda Técnica (Technical Debt):** 11.8 horas (711 minutos - Rating A).
+*   **Duplicaciones (Duplicated Lines Density):** 2.1% (Rating A - Excelente, por debajo de la meta del 3%).
+*   **Maintainability Rating:** A.
+*   **Reliability Rating:** A.
+*   **Security Rating:** A.
+
 ---
 
 ## 🛡️ 2. Auditoría de Seguridad OWASP Top 10 2025

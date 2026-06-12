@@ -4,30 +4,91 @@ Este documento recopila las trazas, logs, códigos e inspecciones que sirven com
 
 ---
 
-## 🔍 1. Evidencia de Configuración de SonarQube
+## 🔍 1. Evidencia de Configuración y Ejecución de SonarQube
 
-Se ha creado un archivo de propiedades estandarizado en la raíz del proyecto para gobernar el análisis estático continuo.
+Para realizar el análisis estático continuo local, se implementó SonarQube mediante Docker y se ejecutó el escáner CLI.
 
-### Archivo [sonar-project.properties](file:///d:/jose/sistema_taller_proyectos/TallerDeProyecto2/sonar-project.properties):
+### A. Docker Compose de SonarQube (`docker-compose-sonar.yml`):
+```yaml
+version: '3'
+services:
+  sonarqube:
+    image: sonarqube:lts-community
+    container_name: local_sonarqube
+    ports:
+      - "9000:9000"
+    environment:
+      - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
+
+volumes:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_logs:
+```
+
+### B. Archivo de Propiedades del Proyecto (`sonar-project.properties`):
 ```ini
+# SonarQube Project Configuration
 sonar.projectKey=sgoha-taller2
 sonar.projectName=SGOHA
-sonar.projectVersion=1.0
+sonar.projectVersion=1.0.0
 
-# Rutas de código fuente
+# Path to sources
 sonar.sources=src/backend,src/frontend/src
+
+# Path to tests
 sonar.tests=src/backend/tests,src/frontend/src/pages/__tests__
 
-# Idiomas del proyecto
+# Language settings
 sonar.language=py,ts,tsx
 sonar.sourceEncoding=UTF-8
 
-# Exclusiones de archivos irrelevantes o compilados
-sonar.exclusions=**/node_modules/**,**/dist/**,**/build/**,**/*.test.tsx,**/*.test.ts,**/tests/**,**/migrations/**,src/backend/local_scheduler.db,src/backend/test.db
+# Exclusiones de archivos para evitar doble indexación y falsos positivos
+sonar.exclusions=src/backend/tests/**,src/frontend/src/pages/__tests__/**,**/node_modules/**,**/dist/**,**/build/**,**/migrations/**,src/backend/local_scheduler.db,src/backend/test.db
 
-# Reporte de cobertura de pruebas unitarias
+# Cobertura de pruebas unitarias
 sonar.python.coverage.reportPaths=src/backend/coverage.xml
-sonar.javascript.lcov.reportPath=src/frontend/coverage/lcov.info
+sonar.javascript.lcov.reportPaths=src/frontend/coverage/lcov.info
+```
+
+### C. Comandos Ejecutados para Levantar e Iniciar el Análisis:
+1. **Levantar el contenedor de SonarQube:**
+   ```bash
+   docker-compose -f docker-compose-sonar.yml up -d
+   ```
+2. **Crear Proyecto y Token mediante REST API:**
+   ```bash
+   # Crear el proyecto
+   curl.exe -u admin:admin -X POST "http://localhost:9000/api/projects/create?project=sgoha-taller2&name=SGOHA"
+   # Generar el token de acceso
+   curl.exe -u admin:admin -X POST "http://localhost:9000/api/user_tokens/generate?name=scanner-token"
+   ```
+   *Token obtenido:* `squ_11548cbe57d0dd8542941b9f2ed874e829a07141`
+3. **Ejecutar el escáner (usando la imagen oficial de CLI de SonarSource):**
+   ```bash
+   docker run --rm -e SONAR_HOST_URL="http://host.docker.internal:9000" -e SONAR_TOKEN="squ_11548cbe57d0dd8542941b9f2ed874e829a07141" -v "d:\jose\sistema_taller_proyectos\TallerDeProyecto2:/usr/src" sonarsource/sonar-scanner-cli
+   ```
+
+### D. Resultado en Consola del Scanner (Análisis Exitoso):
+```text
+INFO: Scanner configuration file: /opt/sonar-scanner/conf/sonar-scanner.properties
+INFO: Project root configuration file: /usr/src/sonar-project.properties
+INFO: SonarScanner CLI 8.0.1.6346
+INFO: Communicating with SonarQube Server 9.9.8.100196
+INFO: Load plugins index (done) | time=82ms
+INFO: Project key: sgoha-taller2
+INFO: Indexing files...
+INFO: Sensor Python Sensor [python] (done) | time=3214ms
+INFO: Sensor TypeScript analysis [javascript] (done) | time=9324ms
+INFO: SCM Publisher 47/47 source files have been analyzed (done) | time=5878ms
+INFO: Analysis report generated in 417ms, dir size=795.9 kB
+INFO: Analysis report uploaded in 51ms
+INFO: ANALYSIS SUCCESSFUL, you can find the results at: http://host.docker.internal:9000/dashboard?id=sgoha-taller2
+INFO: Execution success | total time: 2:20.098s
 ```
 
 ---
