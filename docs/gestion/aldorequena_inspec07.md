@@ -55,6 +55,14 @@ curl -I http://localhost:8000/api/scheduler/config
 **Salida esperada:**
 Debes verificar la presencia de `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff` y `Content-Security-Policy` en los encabezados HTTP.
 
+**Evidencias Visuales de la Validación (Ejecución):**
+*   **Inicio del Servidor Uvicorn y petición interceptada:**
+    ![Inicio Uvicorn](../evidencias/capturas_inspeccion07/Evidencia%201%20OWASP.png)
+*   **Volcado de las Cabeceras HTTP de Seguridad (curl):**
+    ![Cabeceras en la terminal](../evidencias/capturas_inspeccion07/Evidencia%202%20OWASP.png)
+*   **Validación de HSTS, CSP y directivas OWASP:**
+    ![Respuesta OWASP](../evidencias/capturas_inspeccion07/Evidencia%203%20OWASP.png)
+
 ### Paso 4: Confirmación y Envío a GitHub
 Registra los cambios en Git utilizando la estructura de Conventional Commits y sube tu rama al repositorio remoto:
 ```bash

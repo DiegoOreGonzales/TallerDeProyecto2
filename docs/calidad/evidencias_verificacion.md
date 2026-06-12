@@ -142,6 +142,17 @@ connection: keep-alive
 > [!NOTE]
 > Las cabeceras `X-Frame-Options: DENY` e `X-Content-Type-Options: nosniff` se verifican al 100% de efectividad en cada petición realizada a la API.
 
+### Evidencias Visuales de la Validación OWASP:
+
+#### A. Servidor Uvicorn recibiendo peticiones:
+![Uvicorn Logs](../evidencias/capturas_inspeccion07/Evidencia%201%20OWASP.png)
+
+#### B. Cabeceras HTTP inyectadas por el Middleware (curl):
+![Cabeceras de Seguridad](../evidencias/capturas_inspeccion07/Evidencia%202%20OWASP.png)
+
+#### C. Validación de las directivas CSP y HSTS:
+![Detalles OWASP](../evidencias/capturas_inspeccion07/Evidencia%203%20OWASP.png)
+
 ---
 
 ## ♿ 3. Evidencia de Accesibilidad (WCAG 2.2 AA)
