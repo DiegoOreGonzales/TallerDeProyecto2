@@ -192,7 +192,7 @@ $$\text{Puntaje SUS Final} = \frac{97.5 + 77.5 + 90.0 + 75.0 + 97.5 + 80.0 + 80.
 
 ## 🧪 5. Evidencia de Pruebas Unitarias Automatizadas
 
-Las pruebas automatizadas del Backend garantizan el correcto funcionamiento del generador de horarios.
+Las pruebas automatizadas del Backend y Frontend garantizan el correcto funcionamiento del generador de horarios y la lógica de negocio.
 
 ### Ejecución de `pytest` (84 Tests):
 ```text
@@ -212,6 +212,9 @@ src\backend\tests\test_scheduler.py .......................              [100%]
 ================== 84 passed, 1 warning in 100.63s (0:01:40) ==================
 ```
 
+* **Evidencia Visual (Ejecución de Pytest):**
+  ![Pruebas Unitarias Pytest](../evidencias/capturas_inspeccion07/Evidencia_Pytest_Unitarios_Local.png)
+
 ### Ejecución de Vitest en Frontend (7 Tests):
 ```text
 ✓ src/frontend/src/pages/__tests__/Login.test.tsx (3 tests)
@@ -222,3 +225,20 @@ Test Files  2 passed (2)
   Start at  00:37:05
   Duration  4.12s
 ```
+
+---
+
+## 📦 6. Evidencia de Compilación y Calidad del Frontend (Linter & Build)
+
+Se realizaron pruebas de integración estática en el cliente para verificar la solidez del panel y los elementos de accesibilidad implementados:
+
+### A. Compilación de Producción (`npm run build`):
+Permite validar que TypeScript no arroje ningún error de tipado y que Vite compile correctamente el empaquetado de producción.
+* **Evidencia:**
+  ![Compilación Frontend Exitosa](../evidencias/capturas_inspeccion07/frontend_npm_run_build.png)
+
+### B. Linter y Reglas de Formato (`npm run lint`):
+Garantiza el cumplimiento de las guías de estilo mediante ESLint.
+* **Evidencia:**
+  ![Linter Frontend Exitoso](../evidencias/capturas_inspeccion07/frontend_npm_run_lint.png)
+
