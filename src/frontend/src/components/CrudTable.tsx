@@ -8,7 +8,9 @@ interface CrudTableProps {
   onAdd: () => void;
   onDelete: (id: number) => void;
   renderRow: (item: any) => React.ReactNode;
+  extraActions?: (item: any) => React.ReactNode;
 }
+
 
 const CrudTable: React.FC<CrudTableProps> = ({ 
   title, 
@@ -17,8 +19,10 @@ const CrudTable: React.FC<CrudTableProps> = ({
   data, 
   onAdd, 
   onDelete, 
-  renderRow 
+  renderRow,
+  extraActions
 }) => {
+
   const [searchTerm, setSearchTerm] = React.useState('');
   const [currentPage, setCurrentPage] = React.useState(1);
   const ITEMS_PER_PAGE = 10;
@@ -115,7 +119,8 @@ const CrudTable: React.FC<CrudTableProps> = ({
               paginatedData.map((item, index) => (
                 <tr key={index} className="group hover:bg-white/5 transition-colors">
                   {renderRow(item)}
-                  <td className="px-8 py-5 text-right">
+                  <td className="px-8 py-5 text-right flex items-center justify-end gap-2">
+                    {extraActions && extraActions(item)}
                     <button 
                       onClick={() => onDelete(item.id)}
                       className="p-2 text-neutral-600 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-all"

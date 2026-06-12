@@ -128,6 +128,24 @@ const Teachers: React.FC = () => {
         data={docentes}
         onAdd={() => setIsAdding(true)}
         onDelete={handleDelete}
+        extraActions={(docente: Docente) => (
+          <div className="flex gap-1.5">
+            <button
+              onClick={() => window.open(`http://localhost:8000/api/export/pdf/docente/${docente.id}`, '_blank')}
+              className="p-1.5 text-neutral-400 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-all"
+              title="Descargar PDF Horario"
+            >
+              <span className="material-symbols-outlined text-lg">picture_as_pdf</span>
+            </button>
+            <button
+              onClick={() => window.open(`http://localhost:8000/api/export/ical/docente/${docente.id}`, '_blank')}
+              className="p-1.5 text-neutral-400 hover:text-blue-400 hover:bg-blue-400/10 rounded-lg transition-all"
+              title="Exportar iCal Calendario"
+            >
+              <span className="material-symbols-outlined text-lg">calendar_today</span>
+            </button>
+          </div>
+        )}
         renderRow={(docente: Docente) => (
           <>
             <td className="px-8 py-5">

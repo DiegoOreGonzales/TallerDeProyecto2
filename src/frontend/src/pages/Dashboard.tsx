@@ -49,6 +49,7 @@ const Dashboard: React.FC<DashboardProps> = ({ role, cycle, shift }) => {
   const [stats, setStats] = useState<Stats>({ cursos: 0, aulas: 0, secciones: 0, docentes: 0, horarios_generados: 0 });
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
+  const [configs, setConfigs] = useState<{key: string, nombre: string, descripcion: string, activa: boolean, es_dura: boolean}[]>([]);
 
   useEffect(() => {
     fetchInitialData();
@@ -57,11 +58,50 @@ const Dashboard: React.FC<DashboardProps> = ({ role, cycle, shift }) => {
 
   const fetchInitialData = async () => {
     try {
-      await Promise.all([fetchHorarios(), fetchStats()]);
+      const promises = [fetchHorarios(), fetchStats()];
+      if (role === 'admin') {
+        promises.push(fetchConfigs());
+      }
+      await Promise.all(promises);
     } finally {
       setLoadingInitial(false);
     }
   };
+
+  const fetchConfigs = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/api/scheduler/config');
+      if (response.ok) {
+        const data = await response.json();
+        setConfigs(data);
+      }
+    } catch (err) {
+      console.error("Error fetching configs:", err);
+    }
+  };
+
+  const handleToggleConfig = async (key: string, nextVal: boolean) => {
+    // Optimistic UI update
+    setConfigs(prev => prev.map(c => c.key === key ? { ...c, activa: nextVal } : c));
+    try {
+      const response = await fetch('http://localhost:8000/api/scheduler/config', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ [key]: nextVal })
+      });
+      if (response.ok) {
+        showToast("Restricción actualizada correctamente.", "success");
+      } else {
+        showToast("Error al guardar la configuración.", "error");
+        fetchConfigs();
+      }
+    } catch (err) {
+      console.error("Error updating config:", err);
+      showToast("Error de red al actualizar restricción.", "error");
+      fetchConfigs();
+    }
+  };
+
 
   const fetchStats = async () => {
     try {
@@ -311,6 +351,55 @@ const Dashboard: React.FC<DashboardProps> = ({ role, cycle, shift }) => {
           ))}
         </div>
       )}
+
+      {/* Panel de Configuración de Restricciones (Only for Admin) */}
+      {role === 'admin' && configs.length > 0 && (
+        <div className="card-premium p-6">
+          <div className="flex items-center gap-3 mb-6">
+            <span className="material-symbols-outlined text-orange-500" aria-hidden="true">settings_suggest</span>
+            <div>
+              <h3 className="text-lg font-bold text-white font-headline">Configuración de Restricciones del Motor CP-SAT</h3>
+              <p className="text-xs text-neutral-400 font-medium">Habilita o deshabilita restricciones académicas en tiempo real antes de iniciar la optimización.</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {configs.map((cfg) => (
+              <div key={cfg.key} className="p-4 rounded-xl bg-white/[0.02] border border-white/5 flex items-start justify-between gap-4 hover:border-white/10 transition-colors">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <span className="text-sm font-bold text-white">{cfg.nombre}</span>
+                    <span className={`text-[9px] font-black uppercase px-2 py-0.5 rounded ${
+                      cfg.es_dura 
+                        ? 'bg-red-500/10 text-red-400 border border-red-500/20' 
+                        : 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
+                    }`}>
+                      {cfg.es_dura ? 'Dura' : 'Preferencia'}
+                    </span>
+                  </div>
+                  <p className="text-xs text-neutral-500 leading-normal font-medium">{cfg.descripcion}</p>
+                </div>
+                <button
+                  onClick={() => handleToggleConfig(cfg.key, !cfg.activa)}
+                  role="switch"
+                  aria-checked={cfg.activa}
+                  aria-label={`Restricción: ${cfg.nombre}`}
+                  className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-[#131313] ${
+                    cfg.activa ? 'bg-orange-500' : 'bg-white/10'
+                  }`}
+                  title={cfg.activa ? 'Desactivar' : 'Activar'}
+                >
+                  <span
+                    className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
+                      cfg.activa ? 'translate-x-5' : 'translate-x-0'
+                    }`}
+                  />
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
 
       {/* Student Info Banner */}
       {role === 'estudiante' && cycle && (
