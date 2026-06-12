@@ -75,3 +75,24 @@ Durante la exposición, deberás sustentar los siguientes puntos:
    * *Respuesta:* Para cumplir con la directiva **WCAG 2.1.1 (Teclado)**, se utilizó el tag HTML nativo `<button>`. Al ser un botón nativo, el navegador le otorga foco mediante la tecla `Tab` de manera predeterminada y permite que sea clickeado/activado con las teclas `Space` y `Enter`, y se le añadió un anillo indicador visible en color naranja (`focus:ring-orange-500`) que avisa al usuario dónde se encuentra posicionado.
 3. **¿Para qué sirve `aria-hidden="true"` en los Material Icons?**
    * *Respuesta:* Los lectores de pantalla intentan leer el texto interno de los iconos decorativos (por ejemplo, el texto "settings_suggest" dentro del span de Material Icons). Colocar `aria-hidden="true"` hace que el lector de pantalla ignore el icono y lea directamente las etiquetas de texto descriptivas contiguas, evitando confusión.
+
+---
+
+## 📸 4. Evidencias de Calidad y Compilación (Linter & Build)
+
+Como parte de la validación del desarrollo del frontend de la HU-7.3, se ejecutaron localmente las herramientas de calidad y empaquetado para asegurar que la integración del panel de accesibilidad WCAG cumpliera con los estándares técnicos:
+
+### 4.1. Compilación del Frontend (`npm run build`)
+* **Interpretación:** Ejecuta `tsc -b && vite build`. El resultado fue exitoso:
+  * Se transformaron **43 módulos** en **1.24 segundos**.
+  * Se comprobó la total ausencia de errores de tipado en TypeScript (`tsc -b`) y la correcta generación de los bundles en el directorio `dist/`.
+* **Evidencia:**
+  ![Compilación de Frontend](../evidencias/capturas_inspeccion07/frontend_npm_run_build.png)
+
+### 4.2. Análisis Estático del Frontend (`npm run lint`)
+* **Interpretación:** Ejecuta `eslint .` sobre toda la base del código frontend. El resultado fue limpio:
+  * Terminó sin advertencias ni errores en consola (retornando un código de salida 0 al prompt).
+  * Esto certifica que el código cumple estrictamente con las reglas de estilo de JavaScript/TypeScript y el framework React del proyecto.
+* **Evidencia:**
+  ![Linter de Frontend](../evidencias/capturas_inspeccion07/frontend_npm_run_lint.png)
+
