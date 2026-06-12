@@ -33,7 +33,27 @@ Tras desplegar SonarQube en Docker y ejecutar el escaneo local del repositorio d
 *   **Reliability Rating:** A.
 *   **Security Rating:** A.
 
+### D. Evidencias del Análisis en SonarQube (Capturas de Pantalla)
+
+A continuación se adjuntan las capturas del portal local de SonarQube que certifican estas métricas:
+
+#### 1. Panel Principal del Proyecto (Quality Gate Passed)
+![Panel Principal de SonarQube](../evidencias/capturas_inspeccion07/Dashboard_Principal_Calidad_Sonarqube.png)
+
+#### 2. Vista Detallada de Proyectos en el Servidor
+![Código y Proyectos en SonarQube](../evidencias/capturas_inspeccion07/Codigo_Dashboard_Principal_Calidad_Sonarqube.png)
+
+#### 3. Detalle de Code Smells (Mantenibilidad)
+![Detalle de Code Smells en SonarQube](../evidencias/capturas_inspeccion07/Detalle_Code_Smells_Sonarqube.png)
+
+#### 4. Densidad de Duplicación (2.1%)
+![Detalle de Duplicación en SonarQube](../evidencias/capturas_inspeccion07/Detalle_Duplicación_Codigo_Sonarqube.png)
+
+#### 5. Servidor de SonarQube Levantado en Docker Compose
+![Contenedores SonarQube en Docker](../evidencias/capturas_inspeccion07/Consola_contenedores_activos_Sonarqube.png)
+
 ---
+
 
 ## 🛡️ 2. Auditoría de Seguridad OWASP Top 10 2025
 
@@ -144,8 +164,17 @@ $$\text{Puntaje SUS Global} = \frac{97.5 + 77.5 + 90.0 + 75.0 + 97.5 + 80.0 + 80
 
 ## 🧪 5. Testing Automatizado y Cobertura
 
-La verificabilidad técnica del sistema se sustenta mediante múltiples capas de pruebas automáticas:
-*   **Unit & Integration (FastAPI/Pytest):** 84 pruebas que validan autenticación, CRUD y optimización en [test_api.py](file:///d:/jose/sistema_taller_proyectos/TallerDeProyecto2/src/backend/tests/test_api.py).
-*   **Unit & Components (React/Vitest):** 7 pruebas que validan los formularios en [Login.test.tsx](file:///d:/jose/sistema_taller_proyectos/TallerDeProyecto2/src/frontend/src/pages/__tests__/Login.test.tsx) y carga de datos.
-*   **Aceptación & E2E (Cypress + Playwright):** Flujo de Golden Path de login y visualización del Dashboard.
-*   **Cobertura:** Cobertura de backend superior al **96.7%**, garantizando la robustez de los algoritmos.
+La verificabilidad técnica del sistema se sustenta mediante múltiples capas de pruebas automáticas y herramientas de validación de empaquetado:
+
+*   **Unit & Integration (FastAPI/Pytest):** 84 pruebas unitarias que validan el flujo completo de autenticación, CRUD y optimización del motor en [test_api.py](file:///d:/jose/sistema_taller_proyectos/TallerDeProyecto2/src/backend/tests/test_api.py).
+    *   **Evidencia:**
+        ![Ejecución de Pytest local](../evidencias/capturas_inspeccion07/Evidencia_Pytest_Unitarios_Local.png)
+*   **Unit & Components (React/Vitest):** 7 pruebas que validan el correcto renderizado y comportamiento de formularios en [Login.test.tsx](file:///d:/jose/sistema_taller_proyectos/TallerDeProyecto2/src/frontend/src/pages/__tests__/Login.test.tsx) y componentes de tablas.
+*   **Cobertura:** Cobertura de backend superior al **96.7%**, garantizando la cobertura de los algoritmos de asignación matemática.
+*   **Validaciones de Linter y Compilación (Frontend):**
+    *   Para certificar la sanidad del código frontend antes de su distribución:
+        *   **Linter (`npm run lint`):** ESLint finaliza limpio de advertencias y errores.
+            ![Linter Frontend](../evidencias/capturas_inspeccion07/frontend_npm_run_lint.png)
+        *   **Build (`npm run build`):** Vite compila los 43 módulos de forma exitosa en 1.24s.
+            ![Build Frontend](../evidencias/capturas_inspeccion07/frontend_npm_run_build.png)
+
