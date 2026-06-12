@@ -103,5 +103,88 @@ graph TD
 >
 > *El sistema SGOHA obtuvo un puntaje global de **83.75 / 100**. De acuerdo a la escala adjetiva y técnica de usabilidad, este valor nos sitúa en un **Grado A (Excelente)** y un nivel de aceptabilidad **Aceptable**. A partir de este estudio, implementamos mejoras de usabilidad en vivo, como inyectar micro-animaciones (CSS transitions) en los switches del dashboard y optimizar el manejo de retroalimentación ante errores de factibilidad del motor de optimización para guiar mejor al usuario en la plataforma."*
 
-* **Pregunta de defensa típica:** *¿Qué diferencia hay entre usabilidad (SUS) y accesibilidad (WCAG)?*
-  * *Respuesta:* *"La accesibilidad (WCAG) asegura que cualquier usuario con limitaciones visuales o motoras pueda interactuar físicamente con la interfaz. La usabilidad (SUS) mide cuán fácil, intuitiva y agradable resulta esa interacción para los usuarios en general una vez que acceden al sistema."*
+* **Pregunta de defensa típica:** *¿Qué diferencia hay entre usabilidad (SUS) y accesibilidad (WCAG)?*   **Respuesta:** *"La accesibilidad (WCAG) asegura que cualquier usuario con limitaciones visuales o motoras pueda interactuar físicamente con la interfaz. La usabilidad (SUS) mide cuán fácil, intuitiva y agradable resulta esa interacción para los usuarios en general una vez que acceden al sistema."*
+
+---
+
+## 🚀 3. Guía de Ejecución Paso a Paso para la Demostración en Vivo
+
+Para la sustentación con el docente, sigan esta guía exacta de comandos y flujos para demostrar que el aseguramiento de calidad es real y verificable en tiempo de ejecución.
+
+### 🔌 A. Pruebas de Seguridad en Tiempo Real (OWASP / Cabeceras HTTP)
+Para demostrar la mitigación de secuestro de clics (Clickjacking), XSS y MIME Sniffing:
+
+1. Levanten los contenedores de la aplicación:
+   ```bash
+   docker compose up -d
+   ```
+2. Ejecuten una consulta rápida con `curl` para mostrar las cabeceras HTTP de seguridad inyectadas por el Middleware:
+   ```bash
+   curl.exe -I http://localhost:8000/api/scheduler/config
+   ```
+3. **Qué señalar en la respuesta:** Apunten con el cursor a las líneas:
+   *   `X-Frame-Options: DENY` (Mitigación Clickjacking / OWASP A04)
+   *   `X-Content-Type-Options: nosniff` (Mitigación MIME Sniffing / OWASP A05)
+   *   `Content-Security-Policy: ...` (Control de origen / OWASP A03)
+
+---
+
+### 🛡️ B. Demostración en Vivo de SonarQube (Quality Gate)
+Para demostrar el análisis estático frente al docente en `localhost:9000`:
+
+1. **Levantar el contenedor del servidor de SonarQube:**
+   ```bash
+   docker compose -f docker-compose-sonar.yml up -d
+   ```
+2. **Abrir el portal de administración:**
+   *   Naveguen a: [http://localhost:9000](http://localhost:9000)
+   *   Credenciales por defecto: `admin` / `admin` (o la contraseña modificada).
+3. **Ejecutar el escaneo local de SonarQube:**
+   Si el profesor pide correr el análisis desde cero, abran una terminal en la raíz del proyecto y corran:
+   ```bash
+   docker run --rm -e SONAR_HOST_URL="http://host.docker.internal:9000" -e SONAR_TOKEN="squ_11548cbe57d0dd8542941b9f2ed874e829a07141" -v "${PWD}:/usr/src" sonarsource/sonar-scanner-cli
+   ```
+4. **Verificar el resultado:** Recarguen el dashboard y demuestren el estado **Passed** con **0 Bugs**, **0 Vulnerabilidades** y **2.1% de código duplicado**.
+
+---
+
+### 🧪 C. Ejecución de la Suite de Pruebas Automatizadas
+Para correr el 100% de la suite de pruebas unitarias y de integración y comprobar la cobertura:
+
+#### 1. Backend (Pytest + Cobertura):
+Abran una terminal dentro del directorio `src/backend` y ejecuten:
+```bash
+# Entrar a la carpeta del backend
+cd src/backend
+
+# Activar el entorno virtual si lo usan:
+# .\venv\Scripts\activate
+
+# Ejecutar la suite completa de 84 pruebas
+pytest tests/ -v
+
+# Generar reporte detallado de cobertura en consola
+pytest --cov=app --cov-report=term-missing tests/
+```
+*   **Métricas a resaltar:** Explicar que el backend tiene **84 pruebas exitosas** y supera el **96% de cobertura de código** en el motor del scheduler.
+
+#### 2. Frontend (Vitest):
+Abran una terminal dentro del directorio `src/frontend` y ejecuten:
+```bash
+# Entrar a la carpeta del frontend
+cd src/frontend
+
+# Ejecutar las pruebas unitarias y de componentes (Vitest)
+npm run test
+```
+*   **Métricas a resaltar:** Explicar que se ejecutan las pruebas del login, formularios y mocks de API mediante **Mock Service Worker (MSW)** con 100% de éxito.
+
+#### 3. Frontend Compilación e Integración Estática (Linter & Build):
+Para certificar que el código en producción no tiene advertencias ni errores:
+```bash
+# Ejecutar Linter (limpio de advertencias y errores)
+npm run lint
+
+# Compilar la aplicación para producción de forma exitosa
+npm run build
+```
