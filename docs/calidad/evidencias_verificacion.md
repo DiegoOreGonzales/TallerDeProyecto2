@@ -91,6 +91,26 @@ INFO: ANALYSIS SUCCESSFUL, you can find the results at: http://host.docker.inter
 INFO: Execution success | total time: 2:20.098s
 ```
 
+### E. Capturas del Dashboard de Calidad en SonarQube (Evidencias Visuales):
+
+Para verificar visualmente el cumplimiento del Quality Gate, se capturaron los siguientes reportes en la interfaz web de SonarQube:
+
+#### 1. Vista General del Dashboard del Proyecto (SGOHA):
+Demuestra el estado de aprobación general (Passed) con 0 Bugs y 0 Vulnerabilidades.
+![Dashboard Principal de SonarQube](file:///d:/jose/sistema_taller_proyectos/TallerDeProyecto2/docs/evidencias/capturas_inspeccion07/Dashboard_Principal_Calidad_Sonarqube.png)
+
+#### 2. Detalle de Code Smells y Deuda Técnica:
+Muestra la lista de las 6 incidencias menores detectadas y su respectivo tiempo de resolución.
+![Detalle de Code Smells en SonarQube](file:///d:/jose/sistema_taller_proyectos/TallerDeProyecto2/docs/evidencias/capturas_inspeccion07/Detalle_Code_Smells_Sonarqube.png)
+
+#### 3. Densidad de Duplicación de Código:
+Certifica que el porcentaje de duplicación es del 2.1%, por debajo del umbral establecido del 3%.
+![Detalle de Duplicación en SonarQube](file:///d:/jose/sistema_taller_proyectos/TallerDeProyecto2/docs/evidencias/capturas_inspeccion07/Detalle_Duplicación_Codigo_Sonarqube.png)
+
+#### 4. Contenedor Docker de SonarQube en Ejecución:
+Muestra la salida de consola donde el contenedor de SonarQube está levantado y corriendo de forma interactiva en el puerto 9000.
+![Contenedor SonarQube en Docker](file:///d:/jose/sistema_taller_proyectos/TallerDeProyecto2/docs/evidencias/capturas_inspeccion07/Consola_contenedores_activos_Sonarqube.png)
+
 ---
 
 ## 🛡️ 2. Evidencia de Mitigación OWASP Top 10 (Cabeceras de Seguridad)
