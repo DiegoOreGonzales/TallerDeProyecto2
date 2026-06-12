@@ -9,7 +9,7 @@
 
 ## 1. `npm run lint` — Validación de Calidad de Código
 
-![lint-ok](./capturas_inspeccion07/lint-ok.png)
+![lint-ok](./capturas_inspeccion07/link-ok.png)
 
 ### Explicación Técnica
 
