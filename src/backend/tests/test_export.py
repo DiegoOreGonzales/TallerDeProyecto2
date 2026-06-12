@@ -142,3 +142,56 @@ def _seed_horario_data(db_session):
     )
     db_session.add(horario)
     db_session.commit()
+
+
+def test_export_pdf_docente_no_horarios(client: TestClient):
+    """Exportar PDF de docente sin horarios/existencia debe dar 404."""
+    response = client.get("/api/export/pdf/docente/999")
+    assert response.status_code == 404
+
+
+def test_export_pdf_aula_no_horarios(client: TestClient):
+    """Exportar PDF de aula sin horarios/existencia debe dar 404."""
+    response = client.get("/api/export/pdf/aula/999")
+    assert response.status_code == 404
+
+
+def test_export_ical_docente_no_horarios(client: TestClient):
+    """Exportar iCal de docente sin horarios/existencia debe dar 404."""
+    response = client.get("/api/export/ical/docente/999")
+    assert response.status_code == 404
+
+
+def test_export_pdf_docente_success(client: TestClient, db_session):
+    """Exportar PDF de docente con datos existentes debe dar 200."""
+    _seed_horario_data(db_session)
+    docente = db_session.query(models.User).filter(models.User.role == "docente").first()
+    assert docente is not None
+
+    response = client.get(f"/api/export/pdf/docente/{docente.id}")
+    assert response.status_code == 200
+    assert response.headers.get("content-type", "").startswith("application/pdf")
+
+
+def test_export_pdf_aula_success(client: TestClient, db_session):
+    """Exportar PDF de aula con datos existentes debe dar 200."""
+    _seed_horario_data(db_session)
+    aula = db_session.query(models.Aula).first()
+    assert aula is not None
+
+    response = client.get(f"/api/export/pdf/aula/{aula.id}")
+    assert response.status_code == 200
+    assert response.headers.get("content-type", "").startswith("application/pdf")
+
+
+def test_export_ical_docente_success(client: TestClient, db_session):
+    """Exportar iCal de docente con datos existentes debe dar 200."""
+    _seed_horario_data(db_session)
+    docente = db_session.query(models.User).filter(models.User.role == "docente").first()
+    assert docente is not None
+
+    response = client.get(f"/api/export/ical/docente/{docente.id}")
+    assert response.status_code == 200
+    assert response.headers.get("content-type", "").startswith("text/calendar")
+    assert "BEGIN:VCALENDAR" in response.text
+

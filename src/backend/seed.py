@@ -2,7 +2,7 @@ import sys, os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from app.database import SessionLocal, engine, Base
-from app.models import User, Aula, Curso, Seccion, Horario
+from app.models import User, Aula, Curso, Seccion, Horario, ConfigRestriccion
 from app.auth import get_password_hash
 
 def run_seeder():
@@ -174,7 +174,28 @@ def run_seeder():
             db.add(Seccion(codigo=f"{cur.codigo}-T", curso_id=cur.id, docente_id=doc_t.id, capac_estimada=40, turno="TARDE"))
         
         db.commit()
-        print(f"✅ Seeder Finalizado: {len(all_cursos)} cursos y {len(all_cursos)*2} secciones creadas.")
+
+        # CONFIGURACIONES DE RESTRICCIONES POR DEFECTO
+        print("⚙️ Configuración de Restricciones...")
+        configs = [
+            ConfigRestriccion(key="evitar_superposicion_docente", nombre="No colisión de Docentes",
+                              descripcion="Garantiza que ningún docente tenga dos clases programadas en el mismo bloque.", activa=True, es_dura=True),
+            ConfigRestriccion(key="evitar_superposicion_aula", nombre="No colisión de Aulas",
+                              descripcion="Garantiza que ningún aula sea asignada a dos secciones en el mismo bloque.", activa=True, es_dura=True),
+            ConfigRestriccion(key="evitar_colision_ciclo_turno", nombre="No colisión de cursos de un ciclo en el mismo turno",
+                              descripcion="Garantiza que los estudiantes del mismo ciclo y turno no tengan cruces de asignaturas.", activa=True, es_dura=True),
+            ConfigRestriccion(key="carga_maxima_docente", nombre="Carga docente máxima (30 bloques)",
+                              descripcion="Límite semanal de 30 bloques de clase por docente para evitar saturación.", activa=True, es_dura=True),
+            ConfigRestriccion(key="minimizar_huecos_estudiantes", nombre="Preferencia: Minimizar huecos libres",
+                              descripcion="Penaliza en el solver los horarios con bloques vacíos dispersos para los estudiantes.", activa=True, es_dura=False),
+            ConfigRestriccion(key="evitar_bloques_sueltos", nombre="Preferencia: Evitar días con 1 solo bloque",
+                              descripcion="Prefiere acumular al menos 2 bloques por día para que el estudiante no asista por una sola clase.", activa=True, es_dura=False),
+            ConfigRestriccion(key="respetar_turno_preferido", nombre="Preferencia: Respetar turnos preferidos",
+                              descripcion="Prioriza los bloques de la mañana o la tarde según las preferencias de docentes y secciones.", activa=True, es_dura=False)
+        ]
+        db.add_all(configs)
+        db.commit()
+        print(f"✅ Seeder Finalizado: {len(all_cursos)} cursos, {len(all_cursos)*2} secciones y {len(configs)} restricciones inicializadas.")
 
 
     except Exception as e:

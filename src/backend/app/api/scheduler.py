@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session, joinedload
 from ..database import get_db
 from ..core.scheduler import SchedulerEngine, SLOT_TIME_MAP, DAY_LABELS
-from ..models import Horario, Seccion, Aula, Curso, User
+from ..models import Horario, Seccion, Aula, Curso, User, ConfigRestriccion
 
 router = APIRouter(prefix="/scheduler", tags=["Scheduler"])
 
@@ -44,6 +44,30 @@ def get_schedules(db: Session = Depends(get_db)):
     return {"data": result}
 
 
+@router.get("/config")
+def get_config(db: Session = Depends(get_db)):
+    """Obtener lista de restricciones y su estado actual."""
+    configs = db.query(ConfigRestriccion).all()
+    return [{
+        "key": c.key,
+        "nombre": c.nombre,
+        "descripcion": c.descripcion,
+        "activa": c.activa,
+        "es_dura": c.es_dura
+    } for c in configs]
+
+
+@router.post("/config")
+def update_config(updates: dict, db: Session = Depends(get_db)):
+    """Actualizar el estado (activa: true/false) de las restricciones."""
+    for key, val in updates.items():
+        config = db.query(ConfigRestriccion).filter(ConfigRestriccion.key == key).first()
+        if config:
+            config.activa = val
+    db.commit()
+    return {"message": "Configuración actualizada correctamente"}
+
+
 @router.get("/stats")
 def get_stats(db: Session = Depends(get_db)):
     """KPIs dinámicos para el Dashboard."""
@@ -54,6 +78,7 @@ def get_stats(db: Session = Depends(get_db)):
         "docentes": db.query(User).filter(User.role == "docente").count(),
         "horarios_generados": db.query(Horario).count(),
     }
+
 
 
 @router.post("/generate")
