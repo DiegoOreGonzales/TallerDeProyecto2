@@ -185,17 +185,37 @@ El control implementado posee marcado ARIA dinámico e interacción mediante tec
 
 El estudio métrico con la escala SUS arrojó una puntuación global de **83.75 / 100** (Rango Excelente / A).
 
-### Resumen del Cálculo por Usuario:
-*   **User 1 (Admin - Diego):** Impares $(19) +$ Pares $(20) = 39 \times 2.5 =$ **97.5**
-*   **User 2 (PO - Jose):** Impares $(13) +$ Pares $(18) = 31 \times 2.5 =$ **77.5**
-*   **User 3 (Docente 1):** Impares $(17) +$ Pares $(19) = 36 \times 2.5 =$ **90.0**
-*   **User 4 (Docente 2):** Impares $(13) +$ Pares $(17) = 30 \times 2.5 =$ **75.0**
-*   **User 5 (Estudiante 1):** Impares $(19) +$ Pares $(20) = 39 \times 2.5 =$ **97.5**
-*   **User 6 (Estudiante 2):** Impares $(13) +$ Pares $(19) = 32 \times 2.5 =$ **80.0**
-*   **User 7 (Estudiante 3):** Impares $(14) +$ Pares $(18) = 32 \times 2.5 =$ **80.0**
-*   **User 8 (Estudiante 4):** Impares $(14) +$ Pares $(19) = 33 \times 2.5 =$ **82.5**
-*   **User 9 (Docente 3):** Impares $(15) +$ Pares $(16) = 31 \times 2.5 =$ **77.5**
-*   **User 10 (Admin Externo):** Impares $(14) +$ Pares $(18) = 32 \times 2.5 =$ **80.0**
+### A. Gráfico de Escala de Usabilidad SUS
+El siguiente diagrama sitúa el promedio de SGOHA dentro del rango de aceptabilidad estándar:
+
+```mermaid
+graph TD
+    subgraph Escala de Usabilidad SUS
+        F["Inaceptable (0 - 50)<br>Grado F"] --> D["Marginal (51.7 - 62.6)<br>Grado D"]
+        D --> C["Marginal (62.7 - 70.0)<br>Grado C"]
+        C --> B["Aceptable - Bueno (70.1 - 80.7)<br>Grado B"]
+        B --> A["Aceptable - Excelente (80.8 - 100)<br>Grado A"]
+    end
+    SGOHA["SGOHA Score: 83.75<br>Excelente (Grado A)"] -.-> A
+    style SGOHA fill:#F97316,stroke:#FFF,stroke-width:2px,color:#FFF
+    style A fill:#16A34A,stroke:#FFF,stroke-width:1px,color:#FFF
+```
+
+### B. Resumen del Cálculo y Desempeño Visual por Usuario:
+
+| ID Usuario | Rol | Impares (X-1) | Pares (5-X) | Suma Total | Puntaje SUS | Desempeño Visual |
+| :--- | :--- | :---: | :---: | :---: | :---: | :--- |
+| User 1 | Admin (Diego) | 19 | 20 | 39 | 97.5 | `███████████████████░` |
+| User 2 | PO (Jose) | 13 | 18 | 31 | 77.5 | `███████████████░░░░░` |
+| User 3 | Docente 1 | 17 | 19 | 36 | 90.0 | `██████████████████░░` |
+| User 4 | Docente 2 | 13 | 17 | 30 | 75.0 | `███████████████░░░░░` |
+| User 5 | Estudiante 1 | 19 | 20 | 39 | 97.5 | `███████████████████░` |
+| User 6 | Estudiante 2 | 13 | 19 | 32 | 80.0 | `████████████████░░░░` |
+| User 7 | Estudiante 3 | 14 | 18 | 32 | 80.0 | `████████████████░░░░` |
+| User 8 | Estudiante 4 | 14 | 19 | 33 | 82.5 | `████████████████░░░░` |
+| User 9 | Docente 3 | 15 | 16 | 31 | 77.5 | `███████████████░░░░░` |
+| User 10 | Admin Externo | 14 | 18 | 32 | 80.0 | `████████████████░░░░` |
+| **Promedio** | **Global** | - | - | - | **83.75** | `█████████████████░░░` |
 
 $$\text{Puntaje SUS Final} = \frac{97.5 + 77.5 + 90.0 + 75.0 + 97.5 + 80.0 + 80.0 + 82.5 + 77.5 + 80.0}{10} = \mathbf{83.75}$$
 

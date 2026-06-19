@@ -151,14 +151,49 @@ Cada ítem se califica en una escala de Likert de 1 (Totalmente en desacuerdo) a
 $$\text{Puntaje SUS Global} = \frac{97.5 + 77.5 + 90.0 + 75.0 + 97.5 + 80.0 + 80.0 + 82.5 + 77.5 + 80.0}{10} = 83.75$$
 
 ### D. Interpretación Técnica
+
 *   **Puntaje SUS:** **83.75 / 100**
 *   **Grado (Grade Scale):** **A** (Rango de 80.8 a 84.0).
 *   **Nivel de Aceptabilidad:** **Aceptable (Acceptable)**.
 *   **Adjetivo de usabilidad (Adjective Rating):** **Excelente (Excellent)**.
 
+#### Gráfico 1: Distribución del Puntaje SUS Obtenido frente a la Escala de Aceptabilidad
+El siguiente gráfico posiciona el puntaje promedio de usabilidad obtenido por **SGOHA (83.75)** dentro del marco estándar de aceptabilidad y grado de la escala SUS (Brooke, 1996):
+
+```mermaid
+graph TD
+    subgraph Escala de Usabilidad SUS
+        F["Inaceptable (0 - 50)<br>Grado F"] --> D["Marginal (51.7 - 62.6)<br>Grado D"]
+        D --> C["Marginal (62.7 - 70.0)<br>Grado C"]
+        C --> B["Aceptable - Bueno (70.1 - 80.7)<br>Grado B"]
+        B --> A["Aceptable - Excelente (80.8 - 100)<br>Grado A"]
+    end
+    SGOHA["SGOHA Score: 83.75<br>Excelente (Grado A)"] -.-> A
+    style SGOHA fill:#F97316,stroke:#FFF,stroke-width:2px,color:#FFF
+    style A fill:#16A34A,stroke:#FFF,stroke-width:1px,color:#FFF
+```
+
+#### Gráfico 2: Desempeño Visual de Usabilidad por Usuario
+Representación gráfica del puntaje percibido por cada uno de los 10 usuarios evaluados:
+
+| ID Usuario | Rol | Puntaje SUS | Gráfico de Desempeño (Meta: >68) |
+| :--- | :--- | :---: | :--- |
+| User 1 | Admin (Diego) | 97.5 | `███████████████████░` (97.5%) |
+| User 2 | PO (Jose) | 77.5 | `███████████████░░░░░` (77.5%) |
+| User 3 | Docente 1 | 90.0 | `██████████████████░░` (90.0%) |
+| User 4 | Docente 2 | 75.0 | `███████████████░░░░░` (75.0%) |
+| User 5 | Estudiante 1 | 97.5 | `███████████████████░` (97.5%) |
+| User 6 | Estudiante 2 | 80.0 | `████████████████░░░░` (80.0%) |
+| User 7 | Estudiante 3 | 80.0 | `████████████████░░░░` (80.0%) |
+| User 8 | Estudiante 4 | 82.5 | `████████████████░░░░` (82.5%) |
+| User 9 | Docente 3 | 77.5 | `███████████████░░░░░` (77.5%) |
+| User 10 | Admin Externo | 80.0 | `████████████████░░░░` (80.0%) |
+| **Promedio** | **Global** | **83.75** | `█████████████████░░░` (**Excelente / Grado A**) |
+
 ### E. Propuestas de Usabilidad Derivadas
-1.  **Feedback en Acciones en tiempo real:** Implementar micro-animaciones (CSS transitions) en los switches del Dashboard para que el usuario perciba visualmente cuándo cambia el estado del motor.
+1.  **Feedback en Acciones en tiempo real:** Implementar micro-animaciones (CSS transitions) en los switches del Dashboard para que el usuario percepcionará visualmente cuándo cambia el estado del motor.
 2.  **Mensajes de Error Autodescriptivos:** En lugar de lanzar errores genéricos de infactibilidad, desglosar qué restricciones (ej. colisión docente) impidieron la generación del horario para que el usuario desactive el switch correcto.
+
 
 ---
 

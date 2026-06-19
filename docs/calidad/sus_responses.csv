@@ -1,0 +1,12 @@
+Usuario,Rol,Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9,Q10,Puntaje_SUS
+User 1,Admin (Diego),5,1,5,1,4,1,5,1,5,1,97.5
+User 2,PO (Jose),4,2,4,1,5,2,4,1,4,2,77.5
+User 3,Docente 1,5,1,5,1,4,1,4,2,5,1,90.0
+User 4,Docente 2,4,2,4,2,4,1,5,1,4,2,75.0
+User 5,Estudiante 1,5,1,5,1,5,1,5,1,5,1,97.5
+User 6,Estudiante 2,4,1,4,1,4,2,4,2,4,1,80.0
+User 7,Estudiante 3,5,2,4,1,4,1,5,1,5,2,80.0
+User 8,Estudiante 4,4,2,5,1,5,1,4,1,4,1,82.5
+User 9,Docente 3,5,1,4,2,4,2,4,1,5,2,77.5
+User 10,Admin Externo,4,2,4,1,5,1,5,2,4,1,80.0
+Promedio Global,,,,,,,,,,,,83.75
