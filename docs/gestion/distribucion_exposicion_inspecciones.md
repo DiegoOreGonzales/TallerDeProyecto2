@@ -1,190 +1,166 @@
-# Guía de Presentación y Guión de Exposición (Inspección 07)
+# Guía de Presentación y Guión de Exposición — Inspección 06 (Testing & QA)
 
-Este documento detalla el orden de los entregables que el equipo debe presentar y proporciona el guión paso a paso para cada uno de los 4 integrantes (José, Aldo, Luis y Diego), alineado a los criterios de evaluación de la rúbrica.
+Este documento detalla el plan de sustentación, la secuencia de entregables y los guiones individuales para defender con éxito la **Inspección 06 (Estrategias de Testing y Aseguramiento de Calidad)** ante el docente, garantizando todos los puntos del nivel **Sobresaliente** de la rúbrica.
 
 ---
 
-## 📂 1. Orden de Documentos a Presentar
+## 📂 1. Mapeo de Criterios de la Rúbrica (Inspección 06) a Expositores
 
-Para la verificación de la consigna y obtener la máxima nota en el indicador de **Informe Técnico** y **Evidencias**, presenten los archivos en el siguiente orden lógico de lectura:
+Para garantizar una defensa fluida y demostrar dominio técnico completo, los 18 criterios de la rúbrica de la **Inspección 06** se distribuyen de la siguiente manera:
 
-```mermaid
-graph TD
-    A["1. README.md (Raíz)"] --> B["2. plan_auditoria_calidad.md (Gestión)"]
-    B --> C["3. reporte_calidad_inspeccion07.md (Informe Técnico)"]
-    C --> D["4. evidencias_verificacion.md (Logs y Evidencias)"]
-    D --> E["5. Guías Individuales (aldorequena_inspec07.md, etc.)"]
+| Criterio de la Rúbrica | Expositor Responsable | Foco de la Defensa y Evidencias a Mostrar |
+| :--- | :--- | :--- |
+| **C1, C2, C3:** Pruebas Unitarias Backend | **Aldo Requena** (Backend) | Pytest, base de datos en memoria SQLite, stubs, mocks y gestión de excepciones. |
+| **C4, C5, C6:** Pruebas de Componentes React | **Luis Gutierrez** (Frontend) | React Testing Library, Mock Service Worker (MSW), estados de carga, error y vacío. |
+| **C7, C8, C9:** Pruebas de Integración API | **Aldo Requena** (Backend) | FastAPI TestClient, validación CRUD, HTTP codes, persistencia y rollback transaccional. |
+| **C10, C11, C12:** Pruebas Aceptación Cypress | **José Bacilio** (PO/QA Lead) | Cypress, Happy/Unhappy paths de login y CRUDs, generación automática de videos. |
+| **C13, C14, C15:** Pruebas E2E Playwright | **Diego Oré** (Scrum/QA) | Playwright, flujo Golden Path (Generar horario completo y exportar a iCal). |
+| **C16, C17:** Cobertura de Código y Calidad | **Diego Oré** (Scrum/QA) | Reporte global (72% local / 92.4% CI), lógica crítica (96.7%), justificación de exclusiones. |
+| **C18:** Gobernanza y Repositorio | **José Bacilio** (PO/QA Lead) | Gitflow, commits descriptivos, README de instalación y SonarQube local. |
+
+---
+
+## 🐳 2. Inicialización de SonarQube en Vivo y Mapeo de Cobertura
+
+Para demostrar la calidad de código frente al profesor en vivo, **José Bacilio** iniciará el panel unificado de SonarQube para proyectar los resultados acumulados de las pruebas.
+
+### A. Levantar SonarQube mediante Docker
+Abre una terminal de PowerShell en la raíz del proyecto (`C:\Bacilio\sistema_generacion_horarios_academicos`) y ejecuta:
+```powershell
+# Levantar el contenedor de SonarQube en segundo plano
+docker compose -f docker-compose-sonar.yml up -d
 ```
+*   **URL de Acceso:** [http://localhost:9000](http://localhost:9000) (Credenciales: `admin` / `admin` o la contraseña modificada).
 
-1.  **[README.md](../../README.md) (Instrucciones de Instalación y Pruebas):**
-    *   *Propósito:* Demuestra que el proyecto es 100% reproducible y autónomo (requisito del indicador 1 de la rúbrica).
-2.  **[plan_auditoria_calidad.md](plan_auditoria_calidad.md) (Plan de Trabajo Colaborativo):**
-    *   *Propósito:* Demuestra la organización del equipo mediante roles Scrum, la matriz RACI y el historial de Gitflow (ramas y autoría de commits).
-3.  **[reporte_calidad_inspeccion07.md](../calidad/reporte_calidad_inspeccion07.md) (Informe Técnico Integral):**
-    *   *Propósito:* El cuerpo de la entrega. Explica los análisis de SonarQube, la matriz de seguridad OWASP, el checklist de accesibilidad WCAG y la escala métrica de usabilidad SUS.
-4.  **[evidencias_verificacion.md](../calidad/evidencias_verificacion.md) (Evidencias Técnicas):**
-    *   *Propósito:* Trazas de consola, respuestas de cabeceras HTTP, código ARIA e inspecciones que prueban que los cambios están realmente implementados y funcionando en producción.
-5.  **Guías de Ejecución Individuales (en [docs/gestion/](./)):**
-    *   *Propósito:* Desglosa las tareas individuales como sustento de la nota de participación de cada alumno.
+### B. Ejecutar el Escaneo de Cobertura en Vivo (Si el docente lo solicita)
+```powershell
+docker run --rm -e SONAR_HOST_URL="http://host.docker.internal:9000" -e SONAR_TOKEN="squ_11548cbe57d0dd8542941b9f2ed874e829a07141" -v "${PWD}:/usr/src" sonarsource/sonar-scanner-cli
+```
+*   Esto leerá el archivo `coverage.xml` generado por Pytest y mapeará la cobertura de la lógica de negocio directamente en el portal de SonarQube en vivo.
 
 ---
 
-## 🗣️ 2. Guión de Exposición Detallado (10-12 minutos en total)
-
-### 🎙️ Integrante 1: José Anthony Bacilio De La Cruz (PO & QA Lead)
-* **Tiempo:** 2.5 minutos
-* **Foco:** SonarQube, Gobernanza de Calidad y Gitflow.
-* **Apoyo Visual:** Dashboard del proyecto en `localhost:9000` y archivo `sonar-project.properties`.
-
-#### **Guión:**
-> *"Buenas tardes, profesor. Como Product Owner y QA Lead, he liderado la configuración de la gobernanza de calidad del sistema SGOHA. Para asegurar un análisis estático continuo y confiable, implementamos SonarQube a nivel local mediante contenedores de Docker, cuya configuración se encuentra en el archivo `docker-compose-sonar.yml`.*
->
-> *(Mostrar el archivo sonar-project.properties)*
-> *Aquí pueden ver el archivo `sonar-project.properties` en la raíz. Definimos reglas estrictas de análisis especificando las fuentes del backend en Python y el frontend en React. Un punto crítico en la implementación fue solucionar un conflicto de indexación doble en el archivo `conftest.py` y las suites de pruebas, lo cual corregimos definiendo exclusiones cruzadas en el parámetro `sonar.exclusions` para garantizar un escaneo limpio.*
->
-> *(Mostrar el Dashboard de SonarQube en localhost:9000 o la captura)*
-> *Como pueden observar en los resultados reales obtenidos en nuestro escaneo local, nuestro código ha pasado exitosamente el Quality Gate. Logramos **0 Bugs**, **0 Vulnerabilidades**, y una densidad de líneas duplicadas del **2.1%**, lo cual está muy por debajo del límite del 3.0% que propusimos. Asimismo, obtuvimos la máxima calificación (Rating A) en mantenibilidad, confiabilidad y seguridad. Con esto, garantizamos que la deuda técnica del sistema es mínima (tan solo 11.8 horas en total) antes de ir a producción."*
-
-* **Pregunta de defensa típica:** *¿Por qué excluyeron archivos del análisis?*
-  * *Respuesta:* *"Para evitar falsos positivos. Los directorios de distribución de React (`dist/`) o dependencias de terceros (`node_modules`) contienen miles de líneas que no son de nuestra autoría. Al excluirlas, nos enfocamos en el 100% de la calidad de nuestro código escrito."*
+## 🗣️ 3. Guiones Individuales de Exposición
 
 ---
 
-### 🎙️ Integrante 2: Aldo Alexandre Requena Lavi (Backend Developer)
-* **Tiempo:** 2.5 minutos
-* **Foco:** OWASP Top 10 2025, Seguridad a nivel de API, Pytest.
-* **Apoyo Visual:** Middleware en `main.py` y salida de `curl -I`.
+### 🎙️ Integrante 1: JOSÉ ANTHONY BACILIO DE LA CRUZ (PO & QA Lead)
+*   **Foco de Rúbrica:** Pruebas de Aceptación con Cypress (C10, C11, C12) y Organización del Repositorio (C18).
+*   **Apoyo Visual:** Archivo de configuración `cypress.config.ts`, script `login_and_scheduling.cy.ts` y el video en `/cypress/videos/`.
 
-#### **Guión:**
-> *"Buenas tardes. Mi rol en esta inspección consistió en auditar la seguridad de la API FastAPI bajo el estándar de OWASP Top 10 2025. Identificamos riesgos asociados a configuraciones incorrectas de seguridad (MIME Sniffing) y diseño inseguro (Clickjacking).*
+#### **Guión de Exposición:**
+> *"Buenas tardes, profesor. Como Product Owner y QA Lead, he liderado la gobernanza del repositorio y el diseño de las pruebas de aceptación utilizando **Cypress** para validar las historias de usuario de nuestro backlog.*
 >
-> *(Mostrar el código del middleware add_security_headers in main.py)*
-> *Para mitigar estas vulnerabilidades, implementé el middleware `add_security_headers`. Este middleware inyecta en cada respuesta HTTP las siguientes cabeceras:*
-> *1. `X-Frame-Options: DENY`: Evita ataques de Clickjacking impidiendo que nuestra interfaz sea embebida en iframes externos.*
-> *2. `X-Content-Type-Options: nosniff`: Previene el secuestro de tipos MIME.*
-> *3. `Content-Security-Policy`: Restringe la carga de recursos únicamente al propio dominio ('self') y fuentes autorizadas como el QR generator.*
+> *(Mostrar el archivo cypress.config.ts)*
+> *En `cypress.config.ts` establecimos la dirección base en `localhost:5173` y configuramos carpetas dedicadas para capturar evidencias automáticas de video de cada flujo de prueba ejecutado.*
 >
-> *(Mostrar la salida del comando curl -I en el documento de evidencias)*
-> *Validamos esto mediante una petición directa con el comando `curl.exe -I`. Como se observa en la consola de red, el servidor responde con código 200 y adjunta todas las cabeceras restrictivas. Finalmente, para asegurar que estas modificaciones no rompieran las integraciones existentes, ejecutamos la suite de pruebas unitarias con Pytest-cov en el Backend, logrando que las **84 pruebas unitarias pasaran con un 100% de éxito**, generando el reporte de cobertura xml de forma exitosa."*
+> *(Mostrar el código de login_and_scheduling.cy.ts)*
+> *Para cumplir con el **Criterio 11 (Cobertura de Escenarios)**, implementamos dos flujos clave:*
+> *1. El **Happy Path**, donde el administrador inicia sesión con credenciales válidas, verifica que sea redirigido a `/dashboard` y valida la visibilidad de los KPIs de aulas y cursos.*
+> *2. El **Unhappy Path**, que prueba que al ingresar credenciales incorrectas, el sistema no colapse y devuelva de forma controlada el mensaje 'Credenciales inválidas'.*
+>
+> *Respecto al **Criterio 18 (Organización)**, mantenemos una arquitectura limpia: el código productivo reside en `/src` y los scripts de prueba están completamente aislados en `/tests` y `/cypress`. Toda la instalación y flujo de ejecución está documentado paso a paso en el `README.md`.*
+>
+> *Paso la palabra a Aldo Requena para explicar las pruebas de backend."*
 
-* **Pregunta de defensa típica:** *¿Cómo determinan que el riesgo residual es aceptable?*
-  * *Respuesta:* *"Porque las cabeceras inyectadas actúan a nivel de protocolo de red del navegador del cliente. Aunque un atacante intente inyectar scripts (XSS) o enmarcar la web (Clickjacking), el navegador bloquea la renderización al leer las directivas CSP y X-Frame-Options."*
+*   **Pregunta de defensa típica:** *¿Cómo interactúan las pruebas de aceptación con la base de datos?*
+    *   *Respuesta de impacto:* *"Cypress realiza pruebas de caja negra a nivel de interfaz de usuario. Al hacer clic e ingresar texto, Cypress interactúa con el frontend, el cual se comunica mediante peticiones HTTP asíncronas al backend, validando el flujo real del sistema completo de extremo a extremo."*
 
 ---
 
-### 🎙️ Integrante 3: Luis Alberto Gutierrez Taipe (Frontend Developer)
-* **Tiempo:** 2.5 minutos
-* **Foco:** Accesibilidad WCAG 2.2 AA, Componentes React y ESLint/Vite Build.
-* **Apoyo Visual:** Switches del Dashboard, código React con atributos ARIA y logs de compilación de Vite.
+### 🎙️ Integrante 2: ALDO ALEXANDRE REQUENA LAVI (Backend Developer)
+*   **Foco de Rúbrica:** Pruebas Unitarias Backend (C1, C2, C3) y Pruebas de Integración (C7, C8, C9).
+*   **Apoyo Visual:** Archivo `test_scheduler.py`, archivo `test_api.py` y una terminal de comandos.
 
-#### **Guión:**
-> *"Buenas tardes, profesor. Mi asignación en esta inspección fue garantizar que el frontend cumpla con las pautas de accesibilidad internacional WCAG 2.2 AA. Nos enfocamos principalmente en la consola de administración y las tablas de gestión, que son las más propensas a barreras de accesibilidad.*
+#### **Guión de Exposición:**
+> *"Buenas tardes, profesor. Mi rol consistió en el desarrollo y automatización de las **pruebas unitarias y de integración de la API** del backend utilizando **Pytest**.*
 >
-> *(Mostrar el Dashboard y el código de los switches)*
-> *Implementamos navegación completa por teclado y compatibilidad con lectores de pantalla. Por ejemplo, los switches para activar o desactivar restricciones del motor de programación lineal (como evitar colisiones docentes) se implementaron sobre elementos `<button>` nativos en React. Esto garantiza que sean enfocables mediante el uso de la tecla `Tab`, resaltando visualmente con un anillo de contraste naranja, y activables mediante la barra espaciadora o la tecla `Enter` (WCAG 2.1.1).*
+> *(Mostrar el archivo test_scheduler.py)*
+> *Para las pruebas unitarias del backend, aislamos la lógica de negocio del motor de optimización `SchedulerEngine`. Para evitar ensuciar o depender de la base de datos PostgreSQL real, configuramos una base de datos SQLite transaccional en memoria en `conftest.py`, inyectando mocks y stubs para las entidades de cursos, secciones y docentes.*
+> *Validamos reglas críticas como la restricción dura de capacidad de aulas (HC-3) y colisión de docentes (HC-5), asegurando que el solver arroje una alerta controlada si los recursos no coinciden.*
 >
-> *Asimismo, incorporamos semántica ARIA. Los lectores de pantalla anuncian dinámicamente si el switch está encendido o apagado gracias a los atributos `role="switch"` y `aria-checked`. Para evitar lecturas ruidosas, los iconos decorativos de la suite utilizan `aria-hidden="true"`. Por último, validamos que la compilación de producción con Vite y el análisis del linter con ESLint finalicen con **0 errores**, garantizando la limpieza del código en el frontend."*
+> *(Mostrar el archivo test_api.py y ejecutar pytest)*
+> *Respecto al **Criterio 7 (Pruebas de Integración)**, utilizamos `TestClient` de FastAPI para simular llamadas HTTP directas a nuestra API REST en endpoints CRUD. Evaluamos escenarios con peticiones válidas e inválidas, controlando respuestas con códigos de estado HTTP correctos (como 200 para OK, 404 para no encontrado y 401 para accesos sin token). Como ven en la pantalla, las **84 pruebas pasan exitosamente**.*
+>
+> *Paso la palabra a Luis Gutierrez para explicar las pruebas de componentes."*
 
-* **Pregunta de defensa típica:** *¿Cómo ayuda el foco visible a la accesibilidad?*
-  * *Respuesta:* *"Cumple con la directiva WCAG 2.4.7 (Foco Visible). Los usuarios con limitaciones motoras que no usan el ratón dependen enteramente del teclado. El anillo naranja les da un indicador inequívoco de dónde están posicionados en la pantalla antes de hacer clic."*
+*   **Pregunta de defensa típica:** *¿Por qué decidieron usar SQLite en memoria para las pruebas unitarias del backend?*
+    *   *Respuesta de impacto:* *"Para garantizar la velocidad y reproducibilidad de los tests. Una base de datos en disco o en la nube añade latencia de red y requiere configuración de red compleja. SQLite en memoria se crea en milisegundos, corre 100% aislado y se destruye al finalizar los tests sin dejar datos residuales."*
 
 ---
 
-### 🎙️ Integrante 4: Diego Isaac Oré Gonzales (Scrum Master & UX Analyst)
-* **Tiempo:** 2.5 minutos
-* **Foco:** Usabilidad SUS, Metodología de Encuestas y Propuestas de Rediseño.
-* **Apoyo Visual:** Tabla de resultados SUS y fórmulas del informe.
+### 🎙️ Integrante 3: LUIS ALBERTO GUTIERREZ TAIPE (Frontend Developer)
+*   **Foco de Rúbrica:** Pruebas de Componentes React (C4, C5, C6).
+*   **Apoyo Visual:** Archivo `Courses.test.tsx`, handlers de MSW y una terminal de comandos.
 
-#### **Guión:**
-> *"Buenas tardes. Como Scrum Master y analista UX, me encargué de auditar la usabilidad del sistema aplicando el instrumento System Usability Scale (SUS). Este es un estándar de la industria que nos permite medir cuantitativamente la usabilidad percibida mediante 10 preguntas estándar en escala de Likert.*
+#### **Guión de Exposición:**
+> *"Buenas tardes, profesor. Mi asignación consistió en asegurar la calidad de las interfaces de usuario mediante **pruebas de componentes de React** utilizando **React Testing Library (RTL)** y **Mock Service Worker (MSW)**.*
 >
-> *(Mostrar la tabla del estudio SUS en el reporte)*
-> *Aplicamos la encuesta de forma controlada a 10 participantes con diferentes roles en la universidad (administradores, docentes y estudiantes). Para calcular el puntaje final, a las preguntas positivas impares les restamos 1 a su puntaje, y a las preguntas negativas pares les restamos su puntaje a 5. Multiplicamos la suma por 2.5 para estandarizar la escala sobre 100.*
+> *(Mostrar el archivo Courses.test.tsx)*
+> *Durante el ciclo de desarrollo, la interfaz necesita conectarse a la API de FastAPI. Para evitar dependencias y que las pruebas sean robustas, utilizamos MSW para interceptar las llamadas de red `/api/cursos` a nivel de navegador virtual, devolviendo respuestas JSON controladas. Esto nos permite simular los **5 escenarios obligatorios de la interfaz**:*
 >
-> *El sistema SGOHA obtuvo un puntaje global de **83.75 / 100**. De acuerdo a la escala adjetiva y técnica de usabilidad, este valor nos sitúa en un **Grado A (Excelente)** y un nivel de aceptabilidad **Aceptable**. A partir de este estudio, implementamos mejoras de usabilidad en vivo, como inyectar micro-animaciones (CSS transitions) en los switches del dashboard y optimizar el manejo de retroalimentación ante errores de factibilidad del motor de optimización para guiar mejor al usuario en la plataforma."*
+> *1. **Estado de carga:** Verificamos que se renderice el spinner o texto 'Cargando cursos...' mientras la petición está pendiente.*
+> *2. **Carga asincrónica exitosa:** Validamos que la tabla del CRUD renderice la lista de cursos simulada.*
+> *3. **Estado vacío:** Forzamos a MSW a responder un arreglo vacío y verificamos que se muestre el texto 'No hay cursos registrados'.*
+> *4. **Estado de error:** Hacemos que MSW devuelva un error 500 y comprobamos que el componente renderice el mensaje de error de red.*
+> *5. **Validación de Formularios:** Comprobamos que no se permita enviar el formulario si el formato de código de curso es inválido.*
+>
+> *(Ejecutar npm run test en la terminal del frontend)*
+> *Como se observa, todas las pruebas unitarias y de componentes se ejecutan y pasan exitosamente bajo el framework de Vitest.*
+>
+> *Paso la palabra a Diego Oré para el análisis final de cobertura y E2E."*
 
-* **Pregunta de defensa típica:** *¿Qué diferencia hay entre usabilidad (SUS) y accesibilidad (WCAG)?*   **Respuesta:** *"La accesibilidad (WCAG) asegura que cualquier usuario con limitaciones visuales o motoras pueda interactuar físicamente con la interfaz. La usabilidad (SUS) mide cuán fácil, intuitiva y agradable resulta esa interacción para los usuarios en general una vez que acceden al sistema."*
-
----
-
-## 🚀 3. Guía de Ejecución Paso a Paso para la Demostración en Vivo
-
-Para la sustentación con el docente, sigan esta guía exacta de comandos y flujos para demostrar que el aseguramiento de calidad es real y verificable en tiempo de ejecución.
-
-### 🔌 A. Pruebas de Seguridad en Tiempo Real (OWASP / Cabeceras HTTP)
-Para demostrar la mitigación de secuestro de clics (Clickjacking), XSS y MIME Sniffing:
-
-1. Levanten los contenedores de la aplicación:
-   ```bash
-   docker compose up -d
-   ```
-2. Ejecuten una consulta rápida con `curl` para mostrar las cabeceras HTTP de seguridad inyectadas por el Middleware:
-   ```bash
-   curl.exe -I http://localhost:8000/api/scheduler/config
-   ```
-3. **Qué señalar en la respuesta:** Apunten con el cursor a las líneas:
-   *   `X-Frame-Options: DENY` (Mitigación Clickjacking / OWASP A04)
-   *   `X-Content-Type-Options: nosniff` (Mitigación MIME Sniffing / OWASP A05)
-   *   `Content-Security-Policy: ...` (Control de origen / OWASP A03)
+*   **Pregunta de defensa típica:** *¿Qué ventajas tiene React Testing Library sobre otros frameworks como Enzyme?*
+    *   *Respuesta de impacto:* *"React Testing Library promueve probar el comportamiento y no los detalles de implementación interna. RTL nos obliga a buscar los elementos por su rol accesible o su texto, simulando exactamente cómo un usuario real o un lector de pantalla interactúan con el DOM."*
 
 ---
 
-### 🛡️ B. Demostración en Vivo de SonarQube (Quality Gate)
-Para demostrar el análisis estático frente al docente en `localhost:9000`:
+### 🎙️ Integrante 4: DIEGO ISAAC ORÉ GONZALES (Scrum Master & QA)
+*   **Foco de Rúbrica:** Pruebas E2E con Playwright (C13, C14, C15) y Análisis de Cobertura (C16, C17).
+*   **Apoyo Visual:** Archivo `scheduling_flow.spec.ts` y tabla de cobertura (SonarQube o consola).
 
-1. **Levantar el contenedor del servidor de SonarQube:**
-   ```bash
-   docker compose -f docker-compose-sonar.yml up -d
-   ```
-2. **Abrir el portal de administración:**
-   *   Naveguen a: [http://localhost:9000](http://localhost:9000)
-   *   Credenciales por defecto: `admin` / `admin` (o la contraseña modificada).
-3. **Ejecutar el escaneo local de SonarQube:**
-   Si el profesor pide correr el análisis desde cero, abran una terminal en la raíz del proyecto y corran:
-   ```bash
-   docker run --rm -e SONAR_HOST_URL="http://host.docker.internal:9000" -e SONAR_TOKEN="squ_11548cbe57d0dd8542941b9f2ed874e829a07141" -v "${PWD}:/usr/src" sonarsource/sonar-scanner-cli
-   ```
-4. **Verificar el resultado:** Recarguen el dashboard y demuestren el estado **Passed** con **0 Bugs**, **0 Vulnerabilidades** y **2.1% de código duplicado**.
+#### **Guión de Exposición:**
+> *"Buenas tardes, profesor. Para concluir, yo me encargué de las **pruebas End-to-End (E2E) con Playwright** y del **análisis cuantitativo de cobertura de código**.*
+>
+> *(Mostrar el archivo scheduling_flow.spec.ts)*
+> *Playwright nos permite emular el flujo completo del negocio, simulando las acciones de un usuario en navegadores reales de forma automatizada. Validamos el **Golden Path**: el administrador inicia sesión, navega a la sección de generación, presiona 'Generar Horario', espera a que el motor CP-SAT de OR-Tools resuelva el modelo matemático y verifica que la cuadrícula se renderice. Finalmente, descarga el archivo de exportación `.ics` para Google Calendar.*
+>
+> *(Mostrar la tabla de cobertura)*
+> *Respecto al **análisis de cobertura**, el sistema supera el estándar mínimo (70% global, 85% lógica crítica):*
+> *1. En **GitHub Actions**, nuestra integración continua reporta una cobertura global del **92.4%** en el backend y superior al **96%** en la lógica del scheduler.*
+> *2. En **Local (Windows + Python 3.14)**, reportamos un **72%** de cobertura global. Esto se debe a una **decisión técnica de resiliencia**: OR-Tools tiene un problema de violación de acceso en Windows con Python 3.14+. Para evitar que la app se caiga en vivo, programamos un fallback que activa un solver alternativo en Python puro. Al saltar el CP-SAT de OR-Tools, esas líneas quedan sin marcar, bajando la cobertura local al 72% sin comprometer la estabilidad.*
+>
+> *Justificamos la exclusión de `seed.py` (script de desarrollo) y `jira_manager.py` (API de terceros).*
+>
+> *Con esto, profesor, abrimos la ronda de preguntas."*
 
 ---
 
-### 🧪 C. Ejecución de la Suite de Pruebas Automatizadas
-Para correr el 100% de la suite de pruebas unitarias y de integración y comprobar la cobertura:
+## 🧪 4. Guía de Comandos para Ejecutar en Vivo
 
-#### 1. Backend (Pytest + Cobertura):
-Abran una terminal dentro del directorio `src/backend` y ejecuten:
-```bash
-# Entrar a la carpeta del backend
+Ten estos comandos listos en pestañas de terminal independientes para ejecutarlos al instante durante la exposición:
+
+### A. Ejecutar los 84 Tests del Backend y Cobertura (Pytest)
+```powershell
 cd src/backend
-
-# Activar el entorno virtual si lo usan:
-# .\venv\Scripts\activate
-
-# Ejecutar la suite completa de 84 pruebas
-pytest tests/ -v
-
-# Generar reporte detallado de cobertura en consola
+# Correr tests con reporte detallado
 pytest --cov=app --cov-report=term-missing tests/
 ```
-*   **Métricas a resaltar:** Explicar que el backend tiene **84 pruebas exitosas** y supera el **96% de cobertura de código** en el motor del scheduler.
+*   *Qué señalar:* El `TOTAL: 72%` de cobertura en consola local, y explicar la justificación del fallback de Python 3.14.
 
-#### 2. Frontend (Vitest):
-Abran una terminal dentro del directorio `src/frontend` y ejecuten:
-```bash
-# Entrar a la carpeta del frontend
+### B. Ejecutar los Tests de Componentes Frontend (Vitest)
+```powershell
 cd src/frontend
-
-# Ejecutar las pruebas unitarias y de componentes (Vitest)
+# Iniciar Vitest
 npm run test
 ```
-*   **Métricas a resaltar:** Explicar que se ejecutan las pruebas del login, formularios y mocks de API mediante **Mock Service Worker (MSW)** con 100% de éxito.
+*   *Qué señalar:* Muestra que se ejecutan y pasan con éxito las pruebas de renderizado del login y MSW.
 
-#### 3. Frontend Compilación e Integración Estática (Linter & Build):
-Para certificar que el código en producción no tiene advertencias ni errores:
-```bash
-# Ejecutar Linter (limpio de advertencias y errores)
+### C. Ejecutar Compilación y Linter del Frontend (Vite & ESLint)
+```powershell
+cd src/frontend
+# Correr linter sin advertencias
 npm run lint
-
-# Compilar la aplicación para producción de forma exitosa
+# Compilar la aplicación limpia
 npm run build
 ```
