@@ -191,7 +191,7 @@ Representación gráfica del puntaje percibido por cada uno de los 10 usuarios e
 | **Promedio** | **Global** | **83.75** | `█████████████████░░░` (**Excelente / Grado A**) |
 
 ### E. Propuestas de Usabilidad Derivadas
-1.  **Feedback en Acciones en tiempo real:** Implementar micro-animaciones (CSS transitions) en los switches del Dashboard para que el usuario percepcionará visualmente cuándo cambia el estado del motor.
+1.  **Feedback en Acciones en tiempo real:** Implementar micro-animaciones (CSS transitions) en los switches del Dashboard para que el usuario perciba visualmente cuándo cambia el estado del motor.
 2.  **Mensajes de Error Autodescriptivos:** En lugar de lanzar errores genéricos de infactibilidad, desglosar qué restricciones (ej. colisión docente) impidieron la generación del horario para que el usuario desactive el switch correcto.
 
 
