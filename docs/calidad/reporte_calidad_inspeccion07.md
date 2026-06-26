@@ -69,8 +69,25 @@ Se ha realizado una auditoría exhaustiva sobre los riesgos potenciales asociado
 | **A05: Security Misconfiguration** | Conexiones inseguras HTTP interceptables. | Configuración de la cabecera `Strict-Transport-Security` (HSTS) y `Content-Security-Policy` (CSP) estricta. |
 | **A07: Identification and Auth** | Fuerza bruta en endpoint de Login y robo de sesión. | Cifrado unidireccional de contraseñas con `bcrypt` en backend y tokens JWT con expiración temporal corta (30 min). |
 
-### B. Análisis de Riesgo Residual
-Tras inyectar el middleware de cabeceras de seguridad en FastAPI y forzar tipado estricto en Pydantic, el riesgo residual de inyección XSS y Clickjacking ha bajado de **Alto (Inaceptable)** a **Bajo (Aceptable)**, controlado mediante validaciones en tiempo de ejecución.
+### B. Evaluación del Tratamiento de Riesgos Residuales
+
+De acuerdo con el estándar de gestión de riesgos, el **Riesgo Residual** es aquel que persiste tras la aplicación de controles de mitigación iniciales. A continuación, se evalúan las técnicas aplicables para su tratamiento en el sistema SGOHA, considerando el impacto potencial y la efectividad de las medidas implementadas.
+
+#### Matriz de Evaluación y Tratamiento de Riesgos Residuales (OWASP / Tecnológicos)
+
+| ID | Riesgo Identificado | Control Mitigante Implementado | Efectividad del Control | Probabilidad Residual | Impacto Residual | Severidad Residual | Técnica de Tratamiento Aplicable | Plan de Acción y Monitoreo Continuo |
+| :---: | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :--- |
+| **RR-01** | **XSS (Inyección):** Ejecución de scripts dañinos en el navegador del usuario final. | Validación con Pydantic (backend) y sanitización preventiva de entradas de datos. | **Alta** | 1 (Muy baja) | 3 (Medio) | **3 (Bajo)** | **Mitigación Continua** | Auditorías dinámicas periódicas mediante pruebas de penetración automatizadas (DAST) y escaneo de vulnerabilidades en el build pipeline. |
+| **RR-02** | **Clickjacking:** Secuestro de clics mediante enmarcado invisible del portal. | Cabecera HTTP `X-Frame-Options: DENY` y CSP restrictiva. | **Alta** | 1 (Muy baja) | 2 (Bajo) | **2 (Bajo)** | **Aceptación Activa** | Se asume el riesgo residual para navegadores históricos u obsoletos que ignoren las cabeceras HTTP modernas, limitando el acceso a clientes actualizados. |
+| **RR-03** | **MIME Sniffing / Inyección de Contenido:** Interpretación forzada de archivos maliciosos. | Inyección de cabecera `X-Content-Type-Options: nosniff`. | **Alta** | 1 (Muy baja) | 2 (Bajo) | **2 (Bajo)** | **Aceptación Activa** | Monitorear que el servidor de archivos estáticos mantenga la configuración de tipos MIME estrictos y verificar logs de acceso del servidor HTTP. |
+| **RR-04** | **Robo de Token JWT / Secuestro de Sesión:** Acceso físico/local al token en el navegador. | Cifrado con `bcrypt` y expiración JWT de 30 minutos. Contraseñas de alta complejidad. | **Media** | 2 (Baja) | 4 (Alto) | **8 (Medio)** | **Mitigación Continua** | Planificar la migración del almacenamiento de JWT de `localStorage` a cookies seguras de tipo `HttpOnly`, `Secure` y atributo `SameSite=Strict`. |
+| **RR-05** | **Compromiso / Fuga de Datos de la BD:** Acceso no autorizado directo a la base de datos local. | SQLite cifrado en desarrollo y PostgreSQL bajo docker perimetral. | **Alta** | 1 (Muy baja) | 4 (Alto) | **4 (Bajo)** | **Transferencia de Riesgo** | En entornos de producción reales, transferir la administración a servicios administrados de AWS RDS que implementen firewalls perimetrales (VPC) y respaldos automatizados. |
+
+#### Justificación y Efectividad del Tratamiento
+Las técnicas de tratamiento de riesgos residuales aplicadas garantizan que ningún riesgo de seguridad crítico permanezca desatendido:
+1.  **Mitigación Continua:** Se aplica a riesgos dinámicos (XSS, Session Hijacking) donde nuevas técnicas de ataque surgen constantemente. Requiere monitoreo de dependencias automatizado (npm audit / pip audit).
+2.  **Aceptación Activa:** Se reserva para riesgos con impacto mitigado por estándares web donde la probabilidad de fallo está ligada únicamente a la negligencia del usuario final al utilizar navegadores sin soporte de seguridad (obsoletos).
+3.  **Transferencia:** Mitiga el riesgo de pérdida física o intrusión a nivel de hardware/infraestructura, derivando la responsabilidad a proveedores cloud que certifican cumplimiento y alta disponibilidad.
 
 ---
 

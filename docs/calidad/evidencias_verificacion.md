@@ -56,22 +56,45 @@ sonar.javascript.lcov.reportPaths=src/frontend/coverage/lcov.info
 ```
 
 ### C. Comandos Ejecutados para Levantar e Iniciar el Análisis:
+
+Para garantizar que SonarQube capture las métricas de cobertura de código (debe ser $\ge 20\%$, obteniendo 72% en backend local y 92% en CI/CD), **es estrictamente necesario generar los archivos de reporte de cobertura locales antes de invocar el scanner**. La secuencia ordenada de ejecución es:
+
 1. **Levantar el contenedor de SonarQube:**
    ```bash
    docker-compose -f docker-compose-sonar.yml up -d
    ```
-2. **Crear Proyecto y Token mediante REST API:**
+
+2. **Generar el reporte de cobertura del Backend (Pytest XML):**
+   ```bash
+   cd src/backend
+   pytest --cov=app --cov-report=xml tests/
+   cd ../..
+   ```
+   *Esto genera el archivo físico `src/backend/coverage.xml` en formato XML de cobertura.*
+
+3. **Generar el reporte de cobertura del Frontend (Vitest LCOV):**
+   ```bash
+   cd src/frontend
+   npm run test:coverage
+   cd ../..
+   ```
+   *Esto compila las pruebas unitarias y genera el reporte `src/frontend/coverage/lcov.info` en formato LCOV.*
+
+4. **Crear Proyecto y Token mediante REST API (Solo en la primera ejecución):**
    ```bash
    # Crear el proyecto
    curl.exe -u admin:admin -X POST "http://localhost:9000/api/projects/create?project=sgoha-taller2&name=SGOHA"
    # Generar el token de acceso
    curl.exe -u admin:admin -X POST "http://localhost:9000/api/user_tokens/generate?name=scanner-token"
    ```
-   *Token obtenido:* `squ_11548cbe57d0dd8542941b9f2ed874e829a07141`
-3. **Ejecutar el escáner (usando la imagen oficial de CLI de SonarSource):**
+   *Token de acceso obtenido:* `squ_11548cbe57d0dd8542941b9f2ed874e829a07141`
+
+5. **Ejecutar el escáner de SonarQube local (usando la imagen oficial de CLI de SonarSource):**
    ```bash
    docker run --rm -e SONAR_HOST_URL="http://host.docker.internal:9000" -e SONAR_TOKEN="squ_11548cbe57d0dd8542941b9f2ed874e829a07141" -v "d:\jose\sistema_taller_proyectos\TallerDeProyecto2:/usr/src" sonarsource/sonar-scanner-cli
    ```
+   *El escáner monta el volumen del proyecto, lee `sonar-project.properties` e importa automáticamente los reportes de cobertura especificados (`src/backend/coverage.xml` y `src/frontend/coverage/lcov.info`).*
+
 
 ### D. Resultado en Consola del Scanner (Análisis Exitoso):
 ```text

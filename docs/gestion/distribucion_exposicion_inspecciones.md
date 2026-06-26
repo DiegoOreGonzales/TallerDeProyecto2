@@ -247,3 +247,142 @@ Si algo falla durante la presentación en vivo, sigan estas instrucciones rápid
     *   *Solución:* Comprobar que el contenedor del backend está corriendo (`docker ps`). Si no es así, levanten el backend de desarrollo local ejecutando `cd src/backend && uvicorn app.main:app --reload` en una consola independiente.
 *   **Problema C: Vite o npm run build fallan debido a dependencias.**
     *   *Solución:* Eliminar la carpeta `node_modules` y correr `npm install --ignore-scripts` para evitar descargar Cypress/Playwright binarios que causan fallos de descarga tras cortafuegos de red.
+
+---
+---
+
+# 🚀 GUÍA MAESTRA DE PRESENTACIÓN Y GUIÓN DE EXPOSICIÓN — INSPECCIÓN 08 (Fase de Control y Cierre del Proyecto)
+
+Este apartado detalla la distribución de responsabilidades, la secuencia de ejecución en vivo, los discursos literales sincronizados y la estrategia de defensa de preguntas del jurado para la **Inspección 08 (Control y Cierre del Proyecto)** del sistema **SGOHA**. El objetivo es defender con rigor técnico el cierre del ciclo de vida del software, demostrando trazabilidad documental completa y cumplimiento de los estándares PMBOK e Ingeniería de Software.
+
+---
+
+## 📂 1. Mapeo de Rúbrica y Estructura del Equipo (Inspección 08)
+
+La exposición está distribuida en 4 bloques equitativos de 2.5 minutos (tiempo límite total de 10 minutos):
+
+```mermaid
+graph TD
+    A["José Bacilio (PO & QA Lead)<br>1. Alcance, Riesgos Residuales & Defectos"] --> B["Aldo Requena (Backend Dev)<br>2. Incidentes, Impedimentos & Costos (LCC)"]
+    B --> C["Luis Gutierrez (Frontend Dev)<br>3. SOW & Manual de Capacitación / Operaciones"]
+    C --> D["Diego Oré (Scrum Master & UX)<br>4. Charter, Lecciones Aprendidas & Cierre"]
+```
+
+### Tabla de Responsabilidades e Indicadores de Rúbrica (Inspección 08)
+
+| Bloque / Presentador | Criterios Rúbrica A | Entregables Rúbrica B | Apoyo Visual y Documentos Clave |
+| :--- | :--- | :--- | :--- |
+| **1. José Bacilio** | Aprendizaje Experiencial (2.1, 2.2)<br>Diseño y Desarrollo (12.2) | Resumen de Alcance y Calidad<br>Registro de Riesgos (Residuales)<br>Registro de Defectos | [informe_final_proyecto.md](../control_cierre/informe_final_proyecto.md)<br>[registro_riesgos.md](../control_cierre/registro_riesgos.md)<br>[registro_defectos.md](../control_cierre/registro_defectos.md) |
+| **2. Aldo Requena** | Sostenibilidad (9.1, 9.2)<br>Diseño y Desarrollo (12.1) | Desempeño de Costos (LCC)<br>Registro de Incidentes<br>Registro de Impedimentos | [informe_final_proyecto.md](../control_cierre/informe_final_proyecto.md)<br>[registro_incidentes.md](../control_cierre/registro_incidentes.md)<br>[registro_impedimentos.md](../control_cierre/registro_impedimentos.md) |
+| **3. Luis Gutierrez** | Comunicación Efectiva (4.1, 4.2)<br>Diseño y Desarrollo (12.2) | Declaración de Trabajo (SOW)<br>Documentación de Capacitación | [revision_declaracion_trabajo.md](../control_cierre/revision_declaracion_trabajo.md)<br>[documentacion_capacitacion.md](../control_cierre/documentacion_capacitacion.md) |
+| **4. Diego Oré** | Ciudadanía Glocal (3.1, 3.2, 3.3)<br>Comunicación Efectiva (4.3, 4.4) | Acta de Constitución (Charter)<br>Lecciones Aprendidas<br>Registro de Supuestos | [revision_acta_constitucion.md](../control_cierre/revision_acta_constitucion.md)<br>[lecciones_aprendidas.md](../control_cierre/lecciones_aprendidas.md)<br>[registro_supuestos.md](../control_cierre/registro_supuestos.md) |
+
+---
+
+## 🛠️ 2. Protocolo de Ejecución en Vivo Paso a Paso (Demostración de Cierre)
+
+Durante la sustentación, demuestren la consistencia del repositorio y la trazabilidad del código:
+
+1.  **Paso A: Estructura de Carpetas en el Repositorio (José):** Mostrar en VS Code o en GitHub la estructura ordenada del directorio `docs/control_cierre/` conteniendo los 11 archivos de cierre en Markdown y el historial limpio de commits del Sprint 6.
+2.  **Paso B: Verificación Cruzada de Defectos y Unit Tests (José):** Mostrar cómo el `registro_defectos.md` correlaciona los defectos de software encontrados con las pruebas de backend implementadas.
+3.  **Paso C: Demostración de Resiliencia del Motor (Aldo):** Explicar la validación y costes del optimizador offline en comparación con servicios comerciales de APIs.
+4.  **Paso D: Demostración del Manual y Guías de Instalación (Luis):** Mostrar cómo el manual de capacitación en `documentacion_capacitacion.md` permite la reproducción exacta del software usando Docker en 3 comandos simples.
+5.  **Paso E: Cierre de Criterios del Charter (Diego):** Proyectar la matriz comparativa de objetivos del Charter inicial vs. los resultados funcionales obtenidos.
+
+---
+
+## 🗣️ 3. Guiones Literales de Exposición (Detallados y Sincronizados)
+
+### 🎙️ Integrante 1: JOSÉ ANTHONY BACILIO DE LA CRUZ (Product Owner & QA Lead)
+* **Tema:** Desempeño del Alcance, Gobernanza de Calidad, Registro de Riesgos (Residuales) y Defectos de Software.
+* **Apoyo Visual:** Estructura de `docs/control_cierre/`, `informe_final_proyecto.md`, `registro_riesgos.md` y `registro_defectos.md`.
+
+#### **Guión de Exposición:**
+> *"Buenas tardes, profesor. En esta última entrega correspondiente a la Fase de Control y Cierre de SGOHA, mi rol como Product Owner y QA ha sido liderar la verificación del cumplimiento del alcance total comprometido, evaluar la severidad del riesgo residual del software y documentar el control estricto de defectos.*
+>
+> *(Mostrar en pantalla la estructura de docs/control_cierre/)*
+> *Como se observa en el repositorio, hemos compilado formalmente los 11 entregables de control y cierre administrativo en formato Markdown bajo la carpeta `docs/control_cierre/`, organizados con nombres consistentes y trazabilidad verificable en el historial de Git, cumpliendo con las buenas prácticas PMBOK de control de configuración documental.*
+>
+> *(Mostrar el informe_final_proyecto.md en la sección de Alcance)*
+> *Respecto al desempeño del alcance, logramos cubrir el 100% de la línea base planificada que constaba de 3 épicas principales y 11 Historias de Usuario. Experimentamos una desviación controlada del +15% debido a la inyección de requerimientos regulatorios de calidad (como directivas de accesibilidad WCAG y cabeceras OWASP) identificados en las inspecciones previas.*
+>
+> *(Mostrar el registro_riesgos.md y su tabla)*
+> *En nuestro Registro de Riesgos actualizamos la matriz evaluando el **Riesgo Residual**, es decir, el riesgo latente tras los controles de mitigación implementados. Para el riesgo de inyección XSS y robo de token (vulnerabilidades OWASP), implementamos técnicas de mitigación continua mediante sanitización automatizada en los builds y planificamos la migración a cookies HttpOnly. Para la infraestructura local, aplicamos transferencia de riesgo derivando la persistencia de PostgreSQL a un entorno virtualizado en Docker y proponiendo un modelo AWS RDS para producción. Esto redujo el nivel de severidad inicial a rangos Bajos totalmente aceptados y monitoreados.*
+>
+> *(Mostrar el registro_defectos.md)*
+> *Finalmente, en el Registro de Defectos clasificamos los bugs detectados por severidad (como el bug de violación de acceso de OR-Tools en Windows). Cada defecto cuenta con su respectivo ticket en Jira, el código que lo corrige y el test unitario de pytest que valida su no regresión. Le doy el pase a Aldo Requena para detallar incidentes, impedimentos y costos de ciclo de vida."*
+
+---
+
+### 🎙️ Integrante 2: ALDO ALEXANDRE REQUENA LAVI (Backend Developer)
+* **Tema:** Registro de Incidentes, Registro de Impedimentos y Costos del Ciclo de Vida del Software (LCC).
+* **Apoyo Visual:** `registro_incidentes.md`, `registro_impedimentos.md` e `informe_final_proyecto.md` (sección de Costos y LCC).
+
+#### **Guión de Exposición:**
+> *"Buenas tardes, profesor. Durante el ciclo de desarrollo de SGOHA, mi responsabilidad abarcó la documentación y resolución de eventos imprevistos reales en el proyecto (incidentes e impedimentos), así como el análisis económico de ciclo de vida de la solución.*
+>
+> *(Mostrar el registro_incidentes.md)*
+> *En el Registro de Incidentes documentamos las problemáticas reales ocurridas en la ejecución, asignando un responsable, prioridad y plan de acción correctiva. Un incidente crítico fue la incompatibilidad en la inyección de variables de entorno de PostgreSQL al desplegar los contenedores Docker en Windows. La acción correctiva implementada fue reescribir el archivo docker-compose inyectando variables preventivas y añadir la validación de conexión TCP (healthchecks), mitigando el problema al 100%.*
+>
+> *(Mostrar el registro_impedimentos.md)*
+> *En el Registro de Impedimentos identificamos obstáculos organizacionales o técnicos que retrasaban al equipo. El impedimento principal fue el bloqueo de red institucional que impedía la descarga de imágenes Docker de SonarQube. El equipo mitigó el impacto mediante exportación de imágenes locales comprimidas (.tar) y compartidas vía almacenamiento local seguro.*
+>
+> *(Mostrar en el informe_final_proyecto.md la sección de Costos y LCC)*
+> *Respecto al desempeño financiero, el costo total de desarrollo real fue de **$12,450 USD**, lo que representa una desviación menor del +3.75% de la línea base debido a las horas adicionales dedicadas al Sprint 6 de Cierre. Sin embargo, lo más relevante es el **Análisis del Costo del Ciclo de Vida (Life Cycle Cost - LCC)** calculado a 3 años:*
+>
+> *Evaluando el desarrollo inicial ($12,450), la operación e infraestructura cloud ($4,320) y el soporte técnico anual ($1,500), el LCC final del sistema es de **$18,270 USD**. Al desarrollar un motor offline con Google OR-Tools libre de licencias o llamadas a APIs costosas de terceros, redujimos el coste operativo proyectado a 3 años en más de un 60%, garantizando la sostenibilidad financiera del sistema. Doy pase a Luis para la documentación de capacitación y el SOW."*
+
+---
+
+### 🎙️ Integrante 3: LUIS ALBERTO GUTIERREZ TAIPE (Frontend Developer)
+* **Tema:** Documentación de Capacitación (Manual de Usuario y Operaciones) y Revisión del SOW (Declaración de Trabajo).
+* **Apoyo Visual:** `documentacion_capacitacion.md` y `revision_declaracion_trabajo.md`.
+
+#### **Guión de Exposición:**
+> *"Buenas tardes, profesor. Mi asignación en esta fase consistió en construir las bases de transferencia tecnológica para asegurar la mantenibilidad del software por parte del cliente y validar que todos los entregables cumplan con los requerimientos contractuales acordados en el SOW.*
+>
+> *(Mostrar el documentacion_capacitacion.md)*
+> *Para asegurar una correcta transición y capacitación, elaboramos un documento técnico integral dividido en dos secciones:*
+> *1. **Manual del Administrador y Docente:** Guía visual detallada con capturas del dashboard, explicando cómo configurar los switches de restricciones de horarios, exportar mallas a PDF e importar calendarios iCal en Google Calendar de forma amigable.*
+> *2. **Guía de Despliegue y Mantenimiento:** Diseñada para el equipo de TI de la Universidad que heredará el sistema. Incluye los requerimientos mínimos de hardware, el diagrama lógico de contenedores Docker y el comando único (`docker compose up --build -d`) que aprovisiona el stack MERN/FastAPI en producción de forma reproducible en menos de 5 minutos.*
+>
+> *(Mostrar el revision_declaracion_trabajo.md)*
+> *Adicionalmente, en la Revisión del SOW (Statement of Work) realizamos una auditoría estricta de las cláusulas y entregables contractuales. Auditamos cada uno de los 5 hitos del proyecto: desde el prototipo Figma hasta el motor de optimización matemática y las pruebas automatizadas. Todos los módulos funcionales e informes técnicos de SonarQube, WCAG y SUS fueron validados al 100% como conformes por parte de los interesados, asegurando el cierre formal de contratos sin penalidades y con total transparencia. Doy el pase a Diego Oré para la retrospectiva y revisión del Project Charter."*
+
+---
+
+### 🎙️ Integrante 4: DIEGO ISAAC ORÉ GONZALES (Scrum Master & UX Analyst)
+* **Tema:** Revisión del Project Charter, Lecciones Aprendidas de la Retrospectiva, Registro de Supuestos y Conclusiones del Cierre.
+* **Apoyo Visual:** `revision_acta_constitucion.md`, `lecciones_aprendidas.md`, `registro_supuestos.md`.
+
+#### **Guión de Exposición:**
+> *"Buenas tardes, profesor. Para concluir nuestra presentación, evaluamos el éxito del proyecto confrontando los resultados reales con la visión inicial definida en el Project Charter, recopilando además el aprendizaje organizacional del equipo.
+>
+> *(Mostrar el revision_acta_constitucion.md)*
+> *En la revisión del Project Charter contrastamos cada uno de los 5 objetivos específicos de negocio. El objetivo principal de reducir el tiempo de generación de horarios de 2 semanas a menos de 10 minutos se cumplió de forma sobresaliente, registrando un tiempo de resolución matemática del solver de **12 segundos** en promedio. Los criterios de éxito de calidad y usabilidad superaron las metas fijadas (logrando 83.75 puntos SUS y pase del Quality Gate en SonarQube).*
+>
+> *(Mostrar el registro_supuestos.md)*
+> *En el Registro de Supuestos evaluamos la validez de las premisas iniciales del proyecto. Supuestos clave, como la compatibilidad total de Google OR-Tools en todas las plataformas, resultaron ser falsos en entornos locales de desarrollo Windows con Python 3.14 (causando violaciones de acceso). Sin embargo, este supuesto fue validado a tiempo, lo que nos permitió implementar un motor de backtracking de fallback local que garantizó la continuidad operativa sin afectar la demostración.*
+>
+> *(Mostrar el lecciones_aprendidas.md)*
+> *Finalmente, en el Informe Final de Lecciones Aprendidas compilamos el feedback de las retrospectivas de los 6 Sprints. Como buena práctica, identificamos que el desarrollo modular y las pruebas unitarias automatizadas preventivas en el backend evitaron fallos de integración. Como oportunidad de mejora, aprendimos la importancia de realizar pruebas tempranas en entornos de ejecución locales heterogéneos (Windows vs. Linux) para mitigar incompatibilidades de bibliotecas de bajo nivel.*
+>
+> *En conclusión, profesor, el proyecto SGOHA es un producto funcional de alta ingeniería de software, accesible, seguro y documentado bajo estrictos estándares organizacionales. Con esta presentación declaramos formalmente el cierre del proyecto. Quedamos atentos a sus preguntas y comentarios. Muchas gracias."*
+
+---
+
+## 🎯 4. Banco de Respuestas y Estrategia de Defensa (Preguntas de Cierre)
+
+Preparen estas respuestas técnicas para responder a las preguntas habituales del jurado y asegurar la calificación sobresaliente:
+
+### Pregunta 1: *¿Cómo aseguran que los riesgos residuales clasificados en su matriz estén realmente controlados en producción?*
+*   **Respuesta de Impacto:** *"Los riesgos residuales están controlados a través de planes de acción continuos integrados en la operación del sistema. Por ejemplo, el riesgo de robo de tokens JWT (RR-04), clasificado con severidad residual media, se controla limitando el tiempo de vida del token a 30 minutos y planificando la migración a cookies HttpOnly y Secure en el próximo ciclo de mantenimiento. El riesgo de inyección (RR-01) se controla mediante la validación estricta de esquemas Pydantic y sanitización en el frontend. Estos planes de acción aseguran que el riesgo se mantenga por debajo de los límites aceptables de la organización."*
+
+### Pregunta 2: *En el análisis del Costo de Ciclo de Vida (LCC), ¿por qué incluyeron el soporte técnico si el proyecto ya se cerró?*
+*   **Respuesta de Impacto:** *"Bajo las buenas prácticas de Ingeniería de Software y PMBOK, el éxito de un producto no se limita a su entrega inicial. El LCC evalúa los costos totales desde la concepción hasta el desmantelamiento. Incluir $500 USD anuales de soporte y mantenimiento técnico nos permite estimar el costo real de mantener el sistema actualizado contra fallos de seguridad (actualizaciones de dependencias de npm/pip) y adaptar el software ante cambios en el entorno de TI universitario a lo largo de 3 años, lo cual proporciona una visión financiera real para el patrocinador."*
+
+### Pregunta 3: *¿Qué entregable fue el más difícil de transferir en la documentación de capacitación?*
+*   **Respuesta de Impacto:** *"El entregable más complejo fue la configuración del solucionador matemático de horarios en el Manual de Operaciones. Debido a que el optimizador requiere dependencias nativas de Google OR-Tools en C++, documentar una instalación paso a paso en el sistema operativo del cliente podía generar fallos de entorno. Lo resolvimos encapsulando el backend y sus dependencias en una imagen Docker estandarizada. De esta forma, la transferencia tecnológica se simplificó a una guía donde el equipo de TI del cliente solo necesita ejecutar un comando docker compose, eliminando la complejidad técnica de la compilación de bibliotecas locales."*
+
+### Pregunta 4: *¿Cómo afectó a su cronograma y alcance la adición del Sprint 6 de Cierre?*
+*   **Respuesta de Impacto:** *"La adición del Sprint 6 de Cierre fue una decisión del equipo de gestión para asegurar el cierre ordenado administrativo del proyecto y evitar la deuda documental. En términos de alcance, no modificó las Historias de Usuario de cara al usuario final, pero añadió 4 Historias de Usuario técnicas enfocadas a la auditoría del Charter, el SOW, el manual de capacitación y la matriz de riesgos. Esto incrementó el cronograma en 14 días y los costos de desarrollo en $450 USD. Sin embargo, esta desviación marginal garantizó que el producto sea completamente mantenible y libre de vacíos documentales, protegiendo la inversión a largo plazo."*
