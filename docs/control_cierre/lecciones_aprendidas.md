@@ -1,39 +1,42 @@
 # Informe de Lecciones Aprendidas (Final Lessons Learned Report)
 
-Este informe compila las lecciones aprendidas y retrospectivas obtenidas a lo largo de los 6 sprints de desarrollo del sistema **SGOHA**, documentando buenas prácticas y errores para enriquecer el aprendizaje organizacional de futuros proyectos.
+Este informe compila las lecciones aprendidas, desafíos técnicos y retrospectivas obtenidas a lo largo de los 6 sprints de desarrollo del sistema **SGOHA**. Se documentan buenas prácticas, problemas reales ocurridos y sus respectivas soluciones para enriquecer el aprendizaje organizacional de futuros proyectos.
 
 ---
 
 ## 🚀 1. Buenas Prácticas: Qué Funcionó Bien
 
-*   **Integración del Solucionador Matemático (Google OR-Tools):**
-    *   *Lección:* El uso del algoritmo **CP-SAT** permitió satisfacer al 100% las 9 restricciones duras complejas (HC) en un promedio de **30 segundos** por lote. La modularización del resolvedor facilitó añadir restricciones adicionales sin modificar la arquitectura general.
-*   **Enfoque de Análisis Estático Local (Docker + SonarQube):**
-    *   *Lección:* Desplegar SonarQube mediante contenedores locales de Docker permitió realizar auditorías continuas sin costos de licenciamiento en la nube, detectando fallos de mantenibilidad en etapas tempranas.
-*   **Implementación de Accesibilidad WCAG Basada en Componentes Nativos:**
-    *   *Lección:* El uso de elementos nativos de HTML (como `<button>` en React para switches) en lugar de divs estilizados redujo un 50% las líneas de código CSS necesarias y otorgó navegabilidad de teclado inmediata por defecto.
+*   **Integración del Solucionador CP-SAT (Google OR-Tools):**
+    *   *Lección:* El uso del resolvedor **CP-SAT** permitió modelar y resolver de forma óptima las 9 restricciones duras (como disponibilidad docente, capacidad de aulas y no-superposición) en un tiempo promedio de **30 segundos** para 122 secciones y 61 asignaturas. Modularizar la lógica matemática del backend separada de la capa de API REST facilitó el testeo y mantenimiento del modelo.
+*   **Análisis Estático Continuo Contenerizado (SonarQube):**
+    *   *Lección:* Levantar SonarQube mediante Docker Compose local facilitó que el QA Lead realizara escaneos periódicos del repositorio sin incurrir en costos de licencias en la nube, detectando fallos de mantenibilidad e inyecciones de código muerto antes del despliegue.
+*   **Accesibilidad WCAG Integrada en Componentes Nativos:**
+    *   *Lección:* Desarrollar los interruptores y controles interactivos en React usando elementos semánticos de HTML (`button` con `role="switch"` y `aria-checked`) en lugar de divs genéricos redujo un 50% el código CSS necesario y garantizó de forma nativa la navegación por teclado con foco visible.
 
 ---
 
-## ⚠️ 2. Errores y Qué No Funcionó (Retrospectiva)
+## ⚠️ 2. Desafíos Técnicos y Retrospectiva (Qué No Funcionó y Cómo se Solucionó)
 
-*   **Falsos Positivos de Cobertura en SonarQube:**
-    *   *Problema:* El motor de SonarQube escaneaba la carpeta de pruebas unitarias (`tests/`) y dependencias compiladas, reduciendo artificialmente el porcentaje de cobertura y alertando sobre Code Smells falsos.
-    *   *Acción Correctiva:* Se definieron exclusiones estrictas en `sonar.exclusions` dentro de `sonar-project.properties`.
-*   **Complejidad Inicial del Despliegue en Windows:**
-    *   *Problema:* Diferencias en la sintaxis de variables de entorno y comandos entre entornos Linux (Bash) y Windows (PowerShell/CMD) rompían la inicialización de la base de datos de PostgreSQL.
-    *   *Acción Correctiva:* Se estandarizó el despliegue a través de scripts multiplataforma (`.ps1` y `.sh`) y Docker Compose para aislar el entorno.
-*   **Sintaxis de Documentación Propietaria en Git:**
-    *   *Problema:* La inserción de bloques propietarios como ````carousel ... ```` en la documentación markdown impedía el renderizado correcto en GitHub y en la previsualización de VS Code local.
-    *   *Acción Correctiva:* Se reemplazó por sintaxis markdown estándar multiplataforma (imágenes consecutivas y tablas HTML).
+### A. Incompatibilidad de Google OR-Tools en Entornos Locales de Windows
+*   **Problema:** Durante el Sprint 2, algunos integrantes del equipo que no usaban WSL2 (Windows Subsystem for Linux) experimentaron fallos críticos de instalación de `ortools` en Windows debido a que los binarios compilados de C++ no eran compatibles con la versión de Python instalada localmente (Python 3.14 / 3.11).
+*   **Solución:** Se estandarizó el uso de Docker. Toda la ejecución y compilación del backend se delegó al contenedor Docker ejecutándose sobre una imagen base Linux estable (`python:3.11-slim`). Adicionalmente, se construyó un solucionador simple de backtracking en Python puro como fallback para que los desarrolladores pudieran probar la API de forma local sin requerir OR-Tools compilado.
+
+### B. Latencia de E/S en Bind Mounts de Docker en Windows (WSL2)
+*   **Problema:** Al levantar el frontend en un contenedor Docker con bind mounts para habilitar el desarrollo en tiempo real, se detectó una gran latencia (de 5 a 10 segundos) en el reflejo de los cambios (*hot-reload* de Vite) al editar archivos de React en VS Code desde Windows. Esto se debía al retardo en la sincronización de archivos entre el sistema de archivos NTFS de Windows y el sistema virtual de WSL2 Ext4.
+*   **Solución:** Se movió el código fuente del frontend al sistema de archivos nativo de la máquina virtual de WSL2 (`\\wsl$\ubuntu\home\...`) y se configuró Vite para usar encuestas de cambio de archivos (`usePolling: true` en `vite.config.ts`) en los sistemas de archivos compartidos.
+
+### C. Bucles Infinitos y Consumo Excesivo de Memoria en CP-SAT por Datos Infactibles
+*   **Problema:** En las primeras ejecuciones del resolvedor matemático, si la base de datos se alimentaba con restricciones duras físicamente imposibles de satisfacer (por ejemplo, asignar a un docente más horas semanales que las disponibles en toda la semana), el solucionador CP-SAT entraba en estados de búsqueda exhaustiva que consumían el 100% de la CPU y la RAM de la máquina local, bloqueando la API.
+*   **Solución:** Se implementó una capa de pre-validación de datos en FastAPI antes de invocar a OR-Tools. Esta capa comprueba matemáticamente si los recursos son suficientes (por ejemplo: $\text{Capacidad Aulas} \geq \text{Demanda Secciones}$) y rechaza la petición con un error HTTP 400 descriptivo si detecta infactibilidad obvia, previniendo el desbordamiento de memoria.
+
+### D. Cuellos de Botella en las Revisiones de Código (Code Reviews Bottleneck)
+*   **Problema:** Durante el Sprint 2 y Sprint 3, la entrega de historias de usuario se retrasaba frecuentemente en el estado "Ready for Review" en Jira. La regla de exigir que el Scrum Master revisara todas las ramas de Git creó un cuello de botella que demoraba la integración del código entre 1 y 2 días.
+*   **Solución:** Se adoptó una política de revisión cruzada por pares (peer-review). Cualquier desarrollador del equipo podía revisar y aprobar un Pull Request siempre que se cumpliera con una checklist automatizada (cobertura Pytest > 80%, eslint sin errores, y compilación Vite exitosa).
 
 ---
 
 ## 📈 3. Oportunidades de Mejora Futura (Roadmap)
 
-1.  **Migrar a una Base de Datos NoSQL para Historiales:**
-    *   Para optimizar la persistencia de configuraciones de horarios históricas, se sugiere implementar un almacén de documentos tipo MongoDB.
-2.  **Soporte Multi-Turno en Solucionador CP-SAT:**
-    *   Habilitar que el solucionador orqueste la asignación nocturna (turno noche) para alumnos que trabajan, balanceando la dispersión docente de forma automatizada.
-3.  **Integración de Pipeline de CI/CD Completa:**
-    *   Automatizar la ejecución de Pytest y ESLint al realizar commits en ramas de feature utilizando GitHub Actions, previniendo que código no verificado sea fusionado a `develop`.
+1.  **Integración de base de datos NoSQL para historial de mallas:** Utilizar MongoDB para almacenar las simulaciones horarias descartadas por el usuario, evitando sobrecargar la base de datos transaccional PostgreSQL.
+2.  **Soporte Multi-Turno Avanzado:** Habilitar un resolvedor CP-SAT que orqueste la asignación de horarios en turnos nocturnos y mixtos, balanceando automáticamente las horas de descanso de los docentes.
+3.  **Pipeline CI/CD Automatizado:** Implementar GitHub Actions para que, al realizar un commit en la rama `develop`, se ejecuten de manera automática las pruebas unitarias de Pytest y Vitest, impidiendo fusiones de código que rompan el sistema.

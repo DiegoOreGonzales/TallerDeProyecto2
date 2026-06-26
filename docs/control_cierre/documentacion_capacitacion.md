@@ -1,6 +1,6 @@
 # Documentación de Capacitación y Operación (Training & Ops Manual)
 
-Este documento sirve como guía de transferencia de conocimiento para el equipo de operaciones, administradores de TI e ingenieros de mantenimiento encargados del despliegue, monitoreo y soporte a largo plazo del sistema **SGOHA (Sistema de Gestión y Optimización de Horarios Académicos)**.
+Este documento sirve como guía de transferencia de conocimiento para el equipo de operaciones, administradores de TI e ingenieros de mantenimiento encargados del despliegue, monitoreo y soporte a largo plazo del sistema **SGOHA (Sistema de Gestión y Optimización de Horarios Académicos)**. Adicionalmente, resume la capacitación interna y externa realizada a lo largo del proyecto.
 
 ---
 
@@ -18,10 +18,10 @@ graph TD
 ```
 
 ### Componentes y Tecnologías Clave:
-1.  **Frontend (UI)**: React 18, TypeScript, Vite y Tailwind CSS. Implementa un diseño premium y adaptativo con soporte para accesibilidad web (normas WCAG 2.1).
-2.  **Backend (Core API)**: FastAPI (Python 3.11). Provee endpoints para la gestión de entidades, configuración de restricciones y exportación de datos.
-3.  **Motor de Optimización**: resolvedor **CP-SAT** integrado dentro de Google OR-Tools. Modela restricciones matemáticas duras y blandas para generar la malla horaria ideal en segundos.
-4.  **Base de Datos**: PostgreSQL 15. Almacena las entidades académicas (cursos, aulas, secciones, usuarios) y la configuración del motor.
+1.  **Frontend (UI)**: React 18, TypeScript, Vite y Tailwind CSS. Implementa un diseño premium y adaptativo con soporte para accesibilidad web (normas WCAG 2.1 AA).
+2.  **Backend (Core API)**: FastAPI (Python 3.11). Provee endpoints REST, inyección de seguridad y orquestación del solucionador.
+3.  **Motor de Optimización**: Solucionador **CP-SAT** integrado dentro de Google OR-Tools. Modela restricciones matemáticas duras y blandas para generar la malla horaria ideal en segundos.
+4.  **Base de Datos**: PostgreSQL 15. Almacena las entidades académicas (cursos, aulas, secciones, usuarios) y la configuración de las restricciones del motor.
 
 ---
 
@@ -69,70 +69,50 @@ El sistema está completamente contenerizado mediante **Docker** y **Docker Comp
     docker-compose exec backend python seed.py
     ```
 
-### 2.3 Resolución de Problemas Comunes de Despliegue:
-
-*   **Error: Puerto 5173 o 8000 ya está en uso:**
-    *   *Solución:* Edite la sección `ports` en `docker-compose.yml` modificando el puerto izquierdo (ejemplo: cambiar `- "5173:5173"` por `- "3000:5173"`).
-*   **Problema de Permisos en Volúmenes de PostgreSQL:**
-    *   *Síntoma:* El contenedor `scheduling_db` se reinicia continuamente.
-    *   *Solución:* Elimine el volumen corrupto ejecutando `docker-compose down -v` y vuelva a iniciar el despliegue.
-
 ---
 
-## 💻 3. Manual de Usuario del Administrador (Dashboard UI)
+## 💻 3. Manuales de Usuario por Rol
 
-El administrador interactúa con el motor de optimización mediante un panel web moderno.
-
-### 3.1 Flujo Operativo para Generación de Horarios:
-1.  **Autenticación**: Ingrese a la UI en `http://localhost:5173/`. Seleccione el rol de **Administrador** (credenciales del seeder: usuario `admin`, contraseña `admin`).
+### 3.1 Flujo Operativo para el Administrador (Dashboard UI):
+1.  **Autenticación**: Ingrese a la UI. Seleccione el rol de **Administrador** (credenciales del seeder: usuario `admin`, contraseña `admin`).
 2.  **Configuración del Motor CP-SAT (Panel de Restricciones)**:
     En la parte superior del Dashboard se listan las restricciones activas en la base de datos. Cada restricción posee un interruptor (*switch*) accesible mediante teclado y lectores de pantalla:
     *   **Restricciones Duras (Hard Constraints - Obligatorias)**:
         *   *No colisión de Docentes*: Evita que un docente dicte en dos aulas al mismo tiempo.
         *   *No colisión de Aulas*: Impide que un aula albergue dos secciones concurrentes.
-        *   *No colisión de Ciclo/Turno*: Garantiza que cursos del mismo ciclo y turno no se crucen para que los alumnos puedan matricularse sin colisiones.
+        *   *No colisión de Ciclo/Turno*: Garantiza que cursos del mismo ciclo y turno no se crucen para evitar problemas de matrícula.
         *   *Carga Máxima Docente*: Limita la labor docente a un máximo de 30 bloques semanales.
     *   **Preferencias Blandas (Soft Constraints - Optimizables)**:
         *   *Minimizar ventanas libres*: Agrupa las clases de los alumnos de forma compacta.
         *   *Evitar bloques sueltos*: Evita que el alumno asista a la universidad por una sola hora de clase.
-        *   *Respetar turnos preferidos*: Prioriza los horarios en base a las preferencias registradas en las secciones y perfiles.
+        *   *Respetar turnos preferidos*: Prioriza los horarios en base a las preferencias de las secciones.
 3.  **Generación de la Optimización**:
     Haga clic en el botón naranja **"Generar Nuevo Horario"**. La interfaz deshabilitará controles para evitar ediciones y mostrará un spinner con el mensaje *"Optimizando con CP-SAT..."*. En un periodo promedio de **15 a 30 segundos**, el motor retornará la matriz óptima de asignación.
 4.  **Visualización e Inspección**:
     *   **Vista de Grilla**: Muestra la distribución tradicional por días (Lunes a Sábado) y bloques de hora.
     *   **Vista de Agenda (Lista)**: Agrupa el horario secuencialmente por días, ideal para lectura lineal y dispositivos móviles.
-    *   **Modal de Detalle**: Al hacer clic en cualquier bloque de clase, se abre un modal con información del curso, docente asignado, tipo de aula (Teoría/Laboratorio) e información detallada de las horas pedagógicas de 40 minutos con sus respectivos recesos de 10 minutos.
+    *   **Modal de Detalle**: Al hacer clic en cualquier bloque de clase, se abre un modal con información de las horas pedagógicas de 40 minutos con sus respectivos recesos de 10 minutos.
 5.  **Exportación y Descargas**:
-    Utilice los botones del panel para exportar el resultado final:
     *   **PDF Completo**: Descarga el reporte imprimible de la malla completa.
-    *   **Exportar Calendario (iCal)**: Descarga el archivo de integración para importar directamente en Google Calendar, Outlook o Apple Calendar.
+    *   **Exportar Calendario (iCal)**: Descarga el archivo de integración para importar directamente en Google Calendar.
 
-### 3.2 Manual de Usuario para Estudiantes y Docentes
+### 3.2 Flujo del Estudiante:
+1.  **Inicio de Sesión**: Seleccione el rol de **Estudiante** y elija su ciclo académico (ej. `Periodo 8` para alumnos de 8vo ciclo) y su turno preferido (`MAÑANA`, `TARDE` o `COMPLETO`). Credenciales de prueba: usuario `estudiante_c8`, contraseña `ucontinental`.
+2.  **Visualización Adaptada**: El Dashboard del estudiante ocultará de forma inteligente las opciones de configuración de restricciones del motor CP-SAT y el botón de generación.
+3.  **Filtrado Inteligente de Turno (De-duplicación)**: Si el estudiante seleccionó el turno `COMPLETO`, el frontend de React aplica de forma automática un algoritmo de de-duplicación. Si una asignatura se ofrece en la mañana y tarde, la UI priorizará mostrar la sección de la mañana, evitando la duplicidad visual en el calendario.
+4.  **Descarga**: El estudiante tiene habilitado el botón para descargar únicamente el **PDF de su Ciclo** y exportar su calendario a Google Calendar mediante **iCal**.
 
-A diferencia del administrador, los estudiantes y docentes acceden a vistas adaptadas que garantizan la confidencialidad y la usabilidad según sus perfiles:
-
-*   **Flujo del Estudiante**:
-    1.  **Inicio de Sesión**: Ingrese a la UI en `http://localhost:5173/`. Seleccione el rol de **Estudiante** y elija su ciclo académico (ej. `Periodo 8` para alumnos de 8vo ciclo) y su turno preferido (`MAÑANA`, `TARDE` o `COMPLETO`). Las credenciales de prueba del seeder son: usuario `estudiante_c8`, contraseña `ucontinental`.
-    2.  **Visualización Adaptada**: El Dashboard del estudiante ocultará de forma inteligente las opciones de configuración de restricciones del motor CP-SAT y el botón de optimización.
-    3.  **Filtrado Inteligente de Turno (De-duplicación)**: Si el estudiante seleccionó el turno `COMPLETO`, el frontend de React aplica de forma automática un algoritmo de de-duplicación. Si una asignatura se ofrece en la mañana y tarde, la UI priorizará mostrar la sección de la mañana (`MAÑANA`), evitando la sobrecarga de bloques duplicados en el calendario visual.
-    4.  **Descarga Personalizada**: El estudiante tendrá habilitado el botón para descargar únicamente el **PDF de su Ciclo** y exportar su calendario personalizado a Google Calendar usando el formato estándar **iCal**.
-*   **Flujo del Docente**:
-    1.  **Inicio de Sesión**: Ingrese a la UI. Seleccione el rol de **Docente** (credenciales: usuario `docente_demo`, contraseña `docente`).
-    2.  **Visualización de Carga Académica**: El docente puede inspeccionar en la grilla los días y bloques asignados a sus clases semanales, el aula (Teoría o Laboratorio) correspondiente y el nombre del curso, asegurando que no existan ventanas libres excesivas.
+### 3.3 Flujo del Docente:
+1.  **Inicio de Sesión**: Seleccione el rol de **Docente** (credenciales: usuario `docente_demo`, contraseña `docente`).
+2.  **Visualización de Carga Académica**: El docente puede inspeccionar en la grilla los días y bloques asignados a sus clases semanales y el aula correspondiente.
 
 ---
 
 ## ⚙️ 4. Manual de Mantenimiento y Operaciones (TI)
 
-Para asegurar la disponibilidad y salud de los entornos de base de datos y backend, el equipo de TI debe ejecutar tareas de monitoreo y soporte rutinario.
-
 ### 4.1 Monitoreo de logs en Tiempo Real:
-Para depurar peticiones HTTP, errores de base de datos o excepciones del resolvedor CP-SAT:
 ```bash
-# Logs consolidados de todos los servicios
-docker-compose logs -f
-
-# Logs específicos del backend FastAPI
+# Logs del backend FastAPI
 docker-compose logs -f backend
 
 # Logs del motor PostgreSQL
@@ -140,30 +120,37 @@ docker-compose logs -f db
 ```
 
 ### 4.2 Gestión de Respaldos de Datos (Backups):
-El esquema relacional almacena el catálogo de asignaturas y secciones generadas. Se debe programar un cron semanal para respaldar el volumen de Postgres utilizando la herramienta `pg_dump` integrada en la imagen:
-
 *   **Generar una Copia de Seguridad:**
     ```bash
     docker-compose exec db pg_dump -U admin scheduling_system > backup_horarios.sql
     ```
-    *Este comando genera un archivo SQL plano con todas las tablas, restricciones y datos en el directorio actual.*
-
 *   **Restaurar una Copia de Seguridad:**
-    Para recuperar la base de datos a partir de un archivo SQL guardado (advertencia: esto sobrescribirá los datos actuales):
     ```bash
     docker-compose exec -T db psql -U admin scheduling_system < backup_horarios.sql
     ```
 
-### 4.3 Reinicio Total y Limpieza del Entorno:
-Si requiere reinstalar el sistema con una versión de base de datos limpia o aplicar nuevas migraciones SQLAlchemy:
-```bash
-# Apagar contenedores y destruir volúmenes de datos físicos persistidos
-docker-compose down -v
+---
 
-# Volver a levantar el entorno recreando contenedores
-docker-compose up -d --build
+## 🎓 5. Historial de Capacitación del Proyecto
 
-# Volver a inyectar las semillas académicas
-docker-compose exec backend python seed.py
-```
+### 5.1 Capacitación Interna del Equipo de Desarrollo (Sprints 0 - 5)
+Para asegurar el correcto desarrollo técnico, el equipo llevó a cabo sesiones de auto-capacitación y transferencia tecnológica interna:
 
+*   **Sprint 0: Programación Matemática y CP-SAT (Google OR-Tools):**
+    *   *Temática:* Modelado de variables booleanas y enteras, planteamiento de restricciones lineales, y uso del solucionador CP-SAT frente a algoritmos tradicionales de backtracking.
+*   **Sprint 2: dockerización de Aplicaciones Multitapa:**
+    *   *Temática:* Creación de Dockerfiles eficientes, gestión de volúmenes persistentes, redes de contenedores locales y sincronización de carpetas en caliente (*bind mounts*) bajo WSL2.
+*   **Sprint 4: Accesibilidad Web (WCAG 2.1 AA) e Inclusividad:**
+    *   *Temática:* Marcado semántico HTML5, atributos ARIA, navegación por teclado asistida y pruebas de foco con lectores de pantalla.
+*   **Sprint 5: Seguridad Lógica y OWASP Top 10:**
+    *   *Temática:* Inyección de cabeceras HTTP de seguridad restrictivas, prevención de ataques Cross-Origin y escaneo de vulnerabilidades con SonarQube.
+
+### 5.2 Talleres de Capacitación a Usuarios Finales
+En la fase final (Sprint 6), se implementó un programa estructurado para transferir la operación del sistema a la Universidad:
+
+1.  **Taller para Administradores de TI (4 Horas):**
+    *   *Contenido:* Arquitectura de contenedores, gestión de scripts de copia de seguridad (backups), depuración mediante monitoreo de logs en Docker, y actualización del esquema de base de datos con SQLAlchemy.
+2.  **Taller para Coordinadores Académicos (6 Horas):**
+    *   *Contenido:* Registro de datos maestros (CRUDs), activación y desactivación de restricciones duras/blandas en el panel de control, e interpretación de los mensajes de infactibilidad del motor.
+3.  **Sesión Informativa para Estudiantes y Docentes (2 Horas):**
+    *   *Contenido:* Acceso a vistas por rol, de-duplicación inteligente de turnos, y sincronización horaria con Google Calendar mediante iCal.
