@@ -7,13 +7,13 @@ Este documento sirve como el guion maestro de exposición para la **Inspección 
 
 ## 📂 1. Estructura de Tiempos y Distribución del Equipo
 
-La exposición tiene un tiempo límite estricto de **10 minutos** y se divide en 4 bloques equitativos de **2.5 minutos** cada uno:
+La exposición tiene un tiempo límite total de **20 minutos** y se divide en 4 bloques equitativos de **5 minutos** cada uno:
 
 ```mermaid
 graph TD
-    A["Jose Bacilio (PO & QA Lead)<br>[0:00 - 2:30]<br>Alcance, Calidad de Git, Riesgos & Defectos"] --> B["Aldo Requena (Backend Dev)<br>[2:30 - 5:00]<br>Incidentes, Impedimentos & LCC"]
-    B --> C["Luis Gutierrez (Frontend Dev)<br>[5:00 - 7:30]<br>Capacitación, SOW & Código Accesible"]
-    C --> D["Diego Ore (Scrum Master & UX)<br>[7:30 - 10:00]<br>Charter, Supuestos, Lecciones & Cierre"]
+    A["Jose Bacilio (PO & QA Lead)<br>[0:00 - 5:00]<br>Alcance, Calidad de Git, Riesgos & Defectos"] --> B["Aldo Requena (Backend Dev)<br>[5:00 - 10:00]<br>Incidentes, Impedimentos & LCC"]
+    B --> C["Luis Gutierrez (Frontend Dev)<br>[10:00 - 15:00]<br>Capacitación, SOW & Código Accesible"]
+    C --> D["Diego Ore (Scrum Master & UX)<br>[15:00 - 20:00]<br>Charter, Supuestos, Lecciones & Cierre"]
 ```
 
 ---
@@ -23,7 +23,7 @@ graph TD
 ---
 
 ### 🎙️ Bloque 1: José Anthony Bacilio De La Cruz (Product Owner & QA Lead)
-*   **Tiempo:** 0:00 a 2:30
+*   **Tiempo:** 0:00 a 5:00 (5 minutos)
 *   **Rol:** Product Owner & QA Lead
 
 #### 🖥️ Elementos Visuales a Mostrar en Pantalla (VS Code / Navegador / SonarQube):
@@ -33,28 +33,31 @@ graph TD
 4.  **Archivo [registro_defectos.md](../control_cierre/registro_defectos.md):** Mostrar los defectos **DF-05** (fallo de OR-Tools en Windows solucionado con backtracking fallback) y **DF-06** (bloqueo CSP de Tailwind).
 5.  **Dashboard Local de SonarQube (Navegador en `http://localhost:9000`):** Mostrar el panel con el estado **Quality Gate: PASSED**, evidenciando 0 Bugs, 0 Vulnerabilities, 0 Security Hotspots y la mantenibilidad general en Rating A.
 
-#### 🗣️ Discurso Literal:
-> *"Buenas tardes, profesor. En esta última entrega correspondiente a la Fase de Control y Cierre del proyecto SGOHA, mi rol como Product Owner y QA Lead ha sido auditar el alcance del producto, controlar la mitigación de los riesgos y verificar el cierre del 100% de los defectos de software.
+#### 🗣️ Discurso Literal (5 minutos):
+> *"Buenas tardes, profesor. En esta última entrega correspondiente a la Fase de Control y Cierre de nuestro sistema SGOHA, mi rol como Product Owner y QA Lead ha sido auditar la conformidad del alcance del producto final frente a los requisitos establecidos, controlar la mitigación de los riesgos mediante la evaluación de su rango residual e implementar el control del 100% de los defectos de software encontrados.
 >
 > **(Mostrar la carpeta docs/control_cierre/ en el explorador de VS Code)**
-> Como puede observar, hemos estructurado e implementado los 11 documentos de control administrativo exigidos, los cuales han sido versionados en Git de manera formal y trazable.
+> Como puede observar en nuestro explorador de VS Code, hemos estructurado e implementado de forma limpia los 11 documentos de control administrativo exigidos por los estándares de la ingeniería de software. Cada archivo ha sido gestionado bajo una estricta estrategia de control de configuración en Git, asegurando que toda la documentación técnica esté consolidada y con nombres consistentes en la rama principal.
 >
 > **(Enfocar informe_final_proyecto.md - Secciones 2.A y 2.C)**
-> En alcance cumplimos con la línea base original de 3 épicas y 11 historias de usuario. Registramos una desviación controlada del +15% debido a Historias de Usuario técnicas que inyectamos en el Sprint 4 para cumplir con las directivas de seguridad OWASP y accesibilidad WCAG. En calidad, nuestra suite de Pytest alcanzó un **81% de cobertura** y Vitest un **100%**.
+> En cuanto al desempeño de alcance, cumplimos satisfactoriamente con el 100% de la línea base original que abarcaba 3 épicas y 11 historias de usuario funcionales. Registramos una desviación controlada del +15% de alcance debido a la inyección de Historias de Usuario técnicas enfocadas en calidad de software (HU-7.1 a HU-7.4 y HU-8.1 a HU-8.4) para cumplir con las directivas de seguridad OWASP y accesibilidad WCAG solicitadas durante las auditorías previas. En calidad de pruebas, nuestra suite en el backend cuenta con una **cobertura del 81%** respaldada por 84 tests en Pytest, mientras que el frontend alcanza un **100% de cobertura** con Vitest, asegurando la estabilidad del renderizado del Dashboard.
 >
 > **(Enfocar registro_riesgos.md - Fila de RS-06 y RS-07)**
-> En nuestro Registro de Riesgos, el control de mitigaciones redujo la severidad original a un rango bajo de riesgo residual. Por ejemplo, en el riesgo técnico **RS-06** sobre fugas de conexión de base de datos, implementamos sesiones generadas con `yield` en FastAPI, reduciendo el riesgo a un nivel residual bajo. Para el riesgo **RS-07** de adopción docente, administramos encuestas cuantitativas de usabilidad.
+> En nuestro Registro de Riesgos, el control de las mitigaciones redujo la severidad original de los riesgos a un rango bajo de riesgo residual. Destaco dos riesgos agregados en la fase final:
+> - **RS-06 (Riesgo Técnico):** Fugas de conexiones en la base de datos PostgreSQL local debido a sesiones abiertas de forma indefinida por llamadas concurrentes a la API. Esto tenía una severidad inicial de 12 (Medio). Aplicamos una mitigación continua reestructurando la inyección de dependencias en SQLAlchemy usando generadores contextuables `yield` en FastAPI, logrando cerrar cada conexión de forma segura al finalizar cada petición y reduciendo la severidad residual a 2 (Bajo).
+> - **RS-07 (Riesgo de Usabilidad):** Resistencia al cambio o baja tasa de adopción de la interfaz por parte de docentes. Mitigado mediante la administración de encuestas cuantitativas estandarizadas SUS, logrando un puntaje excelente y bajando la severidad residual a 2.
+> Las técnicas de tratamiento utilizadas varían entre **Mitigación Continua** para inyecciones XSS y CORS, **Aceptación Activa** con monitoreo local de linters, y **Transferencia** del hosting de base de datos a servicios administrados de AWS RDS en la fase de producción.
 >
 > **(Enfocar registro_defectos.md - DF-05 y DF-06)**
-> Finalmente, en el Registro de Defectos, documentamos 8 fallos detectados y corregidos. Destaco el defecto **DF-05** donde el solucionador CP-SAT fallaba nativamente en entornos locales Windows con Python 3.14. Lo solucionamos implementando un motor de backtracking alternativo en Python puro como fallback.
+> En el Registro de Defectos, documentamos 8 fallos detectados y corregidos. Hago especial énfasis en el defecto **DF-05**, donde el motor CP-SAT de Google OR-Tools fallaba en cargar en entornos locales Windows con Python 3.14 por incompatibilidades de binarios compilados de C++. Lo solucionamos implementando un resolvedor alternativo basado en un algoritmo de Backtracking clásico en Python puro como fallback para desarrollo local. También solucionamos el defecto **DF-06**, donde la política CSP bloqueaba los estilos dinámicos en línea de Tailwind CSS, reconfigurando las cabeceras HTTP de FastAPI.
 >
 > **(Mostrar la pestaña de SonarQube en el navegador)**
-> Como evidencia de nuestra calidad estática, aquí está el panel local de SonarQube, mostrando el Quality Gate aprobado y 0 vulnerabilidades en nuestro código. Le doy el pase a Aldo Requena."*
+> Finalmente, como evidencia de nuestra calidad estática, aquí está el panel local de SonarQube. El Quality Gate se encuentra en estado aprobado con **0 Bugs, 0 Vulnerabilidades, 0 Security Hotspots** y una deuda técnica mínima en Rating A. Esto certifica que el código cumple con los más altos estándares de mantenibilidad y seguridad lógica. Le doy el pase a Aldo Requena."*
 
 ---
 
 ### 🎙️ Bloque 2: Aldo Alexandre Requena Lavi (Backend Developer)
-*   **Tiempo:** 2:30 a 5:00
+*   **Tiempo:** 5:00 a 10:00 (5 minutos)
 *   **Rol:** Backend Developer
 
 #### 🖥️ Elementos Visuales a Mostrar en Pantalla (VS Code / Docker Desktop / Consola):
@@ -63,30 +66,32 @@ graph TD
 3.  **Archivo [informe_final_proyecto.md](../control_cierre/informe_final_proyecto.md):** Enfocar la tabla de **Cronograma de Sprints (S0 a S6)** y la sección **2.D Desempeño de los Costos y Ciclo de Vida (LCC)**.
 4.  **Código Fuente en VS Code:**
     *   Mostrar [app/main.py](../../src/backend/app/main.py) donde se inyectaron las cabeceras HTTP de seguridad de FastAPI (`CORSMiddleware` y cabeceras OWASP como `X-Frame-Options: DENY`).
-5.  **Docker Desktop (Opcional):** Mostrar la lista de los 4 contenedores (`scheduling_db`, `scheduling_backend`, `scheduling_frontend`, `scheduling_pgadmin`) corriendo de manera saludable.
+5.  **Docker Desktop / Consola:** Mostrar la lista de contenedores activos de Docker (`docker-compose ps`) operando en sus respectivos puertos.
 
-#### 🗣️ Discurso Literal:
-> *"Buenas tardes, profesor. En este bloque detallaré la gestión de incidentes y obstáculos del equipo, y sustentará el análisis de costos del ciclo de vida de nuestro software.
+#### 🗣️ Discurso Literal (5 minutos):
+> *"Buenas tardes, profesor. Durante el ciclo de desarrollo de SGOHA, mi labor se ha centrado en el diseño y despliegue de la API en FastAPI, y en documentar y mitigar activamente los incidentes y obstáculos operativos que amenazaban el cronograma. Asimismo, lideré el análisis financiero del ciclo de vida del producto.
 >
 > **(Enfocar registro_incidentes.md - IS-05 e IS-06)**
-> En nuestro Issue Log documentamos los problemas reales materializados. Destaco el incidente **IS-05**, donde SonarQube bloqueaba la PC del QA Lead por consumir el 100% de la memoria virtual en WSL2. Lo solucionamos creando una configuración `.wslconfig` limitando a 4GB la memoria de la máquina virtual de Docker. También cerramos el incidente de CORS **IS-06** habilitando orígenes específicos de red.
+> En nuestro Registro de Incidentes (Issue Log), documentamos los problemas reales materializados en la ejecución. Destaco el incidente **IS-05**, de prioridad alta, donde Docker Desktop colapsaba debido al agotamiento de la memoria de virtualización de WSL2 al ejecutar SonarQube en paralelo con el backend y frontend. Esto congelaba la PC de desarrollo. Lo solucionamos creando un archivo `.wslconfig` en la raíz de usuario de Windows para forzar a WSL2 a no exceder el límite de 4GB de RAM y 2 cores, garantizando un entorno estable. También cerramos el incidente de CORS **IS-06** reconfigurando las directivas cruzadas en el middleware de FastAPI para permitir solicitudes del origen del cliente React de forma controlada.
 >
 > **(Enfocar registro_impedimentos.md - IM-04 e IM-05)**
-> En cuanto a impedimentos, el obstáculo **IM-04** retrasó el Sprint 0 porque algunos miembros tenían Windows Home sin virtualización de hardware activa. Los asistimos configurando la BIOS localmente. Para el impedimento **IM-05** sobre cuellos de botella en la revisión de ramas de Git, descentralizamos la aprobación estableciendo una checklist automatizada de calidad por pares.
+> En cuanto a impedimentos, registramos obstáculos que detuvieron el flujo de los sprints. El impedimento **IM-04** bloqueó el Sprint 0 porque algunos miembros del equipo disponían de sistemas con Windows Home sin la virtualización nativa de la BIOS habilitada, impidiendo el uso de Docker. Les brindamos asistencia remota para ingresar a la BIOS del sistema anfitrión, activar VT-x/AMD-V e instalar el kernel de actualización de WSL2. El impedimento **IM-05** representaba un cuello de botella en las revisiones de código de Git Bash, debido a la sobrecarga académica de los revisores. Lo mitigamos descentralizando la aprobación y estableciendo revisiones cruzadas por pares bajo una checklist estricta en Jira.
 >
 > **(Enfocar informe_final_proyecto.md - Tabla de Sprints e LCC)**
-> A nivel financiero, el costo real de desarrollo fue de **$12,450 USD**, con una desviación mínima del +3.75% por la incorporación del Sprint 6 de control documental. 
+> A nivel financiero, el costo real de desarrollo ascendió a **$12,450 USD**, con una pequeña desviación del +3.75% provocada por las horas dedicadas al Sprint 6 de control y empaquetado documental.
 >
 > **(Enfocar sección 2.D del informe: Justificación Financiera LCC)**
-> Proyectamos el Costo de Ciclo de Vida del Software (LCC) a 3 años en **$18,270 USD**, que abarca desarrollo, soporte e infraestructura cloud en AWS. Al seleccionar un motor de optimización offline basado en Google OR-Tools CP-SAT en lugar de APIs SaaS propietarias de pago, logramos ahorrar a la universidad más de **$1,800 USD anuales** en llamadas de red, eliminando costos por uso de APIs de terceros.
+> Sin embargo, el valor clave del proyecto radica en nuestro análisis del **Costo del Ciclo de Vida del Software (LCC)** a 3 años, el cual asciende a **$18,270 USD**. Este análisis comprende el desarrollo inicial ($12,450), la infraestructura cloud en AWS App Runner y RDS ($4,320) y el mantenimiento correctivo y parches anuales ($1,500). 
+>
+> La decisión de diseñar un motor de optimización offline basado en Google OR-Tools CP-SAT en lugar de contratar solucionadores comerciales basados en la nube (SaaS) representa un ahorro crítico para la universidad. Los motores comerciales cobran alrededor de $150 USD mensuales por volumen de optimización. Ejecutar CP-SAT dentro de nuestro contenedor Docker reduce el costo por llamada matemática a **S/. 0.00**, lo que ahorra más de **$1,800 USD anuales** a la universidad Continental.
 >
 > **(Mostrar main.py en VS Code con las cabeceras de seguridad)**
-> Aquí en el código backend de `main.py` puede verificar la inyección de las cabeceras de seguridad restrictivas contra secuestro de clics y MIME sniffing, cumpliendo con la directiva OWASP. Doy el pase a Luis."*
+> Como puede verificar aquí en el archivo `main.py` de VS Code, el backend implementa middleware de inyección para las cinco cabeceras HTTP de seguridad restrictivas contra ataques OWASP, tales como `X-Frame-Options: DENY` contra Clickjacking y `X-Content-Type-Options: nosniff` contra Sniffing de tipos MIME, asegurando un entorno robusto. Le doy el pase a Luis."*
 
 ---
 
 ### 🎙️ Bloque 3: Luis Alberto Gutierrez Taipe (Frontend Developer)
-*   **Tiempo:** 5:00 a 7:30
+*   **Tiempo:** 10:00 a 15:00 (5 minutos)
 *   **Rol:** Frontend Developer
 
 #### 🖥️ Elementos Visuales a Mostrar en Pantalla (VS Code / Navegador):
@@ -96,25 +101,27 @@ graph TD
     *   Mostrar la lógica de optimización en el frontend de React para procesar la grilla en complejidad lineal $O(N)$ usando un índice clave-valor, evitando el cuello de botella tradicional de complejidad cuadrática $O(N \times M)$ de los loops anidados de renderizado.
 3.  **Archivo [documentacion_capacitacion.md](../control_cierre/documentacion_capacitacion.md):** Mostrar la sección **5.1 Historial de Capacitación** (Sprints 0 a 5) y la sección **5.2 Talleres a Usuarios Finales**.
 
-#### 🗣️ Discurso Literal:
-> *"Buenas tardes, profesor. Mi trabajo se enfocó en garantizar que el frontend cumpla de manera estricta con las exigencias del contrato de desarrollo y en detallar las actividades de capacitación académica.
+#### 🗣️ Discurso Literal (5 minutos):
+> *"Buenas tardes, profesor. Mi asignación como desarrollador frontend ha sido diseñar y codificar la aplicación web React, garantizar de manera estricta el cumplimiento contractual de los entregables del SOW y liderar la accesibilidad y optimización del cliente de usuario.
 >
 > **(Enfocar revision_declaracion_trabajo.md - Tabla de entregables y WCAG)**
-> En la revisión del SOW auditamos los 6 entregables contractuales, confirmando su conformidad técnica total. Para cumplir con la directiva de accesibilidad WCAG 2.1 AA, rediseñamos los controles interactivos del frontend de React.
+> En la revisión de la Declaración de Trabajo (SOW), auditamos minuciosamente cada uno de los 6 entregables y 5 hitos del contrato, confirmando su conformidad al 100%. Para inyectar valor adicional y cumplir con las políticas inclusivas de la Universidad Continental, aplicamos la normativa de accesibilidad WCAG 2.1 - Nivel AA en el Dashboard de horarios.
 >
 > **(Mostrar Dashboard.tsx en VS Code con atributos ARIA)**
-> Como puede ver en el archivo `Dashboard.tsx`, reemplazamos los contenedores visuales genéricos por botones interactivos nativos. Implementamos el atributo `role="switch"` y el estado dinámico `aria-checked` para que los lectores de pantalla anuncien el estado de las restricciones CP-SAT. Además, implementamos la clase `focus:ring-orange-500` que garantiza un indicador visual claro para usuarios que navegan únicamente mediante tabulación por teclado.
+> Como puede ver aquí en el archivo `Dashboard.tsx` en VS Code, no utilizamos etiquetas divs genéricas para los interruptores interactivos, ya que los divs son inaccesibles para el teclado y los lectores de pantalla. En su lugar, implementamos etiquetas `<button>` nativas configuradas con `role="switch"` y enlazadas al estado dinámico `aria-checked` de React. Esto permite que lectores de pantalla (como NVDA o JAWS) anuncien verbalmente si una restricción CP-SAT está activa o inactiva en tiempo real. 
+>
+> Además, inyectamos las clases utilitarias de Tailwind `focus:ring-2 focus:ring-orange-500 focus:ring-offset-2` junto con `focus:outline-none`. Esto elimina el contorno por defecto del navegador y dibuja un anillo naranja de alto contraste alrededor del botón seleccionado al navegar mediante la tecla Tabulador, garantizando la conformidad con la pauta 2.1.1 de WCAG.
 >
 > **(Mostrar la lógica de ordenación $O(N)$ en Dashboard.tsx)**
-> Para optimizar el rendimiento del navegador frente a 122 secciones de horarios, evitamos loops anidados de complejidad cuadrática $O(N \times M)$. Estructuramos un índice clave-valor tipo hash map en memoria. Esto redujo el renderizado a una complejidad lineal $O(N)$, asegurando una navegación fluida a 60 FPS estables.
+> Asimismo, para garantizar el rendimiento de renderizado en React frente a lotes masivos de hasta 122 secciones asignadas, implementamos una optimización algorítmica. En lugar de ejecutar bucles anidados en la tabla de horarios —lo cual generaría una complejidad de búsqueda cuadrática $O(N \times M)$ y provocaría caídas de FPS en el navegador— implementamos un agrupamiento previo clave-valor de tipo `Record<string, HorarioResult[]>` en memoria indexado por día y hora. Esto nos permite renderizar las celdas de la grilla horaria con un acceso de complejidad lineal $O(N)$, logrando 60 FPS constantes. También inyectamos *lazy rendering* en el modal de detalle de clase para evitar recargar innecesariamente el árbol del DOM.
 >
 > **(Enfocar documentacion_capacitacion.md - Secciones 5.1 y 5.2)**
-> En el Manual de Capacitación, documentamos el historial formativo de nuestro equipo desde el Sprint 0 (aprendizaje de CP-SAT) hasta el Sprint 5 (OWASP y accesibilidad). Adicionalmente, planificamos los talleres dirigidos al equipo de TI, coordinadores de carrera y estudiantes para asegurar una transferencia tecnológica limpia de SGOHA. Le doy el pase a Diego Oré."*
+> Por último, en el manual de capacitación consolidamos los temas de capacitación interna del equipo (incluyendo modelado matemático en OR-Tools, dockerización, accesibilidad y seguridad OWASP) y estructuramos los programas de capacitación externa dirigidos a los administradores de TI de la universidad (para despliegue docker y copias de seguridad de PostgreSQL), coordinadores académicos y estudiantes. Doy el pase a nuestro Scrum Master, Diego Oré."*
 
 ---
 
 ### 🎙️ Bloque 4: Diego Isaac Ore Gonzales (Scrum Master & UX Analyst)
-*   **Tiempo:** 7:30 a 10:00
+*   **Tiempo:** 15:00 a 20:00 (5 minutos)
 *   **Rol:** Scrum Master / UX Analyst
 
 #### 🖥️ Elementos Visuales a Mostrar en Pantalla (VS Code / Navegador):
@@ -124,22 +131,27 @@ graph TD
 4.  **Archivo [indice_revisiones.md](../control_cierre/indice_revisiones.md):** Mostrar la tabla del **Historial de Versiones y Revisiones Documentales** detallando el avance de versiones 1.0, 1.1 y 2.0.
 5.  **El Navegador con el Sistema Funcionando (Opcional):** Mostrar la grilla horaria generada en la UI en localhost.
 
-#### 🗣️ Discurso Literal:
-> *"Buenas tardes, profesor. Para concluir con la defensa, analizaré la validación de nuestros supuestos iniciales, el cierre del Project Charter y la matriz de control documental.
+#### 🗣️ Discurso Literal (5 minutos):
+> *"Buenas tardes, profesor. Para finalizar con la defensa técnica, como Scrum Master y Analista UX del proyecto, detallaré la auditoría de cierre de nuestro Project Charter, la validación del Registro de Supuestos, la retrospectiva de lecciones aprendidas y el control documental de versiones.
 >
 > **(Enfocar revision_acta_constitucion.md)**
-> Al auditar el Project Charter, confirmamos que cumplimos con los objetivos de negocio. El sistema genera horarios óptimos sin colisión alguna en un promedio de **30 segundos**, superando la meta inicial de 2 minutos. Además, las métricas de calidad de código y accesibilidad fueron superadas, incluyendo la usabilidad métrica con un puntaje de **83.75 en escala SUS**.
+> En la revisión del Project Charter confrontamos el resultado real obtenido frente a los objetivos de negocio iniciales trazados en marzo de 2026. Cumplimos satisfactoriamente con el objetivo de automatizar la generación horaria libre de colisiones, logrando que el motor CP-SAT procese la malla completa en un promedio de **30 segundos**, superando con creces la meta inicial de 2 minutos. Además, las métricas de calidad de código y accesibilidad fueron superadas, incluyendo la usabilidad percibida con una calificación de **83.75 en escala métrica SUS**, lo que posiciona a SGOHA en el Grado A de usabilidad excelente.
 >
 > **(Enfocar registro_supuestos.md - AS-05 y AS-06)**
-> En nuestro registro de supuestos validamos hipótesis críticas. El supuesto **AS-05** que asumía la existencia de datos maestros limpios desde el inicio resultó ser **Falso**. Tuvimos que construir un inicializador de semillas relacionales (`seed.py`). En cambio, el supuesto **AS-06** sobre la estabilidad del motor CP-SAT fue **Verdadero**, demostrando eficiencia lineal al aplicar filtros previos en FastAPI.
+> En el Registro de Supuestos evaluamos la validez de nuestras hipótesis iniciales de partida. 
+> - El supuesto **AS-05** asumía que contaríamos con información histórica estructurada y limpia de los docentes, cursos y secciones de Ingeniería de Sistemas desde el día uno. Esto resultó ser **Falso** debido a la falta de consistencia y vacíos en los perfiles. Mitigamos esto desarrollando el módulo `seed.py` para normalizar las semillas relacionales.
+> - El supuesto **AS-06** asumía que el resolvedor CP-SAT escalaría linealmente al integrar restricciones blandas (soft constraints) sin entrar en timeouts. Esto fue validado como **Verdadero** al pre-filtrar variables en FastAPI y calibrar adecuadamente los pesos de las restricciones para evitar bloqueos del resolvedor.
 >
 > **(Enfocar lecciones_aprendidas.md - Sección 2)**
-> En las lecciones aprendidas, consolidamos el aprendizaje organizacional. Documentamos la corrección de latencias de disco en los contenedores Docker en Windows configurando polling en Vite y moviendo la estructura de archivos a la máquina virtual WSL2 nativa. También aprendimos a pre-validar las solicitudes para evitar desbordes de memoria RAM en el servidor ante conjuntos de datos imposibles de optimizar.
+> En nuestro informe de lecciones aprendidas consolidamos la retrospectiva de los 6 sprints. Destaco las lecciones técnicas clave:
+> 1. **Diferencias de Sistemas de Archivos en Docker:** Aprendimos a mitigar el retardo de sincronización de cambios (*hot-reload*) del frontend de Vite en contenedores Docker bajo Windows. El retardo NTFS-Ext4 de WSL2 se solucionó configurando la propiedad `usePolling` en `vite.config.ts` y moviendo el código al directorio nativo de WSL2.
+> 2. **Infactibilidad del resolvedor:** Aprendimos que la alimentación con datos imposibles de optimizar provocaba bucles de CPU y RAM infinitos en el host. Lo corregimos implementando validadores matemáticos de capacidad en FastAPI antes de invocar a OR-Tools.
+> 3. **Código Limpio y Exclusiones:** El linter de SonarQube indexaba inicialmente los archivos de pruebas unitarias reduciendo falsamente la cobertura, lo que corregimos parametrizando las exclusiones en `sonar-project.properties`.
 >
 > **(Enfocar indice_revisiones.md - Tabla de control de versiones)**
-> Finalmente, aquí en el Índice de Revisiones, puede ver la matriz de control documental completa. Registramos formalmente el historial de evolución de versiones 1.0 a 2.0 de las auditorías del Charter, SOW, riesgos y defectos, evidenciando un control de cambios maduro conforme a los estándares de la ingeniería.
+> Finalmente, aquí en el Índice de Revisiones, puede ver la matriz de control documental completa. Registramos formalmente el historial de evolución de versiones 1.0 a 2.0 de las auditorías del Charter, SOW, riesgos y defectos, evidenciando un control de cambios maduro conforme a los estándares de la ingeniería de software.
 >
-> Profesor, el sistema SGOHA se entrega como una solución funcional de alta ingeniería, accesible, segura y documentada bajo buenas prácticas organizacionales. Con esto, declaramos formalmente el cierre técnico del proyecto. Quedamos atentos a sus preguntas. Muchas gracias."*
+> Profesor, el sistema SGOHA se entrega listo para operar, con un alto nivel técnico, seguro y completamente documentado. Damos por cerrada nuestra exposición y quedamos atentos a sus preguntas. Muchas gracias."*
 
 ---
 
