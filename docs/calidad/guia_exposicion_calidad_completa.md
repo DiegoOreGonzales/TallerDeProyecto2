@@ -27,7 +27,7 @@ Como se aprecia en la captura de ejecución de Actions exitosa:
 
 ## 💻 2. Ejecución Local y Evidencias de Verificación
 
-Los resultados documentados en [evidencias_verificacion.md](file:///C:/Bacilio/sistema_generacion_horarios_academicos/docs/calidad/evidencias_verificacion.md) certifican el correcto funcionamiento en local. A continuación, el paso a paso detallado para ejecutar cada componente en tiempo real.
+Los resultados documentados en [evidencias_verificacion.md](evidencias_verificacion.md) certifican el correcto funcionamiento en local. A continuación, el paso a paso detallado para ejecutar cada componente en tiempo real.
 
 ### A. Pruebas de Calidad Estática y Compilación del Frontend
 Antes de desplegar en producción, debemos certificar la limpieza del código del cliente:

@@ -27,10 +27,10 @@ graph TD
 *   **Rol:** Product Owner & QA Lead
 
 #### 🖥️ Elementos Visuales a Mostrar en Pantalla (VS Code / Navegador / SonarQube):
-1.  **Explorador de Archivos en VS Code:** Mostrar la carpeta [docs/control_cierre/](file:///C:/Bacilio/sistema_generacion_horarios_academicos/docs/control_cierre) mostrando los 11 archivos de cierre en formato Markdown.
-2.  **Archivo [informe_final_proyecto.md](file:///C:/Bacilio/sistema_generacion_horarios_academicos/docs/control_cierre/informe_final_proyecto.md):** Enfocar la sección **2.A Desempeño del Alcance** (desviación de +15%) y **2.C Desempeño de la Calidad**.
-3.  **Archivo [registro_riesgos.md](file:///C:/Bacilio/sistema_generacion_horarios_academicos/docs/control_cierre/registro_riesgos.md):** Enfocar la tabla y los nuevos riesgos **RS-06 (Fuga de Conexiones PostgreSQL)** y **RS-07 (Baja Adopción Docente)**, destacando la columna **Severidad Residual** y **Técnica de Tratamiento**.
-4.  **Archivo [registro_defectos.md](file:///C:/Bacilio/sistema_generacion_horarios_academicos/docs/control_cierre/registro_defectos.md):** Mostrar los defectos **DF-05** (fallo de OR-Tools en Windows solucionado con backtracking fallback) y **DF-06** (bloqueo CSP de Tailwind).
+1.  **Explorador de Archivos en VS Code:** Mostrar la carpeta [docs/control_cierre/](../control_cierre/) mostrando los 11 archivos de cierre en formato Markdown.
+2.  **Archivo [informe_final_proyecto.md](../control_cierre/informe_final_proyecto.md):** Enfocar la sección **2.A Desempeño del Alcance** (desviación de +15%) y **2.C Desempeño de la Calidad**.
+3.  **Archivo [registro_riesgos.md](../control_cierre/registro_riesgos.md):** Enfocar la tabla y los nuevos riesgos **RS-06 (Fuga de Conexiones PostgreSQL)** y **RS-07 (Baja Adopción Docente)**, destacando la columna **Severidad Residual** y **Técnica de Tratamiento**.
+4.  **Archivo [registro_defectos.md](../control_cierre/registro_defectos.md):** Mostrar los defectos **DF-05** (fallo de OR-Tools en Windows solucionado con backtracking fallback) y **DF-06** (bloqueo CSP de Tailwind).
 5.  **Dashboard Local de SonarQube (Navegador en `http://localhost:9000`):** Mostrar el panel con el estado **Quality Gate: PASSED**, evidenciando 0 Bugs, 0 Vulnerabilities, 0 Security Hotspots y la mantenibilidad general en Rating A.
 
 #### 🗣️ Discurso Literal:
@@ -58,11 +58,11 @@ graph TD
 *   **Rol:** Backend Developer
 
 #### 🖥️ Elementos Visuales a Mostrar en Pantalla (VS Code / Docker Desktop / Consola):
-1.  **Archivo [registro_incidentes.md](file:///C:/Bacilio/sistema_generacion_horarios_academicos/docs/control_cierre/registro_incidentes.md):** Mostrar los incidentes **IS-05** (desbordamiento de RAM en WSL2 por SonarQube, resuelto mediante `.wslconfig`) e **IS-06** (errores de CORS resueltos en API).
-2.  **Archivo [registro_impedimentos.md](file:///C:/Bacilio/sistema_generacion_horarios_academicos/docs/control_cierre/registro_impedimentos.md):** Mostrar los impedimentos **IM-04** (incompatibilidad de Docker en Windows Home sin virtualización en BIOS) e **IM-05** (cuello de botella de revisiones de código de Git).
-3.  **Archivo [informe_final_proyecto.md](file:///C:/Bacilio/sistema_generacion_horarios_academicos/docs/control_cierre/informe_final_proyecto.md):** Enfocar la tabla de **Cronograma de Sprints (S0 a S6)** y la sección **2.D Desempeño de los Costos y Ciclo de Vida (LCC)**.
+1.  **Archivo [registro_incidentes.md](../control_cierre/registro_incidentes.md):** Mostrar los incidentes **IS-05** (desbordamiento de RAM en WSL2 por SonarQube, resuelto mediante `.wslconfig`) e **IS-06** (errores de CORS resueltos en API).
+2.  **Archivo [registro_impedimentos.md](../control_cierre/registro_impedimentos.md):** Mostrar los impedimentos **IM-04** (incompatibilidad de Docker en Windows Home sin virtualización en BIOS) e **IM-05** (cuello de botella de revisiones de código de Git).
+3.  **Archivo [informe_final_proyecto.md](../control_cierre/informe_final_proyecto.md):** Enfocar la tabla de **Cronograma de Sprints (S0 a S6)** y la sección **2.D Desempeño de los Costos y Ciclo de Vida (LCC)**.
 4.  **Código Fuente en VS Code:**
-    *   Mostrar [app/main.py](file:///C:/Bacilio/sistema_generacion_horarios_academicos/src/backend/app/main.py) donde se inyectaron las cabeceras HTTP de seguridad de FastAPI (`CORSMiddleware` y cabeceras OWASP como `X-Frame-Options: DENY`).
+    *   Mostrar [app/main.py](../../src/backend/app/main.py) donde se inyectaron las cabeceras HTTP de seguridad de FastAPI (`CORSMiddleware` y cabeceras OWASP como `X-Frame-Options: DENY`).
 5.  **Docker Desktop (Opcional):** Mostrar la lista de los 4 contenedores (`scheduling_db`, `scheduling_backend`, `scheduling_frontend`, `scheduling_pgadmin`) corriendo de manera saludable.
 
 #### 🗣️ Discurso Literal:
@@ -90,11 +90,11 @@ graph TD
 *   **Rol:** Frontend Developer
 
 #### 🖥️ Elementos Visuales a Mostrar en Pantalla (VS Code / Navegador):
-1.  **Archivo [revision_declaracion_trabajo.md](file:///C:/Bacilio/sistema_generacion_horarios_academicos/docs/control_cierre/revision_declaracion_trabajo.md):** Enfocar la tabla de verificación de los 6 entregables (`ENT-01` a `ENT-06`) y la sección de **Cumplimiento de Pautas WCAG 2.1 - Nivel AA**.
+1.  **Archivo [revision_declaracion_trabajo.md](../control_cierre/revision_declaracion_trabajo.md):** Enfocar la tabla de verificación de los 6 entregables (`ENT-01` a `ENT-06`) y la sección de **Cumplimiento de Pautas WCAG 2.1 - Nivel AA**.
 2.  **Código Fuente Frontend en VS Code:**
-    *   Mostrar [Dashboard.tsx](file:///C:/Bacilio/sistema_generacion_horarios_academicos/src/frontend/src/pages/Dashboard.tsx) enfocado en las líneas con atributos ARIA (`role="switch"`, `aria-checked`, `aria-label`) y la clase de enfoque de teclado (`focus:ring-2 focus:ring-orange-500`).
+    *   Mostrar [Dashboard.tsx](../../src/frontend/src/pages/Dashboard.tsx) enfocado en las líneas con atributos ARIA (`role="switch"`, `aria-checked`, `aria-label`) y la clase de enfoque de teclado (`focus:ring-2 focus:ring-orange-500`).
     *   Mostrar la lógica de optimización en el frontend de React para procesar la grilla en complejidad lineal $O(N)$ usando un índice clave-valor, evitando el cuello de botella tradicional de complejidad cuadrática $O(N \times M)$ de los loops anidados de renderizado.
-3.  **Archivo [documentacion_capacitacion.md](file:///C:/Bacilio/sistema_generacion_horarios_academicos/docs/control_cierre/documentacion_capacitacion.md):** Mostrar la sección **5.1 Historial de Capacitación** (Sprints 0 a 5) y la sección **5.2 Talleres a Usuarios Finales**.
+3.  **Archivo [documentacion_capacitacion.md](../control_cierre/documentacion_capacitacion.md):** Mostrar la sección **5.1 Historial de Capacitación** (Sprints 0 a 5) y la sección **5.2 Talleres a Usuarios Finales**.
 
 #### 🗣️ Discurso Literal:
 > *"Buenas tardes, profesor. Mi trabajo se enfocó en garantizar que el frontend cumpla de manera estricta con las exigencias del contrato de desarrollo y en detallar las actividades de capacitación académica.
@@ -118,10 +118,10 @@ graph TD
 *   **Rol:** Scrum Master / UX Analyst
 
 #### 🖥️ Elementos Visuales a Mostrar en Pantalla (VS Code / Navegador):
-1.  **Archivo [revision_acta_constitucion.md](file:///C:/Bacilio/sistema_generacion_horarios_academicos/docs/control_cierre/revision_acta_constitucion.md):** Mostrar la sección **1. Evaluación de Objetivos** (verificando cumplimiento de automatización, tests y el puntaje SUS).
-2.  **Archivo [registro_supuestos.md](file:///C:/Bacilio/sistema_generacion_horarios_academicos/docs/control_cierre/registro_supuestos.md):** Enfocar los supuestos **AS-05 (Disponibilidad de Datos Maestros)** y **AS-06 (Escalabilidad del Solver CP-SAT)**.
-3.  **Archivo [lecciones_aprendidas.md](file:///C:/Bacilio/sistema_generacion_horarios_academicos/docs/control_cierre/lecciones_aprendidas.md):** Mostrar las lecciones aprendidas de desarrollo, enfocando los desafíos técnicos y retrospectiva (sección 2).
-4.  **Archivo [indice_revisiones.md](file:///C:/Bacilio/sistema_generacion_horarios_academicos/docs/control_cierre/indice_revisiones.md):** Mostrar la tabla del **Historial de Versiones y Revisiones Documentales** detallando el avance de versiones 1.0, 1.1 y 2.0.
+1.  **Archivo [revision_acta_constitucion.md](../control_cierre/revision_acta_constitucion.md):** Mostrar la sección **1. Evaluación de Objetivos** (verificando cumplimiento de automatización, tests y el puntaje SUS).
+2.  **Archivo [registro_supuestos.md](../control_cierre/registro_supuestos.md):** Enfocar los supuestos **AS-05 (Disponibilidad de Datos Maestros)** y **AS-06 (Escalabilidad del Solver CP-SAT)**.
+3.  **Archivo [lecciones_aprendidas.md](../control_cierre/lecciones_aprendidas.md):** Mostrar las lecciones aprendidas de desarrollo, enfocando los desafíos técnicos y retrospectiva (sección 2).
+4.  **Archivo [indice_revisiones.md](../control_cierre/indice_revisiones.md):** Mostrar la tabla del **Historial de Versiones y Revisiones Documentales** detallando el avance de versiones 1.0, 1.1 y 2.0.
 5.  **El Navegador con el Sistema Funcionando (Opcional):** Mostrar la grilla horaria generada en la UI en localhost.
 
 #### 🗣️ Discurso Literal:
@@ -139,7 +139,7 @@ graph TD
 > **(Enfocar indice_revisiones.md - Tabla de control de versiones)**
 > Finalmente, aquí en el Índice de Revisiones, puede ver la matriz de control documental completa. Registramos formalmente el historial de evolución de versiones 1.0 a 2.0 de las auditorías del Charter, SOW, riesgos y defectos, evidenciando un control de cambios maduro conforme a los estándares de la ingeniería.
 >
-> Profesor, el sistema SGOHA se entrega listo para operar, con un alto nivel técnico, seguro y completamente documentado. Damos por cerrada nuestra exposición y quedamos atentos a sus preguntas. Muchas gracias."*
+> Profesor, el sistema SGOHA se entrega como una solución funcional de alta ingeniería, accesible, segura y documentada bajo buenas prácticas organizacionales. Con esto, declaramos formalmente el cierre técnico del proyecto. Quedamos atentos a sus preguntas. Muchas gracias."*
 
 ---
 
