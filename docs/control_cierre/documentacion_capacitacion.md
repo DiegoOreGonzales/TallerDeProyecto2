@@ -10,11 +10,11 @@ La plataforma **SGOHA** adopta una arquitectura de microservicios contenerizados
 
 ```mermaid
 graph TD
-    User(["Usuario / Admin"]) -->|Accede a la UI (Puerto 5173)| Frontend["Frontend: React + Vite"]
-    Frontend -->|Consume endpoints REST (Puerto 8000)| Backend["Backend: FastAPI"]
+    User(["Usuario / Admin"]) -->|"Accede a la UI (Puerto 5173)"| Frontend["Frontend: React + Vite"]
+    Frontend -->|"Consume endpoints REST (Puerto 8000)"| Backend["Backend: FastAPI"]
     Backend -->|Invoca| Engine["Motor de Optimización: CP-SAT Google OR-Tools"]
-    Backend -->|Persiste / Consulta (Puerto 5432)| DB[("Base de Datos: PostgreSQL 15")]
-    PGAdmin["pgAdmin 4 (Puerto 5050)"] -.->|Administración Visual| DB
+    Backend -->|"Persiste / Consulta (Puerto 5432)"| DB[("Base de Datos: PostgreSQL 15")]
+    PGAdmin["pgAdmin 4 (Puerto 5050)"] -.->|"Administración Visual"| DB
 ```
 
 ### Componentes y Tecnologías Clave:
@@ -75,6 +75,9 @@ El sistema está completamente contenerizado mediante **Docker** y **Docker Comp
 
 ### 3.1 Flujo Operativo para el Administrador (Dashboard UI):
 1.  **Autenticación**: Ingrese a la UI. Seleccione el rol de **Administrador** (credenciales del seeder: usuario `admin`, contraseña `admin`).
+    
+    ![Pantalla de Inicio de Sesión de SGOHA](../evidencias/captura_login.png)
+
 2.  **Configuración del Motor CP-SAT (Panel de Restricciones)**:
     En la parte superior del Dashboard se listan las restricciones activas en la base de datos. Cada restricción posee un interruptor (*switch*) accesible mediante teclado y lectores de pantalla:
     *   **Restricciones Duras (Hard Constraints - Obligatorias)**:
@@ -92,6 +95,9 @@ El sistema está completamente contenerizado mediante **Docker** y **Docker Comp
     *   **Vista de Grilla**: Muestra la distribución tradicional por días (Lunes a Sábado) y bloques de hora.
     *   **Vista de Agenda (Lista)**: Agrupa el horario secuencialmente por días, ideal para lectura lineal y dispositivos móviles.
     *   **Modal de Detalle**: Al hacer clic en cualquier bloque de clase, se abre un modal con información de las horas pedagógicas de 40 minutos con sus respectivos recesos de 10 minutos.
+    
+    ![Dashboard Principal de SGOHA - Panel de Control](../evidencias/captura_dashboard.png)
+
 5.  **Exportación y Descargas**:
     *   **PDF Completo**: Descarga el reporte imprimible de la malla completa.
     *   **Exportar Calendario (iCal)**: Descarga el archivo de integración para importar directamente en Google Calendar.
