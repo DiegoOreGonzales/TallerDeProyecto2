@@ -16,7 +16,7 @@ El proyecto se extendió a lo largo de **6 Sprints** planificados e iterativos y
 
 ### A. Desempeño del Alcance
 *   **Planificado:** 3 Épicas compuestas por 11 Historias de Usuario (HU) funcionales y no funcionales detalladas en el Backlog inicial.
-*   **Real:** **100% del alcance cubierto**. Se implementó el Dashboard administrativo de control, los CRUDs de aulas, cursos y secciones, el motor CP-SAT, las vistas específicas para estudiantes (con de-duplicación de turnos), y se agregaron las HU complementarias de calidad (HU-7.1 a HU-7.4) y cierre de proyecto (HU-8.1 a HU-8.4).
+*   **Real:** **100% del alcance cubierto** (verificado en la [Revisión del SOW](revision_declaracion_trabajo.md) y en la [Revisión del Acta de Constitución](revision_acta_constitucion.md)). Se implementó el Dashboard administrativo de control, los CRUDs de aulas, cursos y secciones, el motor CP-SAT, las vistas específicas para estudiantes (con de-duplicación de turnos), y se agregaron las HU complementarias de calidad (HU-7.1 a HU-7.4) y cierre de proyecto (HU-8.1 a HU-8.4).
 *   **Desviación:** +15% de alcance debido a la inyección de requerimientos regulatorios de calidad (cabeceras OWASP, ARIA WCAG y Green Software) requeridos por las inspecciones de software.
 
 ### B. Desempeño del Cronograma
@@ -39,7 +39,7 @@ El proyecto se estructuró de forma iterativa y secuencial según el siguiente d
 
 ### C. Desempeño de la Calidad
 *   **Planificado:** Cobertura de pruebas unitarias > 80%, 0 bugs críticos y pase del Quality Gate.
-*   **Real:** Cobertura de pruebas del Backend del **81%** (84 tests unitarios en Pytest) y Frontend del **100%** (7 tests unitarios en Vitest). ESLint limpio de errores y Quality Gate de SonarQube aprobado (**Passed** con 0 Bugs, 0 Vulnerabilidades y 2.1% de duplicación).
+*   **Real:** Cobertura de pruebas del Backend del **81%** (84 tests unitarios en Pytest) y Frontend del **100%** (7 tests unitarios en Vitest). ESLint limpio de errores y Quality Gate de SonarQube aprobado (verificado en el [Registro de Defectos](registro_defectos.md) con estado final de 0 bugs).
 *   **Desviación:** Sobresaliente. Se superaron los estándares iniciales mediante análisis estático continuo local contenerizado.
 
 ### D. Desempeño de los Costos y Ciclo de Vida (Life Cycle Cost - LCC)
@@ -69,10 +69,10 @@ La elección de integrar el solucionador CP-SAT de Google OR-Tools de forma loca
 
 ## 3. Resumen de Riesgos e Incidentes Ocurridos
 
-A lo largo del proyecto se gestionaron y cerraron los siguientes eventos:
-*   **Riesgo Tecnológico (Ocurrido):** Incompatibilidad y problemas de tipado TypeScript al inyectar switches de accesibilidad WCAG.
+A lo largo del proyecto se gestionaron, mitigaron y cerraron los eventos detallados en los siguientes registros de control:
+*   **Riesgo Tecnológico (Ocurrido):** Incompatibilidad y problemas de tipado TypeScript al inyectar switches de accesibilidad WCAG (verificado en el [Registro de Riesgos: RS-04 y RS-07](registro_riesgos.md)).
     *   *Mitigación:* Se forzó el tipado con interfaces estrictas de TypeScript y validación local de compilación con Vite (`npm run build`).
-*   **Incidente Operativo (Solucionado):** Doble indexación y falsos positivos de cobertura en SonarQube.
+*   **Incidente Operativo (Solucionado):** Doble indexación y falsos positivos de cobertura en SonarQube (verificado en el [Registro de Incidentes: IS-01](registro_incidentes.md) y [Registro de Impedimentos: IM-01](registro_impedimentos.md)).
     *   *Acción Correctiva:* Se definieron exclusiones explícitas cruzadas en el archivo `sonar-project.properties`.
 
 ---

@@ -24,12 +24,12 @@ La Declaración de Trabajo firmada al inicio del proyecto (Marzo de 2026) estipu
 Para inyectar valor adicional al producto final sin alterar el cronograma crítico ni el presupuesto operativo, se procesaron tres solicitudes de cambio formal bajo el protocolo de control de configuración integrado (PMBOK) durante los Sprints 4 y 5:
 
 ### CR-01: Adición de Accesibilidad Web (Normativa WCAG 2.1 - Nivel AA)
-*   **Motivación:** Garantizar la accesibilidad de la plataforma a usuarios con discapacidades visuales o de motricidad, permitiendo el uso de lectores de pantalla y navegación asistida por teclado, alineándose con las políticas de inclusión de la Universidad Continental.
+*   **Motivación:** Garantizar la accesibilidad de la plataforma a usuarios con discapacidades visuales o de motricidad, permitiendo el uso de lectores de pantalla y navegación asistida por teclado, alineándose con las políticas de inclusión de la Universidad Continental (verificado en el [Registro de Riesgos: RS-04](registro_riesgos.md) y en el [Registro de Defectos: DF-02](registro_defectos.md)).
 *   **Implementación:** Rediseño de componentes de control interactivo en React. Se sustituyeron contenedores genéricos (`div`) por etiquetas semánticas (`button` con `role="switch"`). Se añadieron atributos de estado dinámicos como `aria-checked` para representar en tiempo real si una restricción CP-SAT está activa y `aria-label` para dar contexto semántico a los lectores de pantalla. También se agregó el foco visible `focus:ring-2 focus:ring-orange-500` para navegación por teclado.
 *   **Impacto en Alcance/Costo:** Aumento de 3 SP (Story Points) en el backlog del frontend, absorbido por el equipo durante el Sprint 4 sin desviaciones en el cronograma debido a la optimización de tareas.
 
 ### CR-02: Mitigación OWASP y Seguridad en API (FastAPI Security Headers)
-*   **Motivación:** Reducir la superficie de ataque del backend contra vulnerabilidades críticas del OWASP Top 10, tales como inyecciones XSS, Clickjacking y secuestro de tipos MIME.
+*   **Motivación:** Reducir la superficie de ataque del backend contra vulnerabilidades críticas del OWASP Top 10, tales como inyecciones XSS, Clickjacking y secuestro de tipos MIME (verificado en el [Registro de Riesgos: RS-02](registro_riesgos.md) y en el [Registro de Defectos: DF-03 y DF-06](registro_defectos.md)).
 *   **Implementación:** Configuración de middleware CORS restrictivo (`CORSMiddleware` en FastAPI) que limita las solicitudes HTTP exclusivamente al origen del frontend (`localhost:5173`). Inyección de cabeceras HTTP de seguridad restrictivas:
     1. `X-Frame-Options: DENY` (Mitiga Clickjacking)
     2. `X-Content-Type-Options: nosniff` (Previene secuestro de tipos MIME)
@@ -39,7 +39,7 @@ Para inyectar valor adicional al producto final sin alterar el cronograma críti
 *   **Impacto en Alcance/Costo:** Añadió 2 SP en el Sprint 4, implementado directamente en el archivo `main.py` y validado mediante herramientas locales de análisis estático.
 
 ### CR-03: Estudio Métrico Cuantitativo SUS (System Usability Scale)
-*   **Motivación:** Medir científicamente la usabilidad, eficiencia y facilidad de aprendizaje de la interfaz de usuario generada ante una muestra de usuarios simulados representativos de la comunidad académica.
+*   **Motivación:** Medir científicamente la usabilidad, eficiencia y facilidad de aprendizaje de la interfaz de usuario generada ante una muestra de usuarios simulados representativos de la comunidad académica (verificado en el [Registro de Riesgos: RS-07](registro_riesgos.md) y en el [Registro de Impedimentos: IM-02](registro_impedimentos.md)).
 *   **Metodología y Resultados:** Se administró el test estándar SUS a **10 usuarios** representativos (4 coordinadores académicos, 3 docentes y 3 estudiantes).
     *   La métrica SUS consta de 10 preguntas evaluadas con escala Likert de 1 (totalmente en desacuerdo) a 5 (totalmente de acuerdo).
     *   Fórmula de puntuación: Para ítems impares, se resta 1 a la puntuación dada. Para ítems pares, se resta la puntuación dada a 5. El total sumado se multiplica por 2.5.

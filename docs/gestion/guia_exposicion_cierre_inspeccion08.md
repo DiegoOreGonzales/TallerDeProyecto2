@@ -99,7 +99,7 @@ graph TD
 2.  **Código Fuente Frontend en VS Code:**
     *   Mostrar [Dashboard.tsx](../../src/frontend/src/pages/Dashboard.tsx) enfocado en las líneas con atributos ARIA (`role="switch"`, `aria-checked`, `aria-label`) y la clase de enfoque de teclado (`focus:ring-2 focus:ring-orange-500`).
     *   Mostrar la lógica de optimización en el frontend de React para procesar la grilla en complejidad lineal $O(N)$ usando un índice clave-valor, evitando el cuello de botella tradicional de complejidad cuadrática $O(N \times M)$ de los loops anidados de renderizado.
-3.  **Archivo [documentacion_capacitacion.md](../control_cierre/documentacion_capacitacion.md):** Mostrar la sección **5.1 Historial de Capacitación** (Sprints 0 a 5) y la sección **5.2 Talleres a Usuarios Finales**.
+3.  **Archivo [documentacion_capacitacion.md](../control_cierre/documentacion_capacitacion.md):** Mostrar la sección **3.1** (evidenciando las nuevas capturas de pantalla de restricciones y grilla de horarios integradas), la sección **5.1 Historial de Capacitación** (Sprints 0 a 5) y la sección **5.2 Talleres a Usuarios Finales**.
 
 #### 🗣️ Discurso Literal (5 minutos):
 > *"Buenas tardes, profesor. Mi asignación como desarrollador frontend ha sido diseñar y codificar la aplicación web React, garantizar de manera estricta el cumplimiento contractual de los entregables del SOW y liderar la accesibilidad y optimización del cliente de usuario.
@@ -115,8 +115,8 @@ graph TD
 > **(Mostrar la lógica de ordenación $O(N)$ en Dashboard.tsx)**
 > Asimismo, para garantizar el rendimiento de renderizado en React frente a lotes masivos de hasta 122 secciones asignadas, implementamos una optimización algorítmica. En lugar de ejecutar bucles anidados en la tabla de horarios —lo cual generaría una complejidad de búsqueda cuadrática $O(N \times M)$ y provocaría caídas de FPS en el navegador— implementamos un agrupamiento previo clave-valor de tipo `Record<string, HorarioResult[]>` en memoria indexado por día y hora. Esto nos permite renderizar las celdas de la grilla horaria con un acceso de complejidad lineal $O(N)$, logrando 60 FPS constantes. También inyectamos *lazy rendering* en el modal de detalle de clase para evitar recargar innecesariamente el árbol del DOM.
 >
-> **(Enfocar documentacion_capacitacion.md - Secciones 5.1 y 5.2)**
-> Por último, en el manual de capacitación consolidamos los temas de capacitación interna del equipo (incluyendo modelado matemático en OR-Tools, dockerización, accesibilidad y seguridad OWASP) y estructuramos los programas de capacitación externa dirigidos a los administradores de TI de la universidad (para despliegue docker y copias de seguridad de PostgreSQL), coordinadores académicos y estudiantes. Doy el pase a nuestro Scrum Master, Diego Oré."*
+> **(Enfocar documentacion_capacitacion.md - Secciones 3.1, 5.1 y 5.2)**
+> Por último, en el manual de capacitación hemos integrado evidencias visuales del sistema en funcionamiento (las capturas de pantalla de la configuración de restricciones y de la grilla de horarios oficial), consolidamos los temas de capacitación interna del equipo (incluyendo modelado matemático en OR-Tools, dockerización, accesibilidad y seguridad OWASP) y estructuramos los programas de capacitación externa dirigidos a los administradores de TI de la universidad (para despliegue docker y copias de seguridad de PostgreSQL), coordinadores académicos y estudiantes. Doy el pase a nuestro Scrum Master, Diego Oré."*
 
 ---
 

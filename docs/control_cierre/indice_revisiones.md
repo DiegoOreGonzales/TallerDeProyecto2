@@ -31,10 +31,14 @@ Este registro detalla la evolución y auditorías aplicadas a cada artefacto doc
 | :--- | :---: | :---: | :--- | :--- | :---: |
 | **Project Charter** | 1.0 | 12/03/2026 | D. Oré / J. Bacilio | Creación inicial de objetivos estratégicos, presupuesto preliminar y riesgos de incepción. | **Aprobado** |
 | | 1.1 | 24/04/2026 | D. Oré / A. Requena | Ajuste de métricas de rendimiento del resolvedor tras las pruebas físicas en el Sprint 2. | **Aprobado** |
-| | 2.0 (Cierre) | 20/06/2026 | D. Oré / J. Bacilio | Auditoría final de cierre del Project Charter y firmas de aceptación del sistema. | **Auditado** |
+| | 2.0 (Cierre) | 20/06/2026 | D. Oré / J. Bacilio | Auditoría final de cierre del Project Charter y firmas de aceptación del sistema (enlaces a riesgos). | **Auditado** |
 | **Declaración de Trabajo (SOW)** | 1.0 | 15/03/2026 | L. Gutierrez / D. Oré | Redacción inicial de los 6 entregables contractuales de la solución. | **Aprobado** |
 | | 1.1 | 28/05/2026 | L. Gutierrez / J. Bacilio | Inyección de las HUs de accesibilidad (CR-01) y seguridad (CR-02) al alcance. | **Aprobado** |
-| | 2.0 (Cierre) | 22/06/2026 | L. Gutierrez / PO | Auditoría final de entregables del contrato y mapeo de competencias WCAG. | **Auditado** |
+| | 2.0 (Cierre) | 22/06/2026 | L. Gutierrez / PO | Auditoría final de entregables del contrato, mapeo de competencias WCAG y enlaces de control. | **Auditado** |
+| **Informe Final del Proyecto** | 1.0 | 18/06/2026 | D. Oré / L. Gutierrez | Redacción de cronograma plan vs ejec, costes LCC y desempeño de calidad. | **Aprobado** |
+| | 2.0 (Cierre) | 26/06/2026 | D. Oré / J. Bacilio | Auditoría final de cierre del informe, adición de enlaces a registros para trazabilidad. | **Auditado** |
+| **Informe de Lecciones Aprendidas**| 1.0 | 18/06/2026 | D. Oré / A. Requena | Recopilación de lecciones de OR-Tools, WSL2, RAM y cuellos de botella. | **Aprobado** |
+| | 2.0 (Cierre) | 26/06/2026 | D. Oré / J. Bacilio | Ajuste de retrospectivas e inyección de enlaces a defectos e impedimentos específicos. | **Auditado** |
 | **Registro de Riesgos** | 1.0 | 15/03/2026 | J. Bacilio / A. Requena | Identificación de 5 riesgos iniciales y asignación de probabilidad e impacto. | **En Seguimiento** |
 | | 2.0 (Cierre) | 25/06/2026 | J. Bacilio / D. Oré | Cierre de riesgos mitigados y adición de riesgos de fugas de base de datos (RS-06) y adopción (RS-07). | **Cerrado** |
 | **Registro de Incidentes** | 1.0 | 25/05/2026 | A. Requena / J. Bacilio | Apertura y seguimiento de incidentes de indexación (IS-01) y seeder (IS-02). | **En Seguimiento** |
@@ -43,8 +47,13 @@ Este registro detalla la evolución y auditorías aplicadas a cada artefacto doc
 | | 2.0 (Cierre) | 25/06/2026 | A. Requena / D. Oré | Registro y mitigación de impedimentos de Windows Home (IM-04) y cuellos de botella (IM-05). | **Cerrado** |
 | **Registro de Defectos** | 1.0 | 30/05/2026 | J. Bacilio / L. Gutierrez | Identificación de defectos de software DF-01 al DF-04 mediante pruebas y SonarQube. | **Corregido** |
 | | 2.0 (Cierre) | 25/06/2026 | J. Bacilio / A. Requena | Registro y resolución de defectos DF-05 al DF-08 (Windows, CSP, puertos y key duplicados). | **Cerrado** |
+| **Registro de Supuestos** | 1.0 | 15/03/2026 | D. Oré / J. Bacilio | Registro de supuestos iniciales de aulas, CP-SAT y disponibilidad de datos. | **Aprobado** |
+| | 2.0 (Cierre) | 25/06/2026 | D. Oré / A. Requena | Cierre y validación de supuestos al término del proyecto (AS-05 y AS-06). | **Cerrado** |
 | **Manual de Capacitación** | 1.0 | 05/06/2026 | L. Gutierrez / A. Requena | Estructuración inicial de guías de instalación docker y manuales de administrador. | **Aprobado** |
 | | 2.0 (Cierre) | 26/06/2026 | L. Gutierrez / D. Oré | Inclusión del manual para estudiantes/docentes, talleres externos e histórico de capacitación. | **Auditado** |
+| | 2.1 | 26/06/2026 | L. Gutierrez / J. Bacilio | Integración de capturas de pantalla reales del panel de restricciones y grilla de horarios en el manual. | **Auditado** |
+| **Guía de Exposición (Insp. 08)** | 1.0 | 25/06/2026 | D. Oré / L. Gutierrez | Redacción de guion de exposición de 20 minutos y distribución de bloques de tiempo. | **Aprobado** |
+| | 2.1 | 26/06/2026 | D. Oré / J. Bacilio | Ajuste de recursos visuales en Bloque 3 para mostrar capturas integradas en el manual. | **Auditado** |
 
 ---
 

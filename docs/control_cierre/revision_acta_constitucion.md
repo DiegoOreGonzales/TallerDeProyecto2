@@ -45,11 +45,11 @@ Los tres requisitos de alto nivel definidos al inicio del proyecto fueron valida
 
 ## ⚠️ 4. Auditoría de Riesgos de Iniciación
 
-El Project Charter original identificó riesgos tempranos que fueron gestionados activamente durante el ciclo de vida:
+El Project Charter original identificó riesgos tempranos que fueron gestionados activamente durante el ciclo de vida (verificados en el [Registro de Riesgos](registro_riesgos.md) y en el [Registro de Supuestos](registro_supuestos.md)):
 
-1.  **Infactibilidad del modelo CP-SAT:** Se mitigó agregando un validador en el frontend que impide al administrador activar combinaciones de restricciones duras mutuamente excluyentes y añadiendo tests unitarios de infactibilidad.
-2.  **Curva de aprendizaje de Google OR-Tools:** El equipo dedicó el Sprint 0 a la investigación matemática y pruebas unitarias de factibilidad, minimizando los cuellos de botella de desarrollo en los sprints siguientes.
-3.  **Falta de disponibilidad del equipo:** Se gestionó mediante ceremonias ágiles Scrum (Daily Standups y retrospectivas), lo cual permitió reasignar tareas a tiempo cuando surgían bloqueos por sobrecarga académica.
+1.  **Infactibilidad del modelo CP-SAT (Riesgo RS-01 / Supuesto AS-01):** Se mitigó agregando un validador en el frontend que impide al administrador activar combinaciones de restricciones duras mutuamente excluyentes y añadiendo tests unitarios de infactibilidad.
+2.  **Curva de aprendizaje de Google OR-Tools (Riesgo RS-01 / Supuesto AS-06):** El equipo dedicó el Sprint 0 a la investigación matemática y pruebas unitarias de factibilidad, minimizando los cuellos de botella de desarrollo en los sprints siguientes.
+3.  **Falta de disponibilidad del equipo (Impedimento IM-05):** Se gestionó mediante ceremonias ágiles Scrum (Daily Standups y retrospectivas), lo cual permitió reasignar tareas a tiempo cuando surgían bloqueos por sobrecarga académica (verificado en el [Registro de Impedimentos](registro_impedimentos.md)).
 
 ---
 

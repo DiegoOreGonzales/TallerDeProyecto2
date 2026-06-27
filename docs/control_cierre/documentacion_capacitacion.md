@@ -89,14 +89,17 @@ El sistema está completamente contenerizado mediante **Docker** y **Docker Comp
         *   *Minimizar ventanas libres*: Agrupa las clases de los alumnos de forma compacta.
         *   *Evitar bloques sueltos*: Evita que el alumno asista a la universidad por una sola hora de clase.
         *   *Respetar turnos preferidos*: Prioriza los horarios en base a las preferencias de las secciones.
+    
+    ![Panel de Configuración de Restricciones CP-SAT - SGOHA](../evidencias/captura_dashboard_restricciones.png)
+
 3.  **Generación de la Optimización**:
-    Haga clic en el botón naranja **"Generar Nuevo Horario"**. La interfaz deshabilitará controles para evitar ediciones y mostrará un spinner con el mensaje *"Optimizando con CP-SAT..."*. En un periodo promedio de **15 a 30 segundos**, el motor retornará la matriz óptima de asignación.
+    Haga clic en el botón naranja **"Generar Nuevo Horario"**. La interfaz deshabilitará controles para evitar ediciones y mostrará un spinner con el mensaje *"Optimizando con CP-SAT..."*. En un periodo promedio de **15 a 30 segundos**, el motor de optimización retornará la matriz óptima de asignación.
 4.  **Visualización e Inspección**:
     *   **Vista de Grilla**: Muestra la distribución tradicional por días (Lunes a Sábado) y bloques de hora.
     *   **Vista de Agenda (Lista)**: Agrupa el horario secuencialmente por días, ideal para lectura lineal y dispositivos móviles.
     *   **Modal de Detalle**: Al hacer clic en cualquier bloque de clase, se abre un modal con información de las horas pedagógicas de 40 minutos con sus respectivos recesos de 10 minutos.
     
-    ![Dashboard Principal de SGOHA - Panel de Control](../evidencias/captura_dashboard.png)
+    ![Dashboard Principal de SGOHA - Vista de Grilla Horaria](../evidencias/captura_dashboard_grilla.png)
 
 5.  **Exportación y Descargas**:
     *   **PDF Completo**: Descarga el reporte imprimible de la malla completa.
